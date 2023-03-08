@@ -1,0 +1,12 @@
+@startuml
+
+actor Controller
+
+Controller -> testCommand: execute(HashMap<String, String>)
+activate testCommand
+testCommand -> Engine: change engineState to STAYING
+testCommand -> Controller: removeSequence()
+
+deactivate testCommand
+
+@enduml
