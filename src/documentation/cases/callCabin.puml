@@ -1,0 +1,27 @@
+@startuml
+
+actor Passenger
+
+Passenger ->  FloorButton: pressDownButton()
+activate Controller
+FloorButton -> Controller: getCommand("findNearestCabin", floor: int)
+Controller <-- Controller: findNearestCabinCommand
+Controller -> findNearestCabinCommand: execute
+
+Controller -> Controller: getCommand("moveCabin", floor: int)
+Controller <-- Controller: moveCabinCommand
+Controller -> moveCabinCommand: execute
+
+Controller -> Controller: getCommand("stopCabin")
+Controller <-- Controller: stopCabinCommand
+Controller -> stopCabinCommand: execute
+
+Controller -> Controller: getCommand("openDoor")
+Controller <-- Controller: openDoorCommand
+Controller -> openDoorCommand: execute
+
+Controller -> Controller: getCommand("closeDoor")
+Controller <-- Controller: closeDoorCommand
+Controller -> closeDoorCommand: execute
+deactivate Controller
+@enduml
