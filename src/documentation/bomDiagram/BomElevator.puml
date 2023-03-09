@@ -142,3 +142,5 @@ Cabin o-- "doorState" DoorState
 
 SequenceOfStops "0..N SequenceOfStops" --o "1" Shaft
 @enduml
+
+'test
