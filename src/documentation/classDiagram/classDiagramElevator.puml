@@ -156,14 +156,20 @@ class OpenDoorCommand {
 class CloseDoorCommand {
     Controller: controller
 }
+class CheckOverweightCommand{
+    controller: Controller
+}
+class DisplayOverweightCommand{
+    controller: Controller
+}
 class DisplayCurrentPositionCommand{
     Controller: controller
 }
 class StopCabinCommand {
     Controller: controller
-
-    private checkOverweight(): boolean
-    private displayOverweight(): void
+}
+class DisplayCabinButtonStateCommand{
+    controller: Controller
 }
 
 class FindNearestCabinCommand {
@@ -183,6 +189,8 @@ CloseDoorCommand  ..|> Command
 DisplayCurrentPositionCommand  ..|> Command
 StopCabinCommand  ..|> Command
 FindNearestCabinCommand  ..|> Command
+CheckOverweightCommand ..|> Command
+DisplayOverweightCommand ..|> Command
 
 Controller <--o MoveCabinCommand
 Controller <--o OpenDoorCommand
@@ -190,6 +198,9 @@ Controller <--o CloseDoorCommand
 Controller <--o DisplayCurrentPositionCommand
 Controller <--o FindNearestCabinCommand
 Controller <--o StopCabinCommand
+Controller <--o DisplayCabinButtonStateCommand
+Controller <--o CheckOverweightCommand
+Controller <--o DisplayOverweightCommand
 
 Shaft <--o "command" Command
 
