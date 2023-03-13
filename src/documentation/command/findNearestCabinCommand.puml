@@ -2,7 +2,7 @@
 
 actor Controller
 
-Controller -> findNearestCabinCommand: execute(HashMap<String, String>)
+Controller -> findNearestCabinCommand: execute(HashMap<String, Object>)
 activate findNearestCabinCommand
 findNearestCabinCommand -> Shaft: addSequence()
 Shaft --> Controller: successful
