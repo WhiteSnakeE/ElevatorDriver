@@ -56,7 +56,6 @@ isPressed(): bool
 
 
 abstract "FloorButton"{
-  press(): void
   isPressed(): bool
 }
 
@@ -80,13 +79,11 @@ interface FloorWithUpButton {
   pressUpButton(): void
 }
 
-"UpFloorButton" "upButton" --o FloorWithUpButton
-
 interface FloorWithDownButton {
  pressDownButton(): void
 }
 
-"DownFloorButton" "downButton" --o FloorWithDownButton
+
 
 entity FirstFloor {
   id: int
@@ -105,6 +102,12 @@ LastFloor ..|> FloorWithDownButton
 entity MiddleFloor {
   id: int
 }
+
+"UpFloorButton" "upButton" --o FirstFloor
+"UpFloorButton" "upButton" --o MiddleFloor
+
+"DownFloorButton" "downButton" --o MiddleFloor
+"DownFloorButton" "downButton" --o LastFloor
 
 MiddleFloor --|> Floor
 MiddleFloor ..|> FloorWithUpButton
@@ -128,15 +131,9 @@ entity Shaft {
 
 Shaft "1" o-- "1 engine" Engine
 
-entity House {
-  id: int
-  shafts: Shaft[]
-}
-
 Shaft "1" o-- "N floors" Floor
-House "1" o-- "N shafts" Shaft
+Controller "1" o-- "N shafts" Shaft
 
-Controller "1 controller" --o "1" House
 Shaft "1" o-- "1 cabin" Cabin
 
 Cabin o-- "doorState" DoorState
@@ -156,20 +153,14 @@ class OpenDoorCommand {
 class CloseDoorCommand {
     Controller: controller
 }
-class CheckOverweightCommand{
-    controller: Controller
-}
-class DisplayOverweightCommand{
-    controller: Controller
-}
 class DisplayCurrentPositionCommand{
     Controller: controller
 }
 class StopCabinCommand {
     Controller: controller
-}
-class DisplayCabinButtonStateCommand{
-    controller: Controller
+
+    private checkOverweight(): boolean
+    private displayOverweight(): void
 }
 
 class FindNearestCabinCommand {
@@ -189,8 +180,6 @@ CloseDoorCommand  ..|> Command
 DisplayCurrentPositionCommand  ..|> Command
 StopCabinCommand  ..|> Command
 FindNearestCabinCommand  ..|> Command
-CheckOverweightCommand ..|> Command
-DisplayOverweightCommand ..|> Command
 
 Controller <--o MoveCabinCommand
 Controller <--o OpenDoorCommand
@@ -198,9 +187,6 @@ Controller <--o CloseDoorCommand
 Controller <--o DisplayCurrentPositionCommand
 Controller <--o FindNearestCabinCommand
 Controller <--o StopCabinCommand
-Controller <--o DisplayCabinButtonStateCommand
-Controller <--o CheckOverweightCommand
-Controller <--o DisplayOverweightCommand
 
 Shaft <--o "command" Command
 
