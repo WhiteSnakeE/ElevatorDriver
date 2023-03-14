@@ -9,7 +9,7 @@ public removeSequence()
 private mergeSequence()
 
 public registerCommand(): void
-
+activate()
 }
 
 enum DoorState{
@@ -127,6 +127,7 @@ Engine o-- "engineState" EngineState
 
 entity Shaft {
   cabinPosition: int
+  activate()
 }
 
 Shaft "1" o-- "1 engine" Engine
