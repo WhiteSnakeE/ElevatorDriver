@@ -85,6 +85,15 @@
       <version>${cucumber-version}</version>
       <scope>test</scope>
     </dependency>
+    <!-- Cucumber -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.26</version>
+      <scope>provided</scope> <!-- Всё как ты любишь -->
+    </dependency>
+
+
   </dependencies>
 
   <build>

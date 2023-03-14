@@ -1,7 +1,7 @@
 package com.sytoss.edu.elevator.unitTests;
 
 import com.sytoss.edu.elevator.ControllerIntegrationTest;
-import com.sytoss.edu.elevator.controller.Controller;
+import com.sytoss.edu.elevator.controller.SayHelloController;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ public class ControllerTest extends ControllerIntegrationTest {
 
     @Test
     public void testHelloWorld () {
-        Controller controller = new Controller();
+        SayHelloController controller = new SayHelloController();
         Assertions.assertEquals("Hello World!", controller.sayHello());
 
         String url = getBaseUrl() + "/api/helloWorld";
