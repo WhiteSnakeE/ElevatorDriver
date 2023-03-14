@@ -4,12 +4,11 @@ id: int
 commandMap: HashMap <String, Command>
 
 public doorOpeningRestriction()
-public addSequence()
-public removeSequence()
+public addSequenceToOrder()
+public moveSequence()
 private mergeSequence()
 
 public registerCommand(): void
-activate()
 }
 
 enum DoorState{
@@ -126,8 +125,11 @@ entity Engine {
 Engine o-- "engineState" EngineState
 
 entity Shaft {
+  id: int
   cabinPosition: int
   activate()
+  clearSequence()
+  updateSequence()
 }
 
 Shaft "1" o-- "1 engine" Engine
@@ -139,7 +141,8 @@ Shaft "1" o-- "1 cabin" Cabin
 
 Cabin o-- "doorState" DoorState
 
-SequenceOfStops "0..N SequenceOfStops" --o "1" Shaft
+SequenceOfStops "1 sequenceOfStops" --o "1" Shaft
+Controller "1" o-- "0..N orderSequenceOfStops" SequenceOfStops
 
 interface Command {
     execute()
