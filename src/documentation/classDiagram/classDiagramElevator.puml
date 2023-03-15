@@ -135,7 +135,7 @@ entity Shaft {
 Shaft "1" o-- "1 engine" Engine
 
 Shaft "1" o-- "N floors" Floor
-Controller "1" o-- "N shafts" Shaft
+Controller "1" o--> "N shafts" Shaft
 
 Shaft "1" o-- "1 cabin" Cabin
 
@@ -185,15 +185,9 @@ DisplayCurrentPositionCommand  ..|> Command
 StopCabinCommand  ..|> Command
 FindNearestCabinCommand  ..|> Command
 
-Controller <--o MoveCabinCommand
-Controller <--o OpenDoorCommand
-Controller <--o CloseDoorCommand
-Controller <--o DisplayCurrentPositionCommand
-Controller <--o FindNearestCabinCommand
-Controller <--o StopCabinCommand
 
-Shaft <--o "command" Command
-
+Controller "m" *--> "1 commandMap" Command
+Shaft "m" o--> "1 commandMap" Command
 
 
 @enduml
