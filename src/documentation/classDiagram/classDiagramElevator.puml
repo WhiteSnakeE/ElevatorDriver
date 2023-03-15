@@ -124,6 +124,11 @@ entity Engine {
 
 Engine o-- "engineState" EngineState
 
+entity DoneCommand{
+    nameComand: String
+    HashMap<String, Object> parameter;
+}
+
 entity Shaft {
   id: int
   cabinPosition: int
@@ -131,6 +136,8 @@ entity Shaft {
   clearSequence()
   updateSequence()
 }
+
+Shaft "1" o-- "m historyCommand" DoneCommand
 
 Shaft "1" o-- "1 engine" Engine
 
