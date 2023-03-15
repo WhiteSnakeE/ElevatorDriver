@@ -19,6 +19,4 @@ public class FloorController {
         params.put("floorNumber", String.valueOf(floorNumber));
         floorService.goUpCabinRequest(params);
     }
-
-
 }
