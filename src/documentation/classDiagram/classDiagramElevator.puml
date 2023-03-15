@@ -2,7 +2,7 @@
 entity "Controller"{
 id: int
 commandMap: HashMap <String, Command>
-
+public runCommands()
 public doorOpeningRestriction()
 public addSequenceToOrder()
 public moveSequence()

@@ -4,7 +4,11 @@ actor Passenger
 
 Passenger ->  FloorButton: pressDownButton()
 activate Controller
-FloorButton -> Controller: getCommand("findNearestCabin", floor: int)
+
+FloorButton -> Controller: runCommands( floor: int)
+
+Controller -> Controller: getCommand("findNearestCabin", floor: int)
+
 Controller <-- Controller: findNearestCabinCommand
 Controller -> findNearestCabinCommand: execute
 
