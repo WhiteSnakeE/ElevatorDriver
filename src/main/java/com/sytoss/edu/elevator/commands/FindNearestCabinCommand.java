@@ -1,7 +1,7 @@
 package com.sytoss.edu.elevator.commands;
 
-import com.sytoss.edu.elevator.entities.Controller;
-import com.sytoss.edu.elevator.interfaces.Command;
+import com.sytoss.edu.elevator.bom.Controller;
+import com.sytoss.edu.elevator.bom.Command;
 import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;

@@ -1,16 +1,16 @@
 package com.sytoss.edu.elevator;
 
-import com.sytoss.edu.elevator.controller.FloorController;
-import com.sytoss.edu.elevator.entities.Controller;
-import jakarta.annotation.PostConstruct;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.HashMap;
+import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class Main {
     public static void main (String[] args) {
-        SpringApplication.run(Main.class, args);
+      ApplicationContext applicationContext= SpringApplication.run(Main.class);
+        for (String name:applicationContext.getBeanDefinitionNames()){
+            System.out.println(name);
+        }
+
     }
 }

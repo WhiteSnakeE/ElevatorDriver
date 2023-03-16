@@ -93,6 +93,12 @@
       <scope>provided</scope> <!-- Всё как ты любишь -->
     </dependency>
 
+    <!-- Other -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>2.0.6</version>
+    </dependency>
 
   </dependencies>
 

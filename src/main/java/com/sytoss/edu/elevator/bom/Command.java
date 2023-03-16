@@ -1,4 +1,4 @@
-package com.sytoss.edu.elevator.interfaces;
+package com.sytoss.edu.elevator.bom;
 
 import java.util.HashMap;
 
