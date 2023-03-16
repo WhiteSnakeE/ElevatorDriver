@@ -141,7 +141,7 @@ Shaft "1" o-- "m historyCommand" DoneCommand
 
 Shaft "1" o-- "1 engine" Engine
 
-Shaft "1" o-- "N floors" Floor
+Controller "1" o-- "N floors" Floor
 Controller "1" o--> "N shafts" Shaft
 
 Shaft "1" o-- "1 cabin" Cabin
