@@ -1,13 +1,15 @@
 package com.sytoss.edu.elevator.bom;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
-@Component
-@Scope("prototype")
+
+@Getter
+@Setter
 public class SequenceOfStops {
+    private int id;
     private ArrayList<Integer> stopFloors;
-    private int currentPosition;
+    private int currentFloor;
+    private Direction direction;
 }

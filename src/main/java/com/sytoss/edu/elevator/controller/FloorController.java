@@ -14,8 +14,6 @@ public class FloorController {
 
     @PostMapping("/floorButton/{floorNumber}/up")
     public void goUpCabinRequest (@PathVariable(value = "floorNumber") int floorNumber) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("floorNumber", String.valueOf(floorNumber));
-        floorService.goUpCabinRequest(params);
+        floorService.goUpCabinRequest(floorNumber);
     }
 }

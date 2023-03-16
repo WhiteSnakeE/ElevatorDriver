@@ -1,30 +1,58 @@
 package com.sytoss.edu.elevator.bom;
 
+import com.sytoss.edu.elevator.bom.floors.FirstFloor;
+import com.sytoss.edu.elevator.bom.floors.Floor;
+import com.sytoss.edu.elevator.bom.floors.MiddleFloor;
 import com.sytoss.edu.elevator.commands.FindNearestCabinCommand;
 import jakarta.annotation.PostConstruct;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 @Component
+@Getter
+@Setter
 public class Controller {
+    private int id;
     private final HashMap<String, Command> commandMap = new HashMap<>();
     private final ArrayList<SequenceOfStops> orderSequenceOfStops = new ArrayList<>();
     private final ArrayList<Shaft> shafts = new ArrayList<>();
+    private final ArrayList<Floor> floors = new ArrayList<>();
+    @Value("${house.elevatorCountCabin}")
+    private int shaftCount;
+    @Value("${house.floorsCount}")
+    private int floorCount;
+
+    @Autowired
+    @Lazy
+    private FindNearestCabinCommand findNearestCabinCommand;
 
     @PostConstruct
     public void myInit () {
-        shafts.add(new Shaft());
-        shafts.add(new Shaft());
-        registerCommand("findNearestCabin", new FindNearestCabinCommand(this));
+        for (int i = 0; i < shaftCount; ++i) {
+            shafts.add(new Shaft());
+        }
+
+        floors.add(new FirstFloor(1));
+        for (int id = 2; id < floorCount; ++id) {
+            floors.add(new MiddleFloor(id));
+        }
+
+        System.out.println("Init started!");
+        registerCommand("findNearestCabin", findNearestCabinCommand);
     }
 
     public void registerCommand (String nameCommand, Command command) {
         commandMap.put(nameCommand, command);
     }
 
-    public void runCommands (String commandName, HashMap<String, String> params) {
+    public void runCommands (String commandName, HashMap<String, Object> params) {
         Command command = commandMap.get(commandName);
         if (command == null) {
             throw new IllegalStateException("no command registered for " + commandName);
@@ -32,19 +60,9 @@ public class Controller {
         command.execute(params);
     }
 
-    public void findNearestCabin (int floorInt) {
-        shafts.get(0).setCabinPosition(3);
-        shafts.get(1).setCabinPosition(4);
-        Shaft shaftResult=null;
-        int min = Integer.MAX_VALUE;
-        for (Shaft shaft : shafts) {
-            if (Math.abs(floorInt - shaft.getCabinPosition()) < min) {
-                min = Math.abs(floorInt - shaft.getCabinPosition());
-                shaftResult=shaft;
-            }
-        }
-        System.out.println("Floor number " +shaftResult.getId());
-
+    public void addSequenceToOrder(SequenceOfStops sequenceToAdd) {
+        orderSequenceOfStops.add(sequenceToAdd);
     }
+    public void moveSequence() {}
 }
 
