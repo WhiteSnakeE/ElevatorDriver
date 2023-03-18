@@ -8,7 +8,8 @@ import lombok.Setter;
 @Setter
 public class UpFloorButton extends FloorButton {
     private int id;
-    public UpFloorButton(){
+
+    public UpFloorButton () {
         setDirection(Direction.UPWARDS);
     }
 }

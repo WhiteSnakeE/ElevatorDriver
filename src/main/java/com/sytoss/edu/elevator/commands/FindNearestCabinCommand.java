@@ -16,7 +16,7 @@ public class FindNearestCabinCommand implements Command {
     public void execute (HashMap<String, Object> params) {
         ArrayList<Shaft> shafts = controller.getShafts();
         int floorInt = (int) params.get("floorNumber");
-        Direction direction=(Direction)params.get("direction");
+        Direction direction = (Direction) params.get("direction");
 
         shafts.get(0).setCabinPosition(3);
         shafts.get(1).setCabinPosition(4);
@@ -31,7 +31,7 @@ public class FindNearestCabinCommand implements Command {
             }
         }
 
-        SequenceOfStops sequenceOfStops=new SequenceOfStops();
+        SequenceOfStops sequenceOfStops = new SequenceOfStops();
         sequenceOfStops.getStopFloors().add(floorInt);
         sequenceOfStops.setDirection(direction);
         shaftResult.updateSequence(sequenceOfStops);

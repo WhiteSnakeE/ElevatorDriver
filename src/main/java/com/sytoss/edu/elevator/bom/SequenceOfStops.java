@@ -12,7 +12,8 @@ public class SequenceOfStops {
     private ArrayList<Integer> stopFloors;
     private int currentFloor;
     private Direction direction;
-    public SequenceOfStops(){
-        stopFloors=new ArrayList<>();
+
+    public SequenceOfStops () {
+        stopFloors = new ArrayList<>();
     }
 }

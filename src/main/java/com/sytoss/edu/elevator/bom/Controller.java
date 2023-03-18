@@ -60,9 +60,10 @@ public class Controller {
         command.execute(params);
     }
 
-    public void addSequenceToOrder() {
+    public void addSequenceToOrder () {
     }
-    public void moveSequence() {
+
+    public void moveSequence () {
     }
 }
 

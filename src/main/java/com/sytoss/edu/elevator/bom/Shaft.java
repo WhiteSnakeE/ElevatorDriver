@@ -27,6 +27,6 @@ public class Shaft {
     }
 
     public void updateSequence (SequenceOfStops sequenceOfStops) {
-        this.sequenceOfStops=sequenceOfStops;
+        this.sequenceOfStops = sequenceOfStops;
     }
 }
