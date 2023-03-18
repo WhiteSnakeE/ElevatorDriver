@@ -21,6 +21,7 @@ public class ControllerTest extends ControllerIntegrationTest {
 
         String url = getBaseUrl() + "/api/helloWorld";
         response = new TestRestTemplate().exchange(url, HttpMethod.GET, null, String.class);
+
         Assertions.assertEquals(HttpStatus.valueOf(200), response.getStatusCode());
 
     }

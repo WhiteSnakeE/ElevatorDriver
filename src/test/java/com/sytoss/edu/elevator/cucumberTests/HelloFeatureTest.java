@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 
 
 public class HelloFeatureTest extends ControllerIntegrationTest {
-    ResponseEntity<String> response;
+    private ResponseEntity<String> response;
 
     @When("the user calls sayHello")
     public void theClientCallsSayHello () {

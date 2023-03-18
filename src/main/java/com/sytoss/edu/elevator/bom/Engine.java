@@ -8,7 +8,4 @@ import lombok.Setter;
 public class Engine {
     private int id;
     private EngineState engineState;
-    public Engine(){
-        this.engineState=EngineState.STAYING;
-    }
 }
