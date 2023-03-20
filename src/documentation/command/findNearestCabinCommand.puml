@@ -4,8 +4,12 @@ actor Controller
 
 Controller -> findNearestCabinCommand: execute(HashMap<String, Object>)
 activate findNearestCabinCommand
-findNearestCabinCommand -> Controller: addSequenceToOrder()
+findNearestCabinCommand -> Controller: getSequenceToOrder()
 deactivate findNearestCabinCommand
 Controller -> Controller: moveSequence
-
+activate Controller
+Controller -> Shaft: updateSequence
+deactivate Controller
+Controller <-- Shaft
 @enduml
+
