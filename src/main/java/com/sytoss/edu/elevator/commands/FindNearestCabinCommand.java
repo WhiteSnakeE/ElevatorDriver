@@ -15,26 +15,34 @@ public class FindNearestCabinCommand implements Command {
     @Override
     public void execute (HashMap<String, Object> params) {
         ArrayList<Shaft> shafts = controller.getShafts();
-        int floorInt = (int) params.get("floorNumber");
-        Direction direction = (Direction) params.get("direction");
-
-        shafts.get(0).setCabinPosition(3);
-        shafts.get(1).setCabinPosition(4);
-
-        Shaft shaftResult = shafts.get(0);
-        int min = Integer.MAX_VALUE;
+        ArrayList<Shaft> freeShafts = new ArrayList<>();
 
         for (Shaft shaft : shafts) {
-            if (Math.abs(floorInt - shaft.getCabinPosition()) < min) {
-                min = Math.abs(floorInt - shaft.getCabinPosition());
-                shaftResult = shaft;
+            if (shaft.getSequenceOfStops() == null) {
+                freeShafts.add(shaft);
             }
         }
 
-        SequenceOfStops sequenceOfStops = new SequenceOfStops();
-        sequenceOfStops.getStopFloors().add(floorInt);
-        sequenceOfStops.setDirection(direction);
-        shaftResult.updateSequence(sequenceOfStops);
+        if (freeShafts.isEmpty()) {
+            return;
+        }
 
+        int floorNumber = controller.getOrderSequenceOfStops().get(0).getStopFloors().get(0);
+        int min = Integer.MAX_VALUE;
+        Shaft nearestCabin = null;
+
+        for (Shaft shaft : freeShafts) {
+            if (Math.abs(floorNumber - shaft.getCabinPosition()) < min) {
+                min = Math.abs(floorNumber - shaft.getCabinPosition());
+                nearestCabin = shaft;
+            }
+        }
+
+        if (nearestCabin == null) {
+            return;
+        }
+
+        nearestCabin.updateSequence(controller.getOrderSequenceOfStops().get(0));
+        controller.removeSequenceFromOrder(0);
     }
 }

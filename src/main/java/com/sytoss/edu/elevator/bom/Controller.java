@@ -7,6 +7,7 @@ import com.sytoss.edu.elevator.commands.FindNearestCabinCommand;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 @Component
 @Getter
 @Setter
+@Slf4j
 public class Controller {
     private int id;
     private final HashMap<String, Command> commandMap = new HashMap<>();
@@ -44,7 +46,7 @@ public class Controller {
             floors.add(new MiddleFloor(id));
         }
 
-        System.out.println("Init started!");
+        log.info("Init started!");
         registerCommand("findNearestCabin", findNearestCabinCommand);
     }
 
@@ -52,7 +54,7 @@ public class Controller {
         commandMap.put(nameCommand, command);
     }
 
-    public void runCommands (String commandName, HashMap<String, Object> params) {
+    public void executeCommand (String commandName, HashMap<String, Object> params) {
         Command command = commandMap.get(commandName);
         if (command == null) {
             throw new IllegalStateException("no command registered for " + commandName);
@@ -60,10 +62,16 @@ public class Controller {
         command.execute(params);
     }
 
-    public void addSequenceToOrder () {
+    public void runCommands() {
+        this.executeCommand("findNearestCabin", null);
     }
 
-    public void moveSequence () {
+    public void addSequenceToOrder (SequenceOfStops sequenceToAdd) {
+        orderSequenceOfStops.add(sequenceToAdd);
+    }
+
+    public void removeSequenceFromOrder(int index) {
+        orderSequenceOfStops.remove(index);
     }
 }
 

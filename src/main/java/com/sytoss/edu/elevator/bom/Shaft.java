@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-
 @Slf4j
 @Getter
 @Setter
@@ -21,12 +20,14 @@ public class Shaft {
         id = serialNumber++;
         cabin = new Cabin();
         engine = new Engine();
-    }
-
-    public void activate () {
+        cabinPosition = 1;
     }
 
     public void updateSequence (SequenceOfStops sequenceOfStops) {
-        this.sequenceOfStops = sequenceOfStops;
+        if (this.sequenceOfStops == null) {
+            this.sequenceOfStops = sequenceOfStops;
+        } else {
+            this.sequenceOfStops.getStopFloors().addAll(sequenceOfStops.getStopFloors());
+        }
     }
 }

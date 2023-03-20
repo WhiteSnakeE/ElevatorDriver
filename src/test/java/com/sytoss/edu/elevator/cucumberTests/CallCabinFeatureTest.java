@@ -17,7 +17,6 @@ public class CallCabinFeatureTest extends ControllerIntegrationTest {
             String engineState, Integer currentPosition) {
         getController().getShafts().get(cabinId).getEngine().setEngineState(EngineState.valueOf(engineState));
         getController().getShafts().get(cabinId).setCabinPosition(currentPosition);
-
     }
 
     @When("passenger on floor {int} presses UpFloorButton with direction {string}")
