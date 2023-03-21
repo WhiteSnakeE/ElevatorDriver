@@ -5,7 +5,6 @@ import com.sytoss.edu.elevator.bom.Direction;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
 public abstract class FloorButton {
     private Direction direction;

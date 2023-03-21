@@ -18,7 +18,6 @@ import java.util.HashMap;
 
 @Component
 @Getter
-@Setter
 @Slf4j
 public class Controller {
     private int id;
