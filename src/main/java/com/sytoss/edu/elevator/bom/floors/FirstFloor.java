@@ -15,7 +15,6 @@ public class FirstFloor extends Floor implements FloorWithUpButton {
 
     @Override
     public void pressUpButton () {
-        upFloorButton.isPressed(true);
         upFloorButton.setButtonState(ButtonState.PRESSED);
     }
 }

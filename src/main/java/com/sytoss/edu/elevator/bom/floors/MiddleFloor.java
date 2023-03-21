@@ -1,5 +1,6 @@
 package com.sytoss.edu.elevator.bom.floors;
 
+import com.sytoss.edu.elevator.bom.ButtonState;
 import com.sytoss.edu.elevator.bom.FloorWithUpButton;
 import com.sytoss.edu.elevator.bom.buttons.UpFloorButton;
 
@@ -7,7 +8,7 @@ import com.sytoss.edu.elevator.bom.buttons.UpFloorButton;
 public class MiddleFloor extends Floor implements FloorWithUpButton {
     private int id;
 
-    private UpFloorButton upFloorButton;
+    private UpFloorButton upFloorButton=new UpFloorButton();
 
     public MiddleFloor (int id) {
         this.id = id;
@@ -15,6 +16,6 @@ public class MiddleFloor extends Floor implements FloorWithUpButton {
 
     @Override
     public void pressUpButton () {
-
+        upFloorButton.setButtonState(ButtonState.PRESSED);
     }
 }

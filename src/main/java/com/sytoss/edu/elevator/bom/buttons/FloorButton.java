@@ -10,6 +10,4 @@ public abstract class FloorButton {
     private Direction direction;
     private ButtonState buttonState = ButtonState.UNPRESSED;
 
-    public void isPressed (boolean state) {
-    }
 }
