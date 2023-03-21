@@ -1,6 +1,6 @@
 package com.sytoss.edu.elevator.unitTests;
 
-import com.sytoss.edu.elevator.ControllerIntegrationTest;
+import com.sytoss.edu.elevator.IntegrationTest;
 import com.sytoss.edu.elevator.bom.Direction;
 import com.sytoss.edu.elevator.bom.EngineState;
 import org.junit.jupiter.api.Assertions;
@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 
-public class CallCabinUnitTest extends ControllerIntegrationTest {
+public class CallCabinUnitTest extends IntegrationTest {
     private ResponseEntity<String> response;
 
     @Test
