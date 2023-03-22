@@ -1,6 +1,6 @@
 package com.sytoss.edu.elevator.services;
 
-import com.sytoss.edu.elevator.bom.Controller;
+import com.sytoss.edu.elevator.bom.LiftDriver;
 import com.sytoss.edu.elevator.bom.Direction;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.floors.FirstFloor;
@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class FloorService {
     @Autowired
-    private Controller controller;
+    private LiftDriver liftDriver;
 
     public void goUpCabinRequest (int floorNumber) {
-        Floor floor = controller.getFloors().get(floorNumber - 1);
+        Floor floor = liftDriver.getFloors().get(floorNumber - 1);
 
         if (floorNumber == 1) {
             ((FirstFloor) floor).pressUpButton();
@@ -27,7 +27,7 @@ public class FloorService {
         sequenceToAdd.getStopFloors().add(floorNumber);
         sequenceToAdd.setDirection(Direction.UPWARDS);
 
-        controller.addSequenceToOrder(sequenceToAdd);
-        controller.runCommands();
+        liftDriver.addSequenceToOrder(sequenceToAdd);
+        liftDriver.runCommands();
     }
 }

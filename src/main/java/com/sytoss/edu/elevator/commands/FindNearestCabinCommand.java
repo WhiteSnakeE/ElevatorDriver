@@ -10,11 +10,11 @@ import java.util.HashMap;
 @Component
 public class FindNearestCabinCommand implements Command {
     @Autowired
-    private Controller controller;
+    private LiftDriver liftDriver;
 
     @Override
     public void execute (HashMap<String, Object> params) {
-        ArrayList<Shaft> shafts = controller.getShafts();
+        ArrayList<Shaft> shafts = liftDriver.getShafts();
         ArrayList<Shaft> freeShafts = new ArrayList<>();
 
         for (Shaft shaft : shafts) {
@@ -27,7 +27,7 @@ public class FindNearestCabinCommand implements Command {
             return;
         }
 
-        int floorNumber = controller.getOrderSequenceOfStops().get(0).getStopFloors().get(0);
+        int floorNumber = liftDriver.getOrderSequenceOfStops().get(0).getStopFloors().get(0);
         int min = Integer.MAX_VALUE;
         Shaft nearestCabin = null;
 
@@ -42,7 +42,7 @@ public class FindNearestCabinCommand implements Command {
             return;
         }
 
-        nearestCabin.updateSequence(controller.getOrderSequenceOfStops().get(0));
-        controller.removeSequenceFromOrder(0);
+        nearestCabin.updateSequence(liftDriver.getOrderSequenceOfStops().get(0));
+        liftDriver.removeSequenceFromOrder(0);
     }
 }

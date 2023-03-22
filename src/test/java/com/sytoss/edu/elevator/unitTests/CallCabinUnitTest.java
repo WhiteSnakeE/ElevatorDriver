@@ -14,18 +14,18 @@ public class CallCabinUnitTest extends IntegrationTest {
 
     @Test
     public void testFindNearestCabinCommand () {
-        getController().getShafts().get(0).getEngine().setEngineState(EngineState.STAYING);
-        getController().getShafts().get(0).setCabinPosition(3);
+        getLiftDriver().getShafts().get(0).getEngine().setEngineState(EngineState.STAYING);
+        getLiftDriver().getShafts().get(0).setCabinPosition(3);
 
-        getController().getShafts().get(1).getEngine().setEngineState(EngineState.STAYING);
-        getController().getShafts().get(1).setCabinPosition(4);
+        getLiftDriver().getShafts().get(1).getEngine().setEngineState(EngineState.STAYING);
+        getLiftDriver().getShafts().get(1).setCabinPosition(4);
 
         String url = "/api/floorButton/" + 5 + "/up";
         response = doPost(url, null, String.class);
 
         Assertions.assertEquals(HttpStatus.valueOf(200), response.getStatusCode());
-        Assertions.assertNotNull(getController().getShafts().get(1).getSequenceOfStops());
-        Assertions.assertEquals(Direction.UPWARDS, getController().getShafts().get(1).getSequenceOfStops().getDirection());
+        Assertions.assertNotNull(getLiftDriver().getShafts().get(1).getSequenceOfStops());
+        Assertions.assertEquals(Direction.UPWARDS, getLiftDriver().getShafts().get(1).getSequenceOfStops().getDirection());
 
     }
 }

@@ -20,7 +20,7 @@ import java.util.HashMap;
 @Getter
 @Setter
 @Slf4j
-public class Controller {
+public class LiftDriver {
     private int id;
     private final HashMap<String, Command> commandMap = new HashMap<>();
     private final ArrayList<SequenceOfStops> orderSequenceOfStops = new ArrayList<>();
