@@ -18,6 +18,7 @@ import java.util.HashMap;
 
 @Component
 @Getter
+@Setter
 @Slf4j
 public class Controller {
     private int id;
@@ -41,7 +42,7 @@ public class Controller {
         }
 
         floors.add(new FirstFloor(1));
-        for (int id = 2; id < floorCount; ++id) {
+        for (int id = 2; id <= floorCount; ++id) {
             floors.add(new MiddleFloor(id));
         }
 

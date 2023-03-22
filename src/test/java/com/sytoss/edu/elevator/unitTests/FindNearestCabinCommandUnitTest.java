@@ -1,0 +1,5 @@
+package com.sytoss.edu.elevator.unitTests;
+
+import com.sytoss.edu.elevator.AbstractJunitTest;
+
+public class FindNearestCabinCommandUnitTest extends AbstractJunitTest {}
