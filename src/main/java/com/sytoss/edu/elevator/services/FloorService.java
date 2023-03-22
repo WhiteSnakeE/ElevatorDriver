@@ -1,7 +1,7 @@
 package com.sytoss.edu.elevator.services;
 
-import com.sytoss.edu.elevator.bom.LiftDriver;
 import com.sytoss.edu.elevator.bom.Direction;
+import com.sytoss.edu.elevator.bom.LiftDriver;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.floors.FirstFloor;
 import com.sytoss.edu.elevator.bom.floors.Floor;

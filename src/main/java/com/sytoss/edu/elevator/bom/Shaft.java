@@ -23,11 +23,4 @@ public class Shaft {
         cabinPosition = 1;
     }
 
-    public void updateSequence (SequenceOfStops sequenceOfStops) {
-        if (this.sequenceOfStops == null) {
-            this.sequenceOfStops = sequenceOfStops;
-        } else {
-            this.sequenceOfStops.getStopFloors().addAll(sequenceOfStops.getStopFloors());
-        }
-    }
 }

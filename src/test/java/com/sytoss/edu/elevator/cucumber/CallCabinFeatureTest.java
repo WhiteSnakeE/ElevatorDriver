@@ -1,9 +1,10 @@
-package com.sytoss.edu.elevator.cucumberTests;
+package com.sytoss.edu.elevator.cucumber;
 
 import com.sytoss.edu.elevator.IntegrationTest;
 import com.sytoss.edu.elevator.TestContext;
 import com.sytoss.edu.elevator.bom.Direction;
 import com.sytoss.edu.elevator.bom.EngineState;
+import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -13,38 +14,46 @@ import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
 @Slf4j
 public class CallCabinFeatureTest extends IntegrationTest {
     private ResponseEntity<String> response;
 
-    @Given("cabin with id {int} and Engine has EngineState {string} and Shaft has current position {int}")
-    public void cabin_with_id_and_engine_has_engine_state_and_shaft_has_current_position (Integer cabinId,
-            String engineState, Integer currentPosition) {
+    @Given("cabin with index {int} and Engine has EngineState {string} and Shaft has current position {int}")
+    public void cabinWithIdAndEngineHasEngineStateAndShaftHasCurrentPosition (Integer cabinId, String engineState,
+            Integer currentPosition) {
         getLiftDriver().getShafts().get(cabinId).getEngine().setEngineState(EngineState.valueOf(engineState));
         getLiftDriver().getShafts().get(cabinId).setCabinPosition(currentPosition);
     }
 
     @When("passenger on floor {int} presses UpFloorButton with direction {string}")
-    public void passenger_on_floor_presses_up_floor_button_with_direction (Integer floorNumber, String string) {
-        String url = "/api/floorButton/" + floorNumber + "/up";
+    public void passengerOnFloorPressesUpFloorButtonWithDirection (Integer floorNumber, String direction) {
+        String buttonDirection = (direction.equals("UPWARDS") ? "/up" : "/down");
+        String url = "/api/floorButton/" + floorNumber + buttonDirection;
         response = doPost(url, null, String.class);
         TestContext.getInstance().setResponse(response);
 
     }
 
-    @Then("controller should create order with sequence of stops with floor {int} with index {int} and Direction {string}")
-    public void controller_should_create_sequence_of_stops_with_floor_and_id_and_direction (Integer floorRequested,
+    @Then("controller should create sequence of stops with floor {int} for Cabin with index {int} and Direction {string}")
+    public void controllerShouldCreateSequenceOfStopsWithFloorAndIdAndDirection (Integer floorRequested,
             Integer shaftIndex, String direction) {
 
         log.info("responseIs called with " + response);
         assertEquals(200, TestContext.getInstance().getResponse().getStatusCode().value());
 
-        verify(getLiftDriver(), times(1)).addSequenceToOrder(Mockito.any());
-        verify(getLiftDriver(),times(1)).runCommands();
+        SequenceOfStops expectedSequenceOfStops = new SequenceOfStops();
+        expectedSequenceOfStops.getStopFloors().add(floorRequested);
+        expectedSequenceOfStops.setDirection(Direction.UPWARDS);
+
+        verify(getLiftDriver()).addSequenceToOrder(Mockito.any());
+        verify(getLiftDriver()).runCommands();
+        verify(getLiftDriver()).executeCommand("findNearestCabin", null);
 
         Assertions.assertEquals(floorRequested, getLiftDriver().getShafts().get(shaftIndex).getSequenceOfStops().getStopFloors().get(0));
         Assertions.assertEquals(Direction.valueOf(direction), getLiftDriver().getShafts().get(shaftIndex).getSequenceOfStops().getDirection());
+
+        Assertions.assertNull(getLiftDriver().getShafts().get(0).getSequenceOfStops());
     }
 }

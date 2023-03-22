@@ -1,4 +1,4 @@
-package com.sytoss.edu.elevator.unitTests;
+package com.sytoss.edu.elevator.unit;
 
 import com.sytoss.edu.elevator.IntegrationTest;
 import com.sytoss.edu.elevator.bom.Direction;
@@ -9,11 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 
-public class CallCabinUnitTest extends IntegrationTest {
+public class CallCabinTest extends IntegrationTest {
     private ResponseEntity<String> response;
 
     @Test
-    public void testFindNearestCabinCommand () {
+    public void goUpCabinRequest () {
         getLiftDriver().getShafts().get(0).getEngine().setEngineState(EngineState.STAYING);
         getLiftDriver().getShafts().get(0).setCabinPosition(3);
 
@@ -26,6 +26,8 @@ public class CallCabinUnitTest extends IntegrationTest {
         Assertions.assertEquals(HttpStatus.valueOf(200), response.getStatusCode());
         Assertions.assertNotNull(getLiftDriver().getShafts().get(1).getSequenceOfStops());
         Assertions.assertEquals(Direction.UPWARDS, getLiftDriver().getShafts().get(1).getSequenceOfStops().getDirection());
+
+        Assertions.assertNull(getLiftDriver().getShafts().get(0).getSequenceOfStops());
 
     }
 }

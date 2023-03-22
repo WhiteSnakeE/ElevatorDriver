@@ -1,22 +1,17 @@
-package com.sytoss.edu.elevator.unitTests;
+package com.sytoss.edu.elevator.unit;
 
 import com.sytoss.edu.elevator.AbstractJunitTest;
-import com.sytoss.edu.elevator.bom.LiftDriver;
 import com.sytoss.edu.elevator.bom.Direction;
+import com.sytoss.edu.elevator.bom.LiftDriver;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.commands.FindNearestCabinCommand;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.util.Arrays;
-import java.util.HashMap;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
 
 public class LiftDriverTest extends AbstractJunitTest {
 
@@ -27,21 +22,22 @@ public class LiftDriverTest extends AbstractJunitTest {
     private FindNearestCabinCommand findNearestCabinCommand;
 
     @Test
-    public void initTest() {
+    public void initTest () {
         Assertions.assertEquals(2, liftDriver.getShafts().size());
         Assertions.assertEquals(16, liftDriver.getFloors().size());
         Assertions.assertNotEquals(0, liftDriver.getCommandMap().size());
     }
 
     @Test
-    public void registerCommandTest() {
+    public void registerCommandTest () {
         liftDriver.getCommandMap().clear();
-        liftDriver.getCommandMap().put("findNearestCabin", findNearestCabinCommand);
-        Assertions.assertNotEquals(0, liftDriver.getCommandMap().size());
+        liftDriver.registerCommand("findNearestCabin", findNearestCabinCommand);
+        Assertions.assertNotEquals(liftDriver.getCommandMap().size(), 0);
+
     }
 
     @Test
-    public void executeCommandTest() {
+    public void executeCommandTest () {
         SequenceOfStops sequence = new SequenceOfStops();
         sequence.getStopFloors().add(5);
         sequence.setCurrentFloor(1);
@@ -50,11 +46,12 @@ public class LiftDriverTest extends AbstractJunitTest {
         liftDriver.addSequenceToOrder(sequence);
 
         liftDriver.executeCommand("findNearestCabin", null);
+
         verify(findNearestCabinCommand).execute(null);
     }
 
     @Test
-    public void runCommandsTest() {
+    public void runCommandsTest () {
         SequenceOfStops sequence = new SequenceOfStops();
         sequence.getStopFloors().add(5);
         sequence.setCurrentFloor(1);
@@ -66,7 +63,12 @@ public class LiftDriverTest extends AbstractJunitTest {
     }
 
     @Test
-    public void addSequenceToOrderTest() {
+    public void executeCommandFailed () {
+        Assertions.assertThrows(IllegalStateException.class, () -> liftDriver.executeCommand("BadName", null));
+    }
+
+    @Test
+    public void addSequenceToOrderTest () {
         SequenceOfStops sequence = new SequenceOfStops();
         sequence.getStopFloors().add(4);
         sequence.setCurrentFloor(10);
@@ -78,7 +80,7 @@ public class LiftDriverTest extends AbstractJunitTest {
     }
 
     @Test
-    public void removeSequenceFromOrderTest() {
+    public void removeSequenceFromOrderTest () {
         liftDriver.getOrderSequenceOfStops().clear();
 
         SequenceOfStops sequenceUpwards = new SequenceOfStops();
@@ -94,34 +96,16 @@ public class LiftDriverTest extends AbstractJunitTest {
         liftDriver.addSequenceToOrder(sequenceUpwards);
         liftDriver.addSequenceToOrder(sequenceDownwards);
 
-        Assertions.assertEquals(2, liftDriver
-                .getOrderSequenceOfStops()
-                .size()
-        );
+        Assertions.assertEquals(2, liftDriver.getOrderSequenceOfStops().size());
 
-        Assertions.assertEquals(Arrays.asList(2, 7, 10), liftDriver
-                .getOrderSequenceOfStops()
-                .get(0)
-                .getStopFloors()
-        );
+        Assertions.assertEquals(Arrays.asList(2, 7, 10), liftDriver.getOrderSequenceOfStops().get(0).getStopFloors());
 
-        Assertions.assertEquals(Arrays.asList(10, 9, 6), liftDriver
-                .getOrderSequenceOfStops()
-                .get(1)
-                .getStopFloors()
-        );
+        Assertions.assertEquals(Arrays.asList(10, 9, 6), liftDriver.getOrderSequenceOfStops().get(1).getStopFloors());
 
         liftDriver.removeSequenceFromOrder(0);
 
-        Assertions.assertEquals(1, liftDriver.
-                getOrderSequenceOfStops().
-                size()
-        );
+        Assertions.assertEquals(1, liftDriver.getOrderSequenceOfStops().size());
 
-        Assertions.assertEquals(Arrays.asList(10, 9, 6), liftDriver
-                .getOrderSequenceOfStops()
-                .get(0)
-                .getStopFloors()
-        );
+        Assertions.assertEquals(Arrays.asList(10, 9, 6), liftDriver.getOrderSequenceOfStops().get(0).getStopFloors());
     }
 }

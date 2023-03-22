@@ -62,7 +62,7 @@ public class LiftDriver {
         command.execute(params);
     }
 
-    public void runCommands() {
+    public void runCommands () {
         this.executeCommand("findNearestCabin", null);
     }
 
@@ -70,7 +70,7 @@ public class LiftDriver {
         orderSequenceOfStops.add(sequenceToAdd);
     }
 
-    public void removeSequenceFromOrder(int index) {
+    public void removeSequenceFromOrder (int index) {
         orderSequenceOfStops.remove(index);
     }
 }

@@ -8,6 +8,6 @@ public class UpFloorButton extends FloorButton {
     private int id;
 
     public UpFloorButton () {
-        setDirection(Direction.UPWARDS);
+        this.direction=Direction.UPWARDS;
     }
 }

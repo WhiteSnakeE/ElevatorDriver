@@ -1,6 +1,8 @@
 package com.sytoss.edu.elevator.commands;
 
-import com.sytoss.edu.elevator.bom.*;
+import com.sytoss.edu.elevator.bom.Command;
+import com.sytoss.edu.elevator.bom.LiftDriver;
+import com.sytoss.edu.elevator.bom.Shaft;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -42,7 +44,7 @@ public class FindNearestCabinCommand implements Command {
             return;
         }
 
-        nearestCabin.updateSequence(liftDriver.getOrderSequenceOfStops().get(0));
+        nearestCabin.setSequenceOfStops(liftDriver.getOrderSequenceOfStops().get(0));
         liftDriver.removeSequenceFromOrder(0);
     }
 }
