@@ -1,5 +1,12 @@
 package com.sytoss.edu.elevator.bom.floors;
 
-public abstract class Floor {
-    private int id;
+import com.sytoss.edu.elevator.bom.Entity;
+import lombok.Getter;
+
+public abstract class Floor extends Entity {
+    @Getter
+    private final int floorNumber;
+    public Floor (int floorNumber) {
+        this.floorNumber = floorNumber;
+    }
 }

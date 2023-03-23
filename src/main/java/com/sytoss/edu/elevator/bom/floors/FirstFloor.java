@@ -5,12 +5,12 @@ import com.sytoss.edu.elevator.bom.FloorWithUpButton;
 import com.sytoss.edu.elevator.bom.buttons.UpFloorButton;
 
 public class FirstFloor extends Floor implements FloorWithUpButton {
-    private int id;
 
-    private final UpFloorButton upFloorButton = new UpFloorButton();
+    private final UpFloorButton upFloorButton;
 
-    public FirstFloor (int id) {
-        this.id = id;
+    public FirstFloor (int floorNumber) {
+        super(floorNumber);
+        this.upFloorButton = new UpFloorButton();
     }
 
     @Override

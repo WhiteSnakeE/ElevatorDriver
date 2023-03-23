@@ -9,8 +9,7 @@ import java.util.ArrayList;
 @Getter
 @Setter
 @ToString
-public class SequenceOfStops {
-    private int id;
+public class SequenceOfStops extends Entity {
     private ArrayList<Integer> stopFloors;
     private int currentFloor;
     private Direction direction;

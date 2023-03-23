@@ -7,17 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Getter
 @Setter
-public class Shaft {
+public class Shaft extends Entity {
 
-    private int id;
-    private static int serialNumber = 0;
     private int cabinPosition;
     private SequenceOfStops sequenceOfStops;
     private Cabin cabin;
     private Engine engine;
 
     public Shaft () {
-        id = serialNumber++;
         cabin = new Cabin();
         engine = new Engine();
         cabinPosition = 1;

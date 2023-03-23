@@ -20,8 +20,7 @@ import java.util.HashMap;
 @Getter
 @Setter
 @Slf4j
-public class LiftDriver {
-    private int id;
+public class LiftDriver extends Entity {
     private final HashMap<String, Command> commandMap = new HashMap<>();
     private final ArrayList<SequenceOfStops> orderSequenceOfStops = new ArrayList<>();
     private final ArrayList<Shaft> shafts = new ArrayList<>();
@@ -36,7 +35,7 @@ public class LiftDriver {
     private FindNearestCabinCommand findNearestCabinCommand;
 
     @PostConstruct
-    public void myInit () {
+    public void Init () {
         for (int i = 0; i < shaftCount; ++i) {
             shafts.add(new Shaft());
         }

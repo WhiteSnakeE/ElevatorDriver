@@ -6,16 +6,15 @@ import com.sytoss.edu.elevator.bom.buttons.UpFloorButton;
 
 
 public class MiddleFloor extends Floor implements FloorWithUpButton {
-    private int id;
-
-    private UpFloorButton upFloorButton = new UpFloorButton();
-
-    public MiddleFloor (int id) {
-        this.id = id;
-    }
+    private UpFloorButton upFloorButton;
 
     @Override
     public void pressUpButton () {
         upFloorButton.setButtonState(ButtonState.PRESSED);
+    }
+
+    public MiddleFloor (int floorNumber) {
+        super(floorNumber);
+        upFloorButton=new UpFloorButton();
     }
 }
