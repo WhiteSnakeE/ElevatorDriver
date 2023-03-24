@@ -6,6 +6,6 @@ Passenger -> FloorButton: pressDownButton()
 
 FloorButton -> FloorButton: change ButtonState to PRESSED
 
-FloorButton -> Controller: addSequenceToOrder(Sequence)
+FloorButton -> ElevatorDriver: addNewSequenceToOrder(Sequence)
 
 @enduml

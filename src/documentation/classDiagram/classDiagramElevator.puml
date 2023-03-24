@@ -1,13 +1,8 @@
 @startuml
 entity ElevatorDriver{
 id: int
-commandMap: HashMap <String, Command>
-public executeCommand(name, params)
-public doorOpeningRestriction()
-public addSequenceToOrder()
-public moveSequence()
-private mergeSequence()
-public registerCommand(): void
+public addNewSequenceToOrder()
+
 }
 
 enum DoorState{
@@ -17,6 +12,8 @@ CLOSED
 
 entity Cabin{
 id: int
+
+public doorOpeningRestriction()
 }
 
 entity SequenceOfStops {
@@ -49,6 +46,7 @@ cabinId: int
 buttonValue: int
 
 press(): void
+unPress(): void
 isPressed(): bool
 }
 
@@ -151,6 +149,10 @@ ElevatorDriver "1" o-- "0..N orderSequenceOfStops" SequenceOfStops
 
 entity House {
   id: int
+
+  public moveSequenceToShaft()
+  public mergeSequence()
+  public updateSequence()
 }
 
 House "1" o-- "N floors" Floor
@@ -186,6 +188,13 @@ class FindNearestCabinCommand {
 enum OverweightState {
     OVERWEIGHTED
     NOT_OVERWEIGHTED
+}
+
+class CommandManager {
+    commandMap: HashMap <String, Command>
+
+    public registerCommand(): void
+    public getCommand(String name): Command
 }
 
 OverweightState "isOverweighted" --o Cabin
