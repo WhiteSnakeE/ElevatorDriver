@@ -58,14 +58,20 @@ pressCabinButton()
 
 abstract "FloorButton"{
   isPressed(): bool
+  press(int floor, Direction direction): void
+  unPress(): void
 }
 
 entity "UpFloorButton" {
   id: int
+
+  press(int floor): void
 }
 
 entity "DownFloorButton" {
  id: int
+
+ press(int floor): void
 }
 
 "UpFloorButton" --|> "FloorButton"
@@ -132,7 +138,7 @@ entity House {
   id: int
 }
 
-Shaft "1" o-- "N floors" Floor
+House "1" o-- "N floors" Floor
 House "1" o-- "N shafts" Shaft
 
 Controller "1 controller" --o "1" House
