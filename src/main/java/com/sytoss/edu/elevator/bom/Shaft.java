@@ -11,11 +11,9 @@ public class Shaft extends Entity {
 
     private int cabinPosition;
     private SequenceOfStops sequenceOfStops;
-    private Cabin cabin;
     private Engine engine;
 
     public Shaft () {
-        cabin = new Cabin();
         engine = new Engine();
         cabinPosition = 1;
     }

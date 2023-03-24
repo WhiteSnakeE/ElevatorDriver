@@ -1,4 +1,4 @@
-package com.sytoss.edu.elevator.bom.floors;
+package com.sytoss.edu.elevator.bom.house.floors;
 
 import com.sytoss.edu.elevator.bom.Entity;
 import lombok.Getter;

@@ -1,5 +1,6 @@
 package com.sytoss.edu.elevator.bom;
 
+import com.sytoss.edu.elevator.bom.enums.EngineState;
 import lombok.Setter;
 
 @Setter

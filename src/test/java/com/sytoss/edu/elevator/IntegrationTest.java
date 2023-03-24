@@ -1,6 +1,6 @@
 package com.sytoss.edu.elevator;
 
-import com.sytoss.edu.elevator.bom.LiftDriver;
+import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import io.cucumber.spring.CucumberContextConfiguration;
 import lombok.Getter;
 import org.junit.platform.suite.api.ConfigurationParameter;
@@ -25,7 +25,7 @@ public class IntegrationTest extends AbstractControllerTest {
     @Autowired
     @Getter
     @SpyBean
-    private LiftDriver liftDriver;
+    private ElevatorDriver elevatorDriver;
 
     public String getBaseUrl () {
         return "http://localhost:" + applicationPort;

@@ -2,8 +2,8 @@ package com.sytoss.edu.elevator.cucumber;
 
 import com.sytoss.edu.elevator.IntegrationTest;
 import com.sytoss.edu.elevator.TestContext;
-import com.sytoss.edu.elevator.bom.Direction;
-import com.sytoss.edu.elevator.bom.EngineState;
+import com.sytoss.edu.elevator.bom.enums.Direction;
+import com.sytoss.edu.elevator.bom.enums.EngineState;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -23,8 +23,8 @@ public class CallCabinFeatureTest extends IntegrationTest {
     @Given("cabin with index {int} and Engine has EngineState {string} and Shaft has current position {int}")
     public void cabinWithIdAndEngineHasEngineStateAndShaftHasCurrentPosition (Integer cabinId, String engineState,
             Integer currentPosition) {
-        getLiftDriver().getShafts().get(cabinId).getEngine().setEngineState(EngineState.valueOf(engineState));
-        getLiftDriver().getShafts().get(cabinId).setCabinPosition(currentPosition);
+        getElevatorDriver().getShafts().get(cabinId).getEngine().setEngineState(EngineState.valueOf(engineState));
+        getElevatorDriver().getShafts().get(cabinId).setCabinPosition(currentPosition);
     }
 
     @When("passenger on floor {int} presses UpFloorButton with direction {string}")
@@ -47,13 +47,13 @@ public class CallCabinFeatureTest extends IntegrationTest {
         expectedSequenceOfStops.getStopFloors().add(floorRequested);
         expectedSequenceOfStops.setDirection(Direction.UPWARDS);
 
-        verify(getLiftDriver()).addSequenceToOrder(Mockito.any());
-        verify(getLiftDriver()).runCommands();
-        verify(getLiftDriver()).executeCommand("findNearestCabin", null);
+        verify(getElevatorDriver()).addSequenceToOrder(Mockito.any());
+        verify(getElevatorDriver()).runCommands();
+        verify(getElevatorDriver()).executeCommand("findNearestCabin", null);
 
-        Assertions.assertEquals(floorRequested, getLiftDriver().getShafts().get(shaftIndex).getSequenceOfStops().getStopFloors().get(0));
-        Assertions.assertEquals(Direction.valueOf(direction), getLiftDriver().getShafts().get(shaftIndex).getSequenceOfStops().getDirection());
+        Assertions.assertEquals(floorRequested, getElevatorDriver().getShafts().get(shaftIndex).getSequenceOfStops().getStopFloors().get(0));
+        Assertions.assertEquals(Direction.valueOf(direction), getElevatorDriver().getShafts().get(shaftIndex).getSequenceOfStops().getDirection());
 
-        Assertions.assertNull(getLiftDriver().getShafts().get(0).getSequenceOfStops());
+        Assertions.assertNull(getElevatorDriver().getShafts().get(0).getSequenceOfStops());
     }
 }
