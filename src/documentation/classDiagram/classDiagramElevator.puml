@@ -1,9 +1,8 @@
 @startuml
-entity "Controller"{
+entity ElevatorDriver{
 id: int
 commandMap: HashMap <String, Command>
 public executeCommand(name, params)
-public runCommands()
 public doorOpeningRestriction()
 public addSequenceToOrder()
 public moveSequence()
@@ -56,14 +55,20 @@ isPressed(): bool
 
 abstract "FloorButton"{
   isPressed(): bool
+  press(int floor, Direction direction): void
+  unPress(): void
 }
 
 entity "UpFloorButton" {
   id: int
+
+  press(int floor): void
 }
 
 entity "DownFloorButton" {
  id: int
+
+ press(int floor): void
 }
 
 "UpFloorButton" --|> "FloorButton"
@@ -124,11 +129,6 @@ entity Engine {
 
 Engine o-- "engineState" EngineState
 
-entity DoneCommand{
-    nameComand: String
-    HashMap<String, Object> parameter;
-}
-
 entity Shaft {
   id: int
   cabinPosition: int
@@ -137,45 +137,50 @@ entity Shaft {
   updateSequence()
 }
 
-Shaft "1" o-- "m historyCommand" DoneCommand
-
 Shaft "1" o-- "1 engine" Engine
 
-Controller "1" o-- "N floors" Floor
-Controller "1" o--> "N shafts" Shaft
+ElevatorDriver "1" o-- "N floors" Floor
+ElevatorDriver "1" o--> "N shafts" Shaft
 
 Shaft "1" o-- "1 cabin" Cabin
 
 Cabin o-- "doorState" DoorState
 
 SequenceOfStops "1 sequenceOfStops" --o "1" Shaft
-Controller "1" o-- "0..N orderSequenceOfStops" SequenceOfStops
+ElevatorDriver "1" o-- "0..N orderSequenceOfStops" SequenceOfStops
+
+entity House {
+  id: int
+}
+
+House "1" o-- "N floors" Floor
+House "1" o-- "N shafts" Shaft
 
 interface Command {
     execute()
 }
 
 class MoveCabinCommand {
-    Controller: controller
+    elevatorDriver: ElevatorDriver
 }
 class OpenDoorCommand {
-    Controller: controller
+    elevatorDriver: ElevatorDriver
 }
 class CloseDoorCommand {
-    Controller: controller
+    elevatorDriver: ElevatorDriver
 }
 class DisplayCurrentPositionCommand{
-    Controller: controller
+    elevatorDriver: ElevatorDriver
 }
 class StopCabinCommand {
-    Controller: controller
+    elevatorDriver: ElevatorDriver
 
     private checkOverweight(): boolean
     private displayOverweight(): void
 }
 
 class FindNearestCabinCommand {
-    Controller: controller
+    elevatorDriver: ElevatorDriver
 }
 
 enum OverweightState {
@@ -193,7 +198,7 @@ StopCabinCommand  ..|> Command
 FindNearestCabinCommand  ..|> Command
 
 
-Controller "m" *--> "1 commandMap" Command
+ElevatorDriver "m" *--> "1 commandMap" Command
 Shaft "m" o--> "1 commandMap" Command
 
 

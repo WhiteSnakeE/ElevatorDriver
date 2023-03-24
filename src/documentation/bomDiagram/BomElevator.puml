@@ -76,6 +76,7 @@ entity "DownFloorButton" {
 
 abstract Floor{
   id: int
+  floorNumber: int
   visit(): void
 }
 
@@ -83,13 +84,9 @@ interface FloorWithUpButton {
   pressUpButton(): void
 }
 
-"UpFloorButton" "upButton" --o FloorWithUpButton
-
 interface FloorWithDownButton {
  pressDownButton(): void
 }
-
-"DownFloorButton" "downButton" --o FloorWithDownButton
 
 entity FirstFloor {
   id: int
@@ -108,6 +105,12 @@ LastFloor ..|> FloorWithDownButton
 entity MiddleFloor {
   id: int
 }
+
+"UpFloorButton" "upButton" --o FirstFloor
+"UpFloorButton" "upButton" --o MiddleFloor
+
+"DownFloorButton" "downButton" --o MiddleFloor
+"DownFloorButton" "downButton" --o LastFloor
 
 MiddleFloor --|> Floor
 MiddleFloor ..|> FloorWithUpButton
