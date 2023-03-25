@@ -23,18 +23,18 @@ public class CommandManager {
 
     private final HashMap<String, Command> commandMap = new HashMap<>();
 
-    private Command createCommand(String nameCommand) {
+    private Command createCommand (String nameCommand) {
         switch (nameCommand) {
             case FIND_NEAREST_CABIN_COMMAND:
-                return pressUpButtonCommandProvider.getObject();
-            case PRESS_UP_BUTTON:
                 return findNearestCabinCommandProvider.getObject();
+            case PRESS_UP_BUTTON:
+                return pressUpButtonCommandProvider.getObject();
             default:
                 throw new IllegalArgumentException("Unknown command: " + nameCommand);
         }
     }
 
-    public Command getCommand(String nameCommand) {
+    public Command getCommand (String nameCommand) {
         if (!commandMap.containsKey(nameCommand)) {
             commandMap.put(nameCommand, createCommand(nameCommand));
         }
