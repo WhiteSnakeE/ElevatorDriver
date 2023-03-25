@@ -17,7 +17,6 @@ public class House {
 
     @Getter
     private List<Floor> floors = new ArrayList<>();
-
     @Getter
     @Setter
     private ElevatorDriver elevatorDriver;

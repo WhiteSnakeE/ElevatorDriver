@@ -9,7 +9,8 @@ import java.util.List;
 
 import static org.mockito.Mockito.verify;
 
-public class ElevatorDriverTest extends IntegrationTest {
+public class ElevatorDriverTest extends IntegrationTest  {
+
     @Test
     public void addNewSequenceToOrderTest () {
         getElevatorDriver().addNewSequenceToOrder(5, Direction.UPWARDS);
@@ -22,7 +23,7 @@ public class ElevatorDriverTest extends IntegrationTest {
 
     @Test
     public void removeSequenceFromOrderTest () {
-
+        getElevatorDriver().getOrderSequenceOfStops().clear();
         getElevatorDriver().addNewSequenceToOrder(5, Direction.UPWARDS);
         getElevatorDriver().removeSequenceFromOrder();
 
