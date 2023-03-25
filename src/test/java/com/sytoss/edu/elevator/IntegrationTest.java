@@ -24,6 +24,4 @@ public class IntegrationTest extends AbstractControllerTest {
     @SpyBean
     private ElevatorDriver elevatorDriver;
 
-
-
 }

@@ -1,8 +1,5 @@
 package com.sytoss.edu.elevator.commands;
 
-import com.sytoss.edu.elevator.commands.Command;
-import com.sytoss.edu.elevator.commands.FindNearestCabinCommand;
-import com.sytoss.edu.elevator.commands.PressUpButtonCommand;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
