@@ -24,15 +24,16 @@ public class PressUpButtonCommandTest extends IntegrationTest {
     private CommandManager commandManager;
     @MockBean
     FindNearestCabinCommand findNearestCabinCommand;
+
     @Test
-    public void executeTest(){
-        HashMap<String, Object> params=new HashMap<>();
-        params.put("numberFloor",5);
+    public void executeTest () {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("numberFloor", 5);
         params.put("Direction", Direction.UPWARDS);
         pressUpButtonCommand.execute(params);
 
-        verify(elevatorDriver).addNewSequenceToOrder(5,Direction.UPWARDS);
-        verify(findNearestCabinCommand).execute(null);
+        verify(elevatorDriver).addNewSequenceToOrder(5, Direction.UPWARDS);
         verify(commandManager).getCommand(CommandManager.FIND_NEAREST_CABIN_COMMAND);
+        verify(findNearestCabinCommand).execute(null);
     }
 }

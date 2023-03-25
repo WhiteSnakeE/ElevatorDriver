@@ -1,7 +1,7 @@
 package com.sytoss.edu.elevator.commands;
 
-import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
+import com.sytoss.edu.elevator.bom.enums.Direction;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

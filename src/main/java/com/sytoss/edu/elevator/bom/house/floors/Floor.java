@@ -6,6 +6,7 @@ import lombok.Getter;
 public abstract class Floor extends Entity {
     @Getter
     private final int floorNumber;
+
     public Floor (int floorNumber) {
         this.floorNumber = floorNumber;
     }

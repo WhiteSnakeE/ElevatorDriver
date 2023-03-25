@@ -26,6 +26,6 @@ public class ElevatorDriverTest extends IntegrationTest {
         getElevatorDriver().addNewSequenceToOrder(5, Direction.UPWARDS);
         getElevatorDriver().removeSequenceFromOrder();
 
-        Assertions.assertEquals(0,getElevatorDriver().getOrderSequenceOfStops().size());
+        Assertions.assertEquals(0, getElevatorDriver().getOrderSequenceOfStops().size());
     }
 }

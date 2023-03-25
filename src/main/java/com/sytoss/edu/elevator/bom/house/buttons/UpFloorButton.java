@@ -1,7 +1,7 @@
 package com.sytoss.edu.elevator.bom.house.buttons;
 
-import com.sytoss.edu.elevator.commands.Command;
 import com.sytoss.edu.elevator.bom.enums.Direction;
+import com.sytoss.edu.elevator.commands.Command;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

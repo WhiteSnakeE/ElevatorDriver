@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.mockito.Mockito.verify;
-
 public class CommandManagerTest extends IntegrationTest {
     @Autowired
     CommandManager commandManager;
@@ -25,6 +23,6 @@ public class CommandManagerTest extends IntegrationTest {
 
     @Test
     public void getCommandFailedTest () {
-        Assertions.assertThrows(IllegalArgumentException.class,()->commandManager.getCommand("BadName"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> commandManager.getCommand("BadName"));
     }
 }

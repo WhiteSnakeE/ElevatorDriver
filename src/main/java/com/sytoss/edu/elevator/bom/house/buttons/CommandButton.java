@@ -7,11 +7,11 @@ import java.util.HashMap;
 public abstract class CommandButton {
     private Command command;
 
-    CommandButton(Command command) {
+    CommandButton (Command command) {
         this.command = command;
     }
 
-    protected void execute(HashMap<String, Object> params) {
+    protected void execute (HashMap<String, Object> params) {
         command.execute(params);
     }
 }

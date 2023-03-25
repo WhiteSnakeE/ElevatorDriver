@@ -1,11 +1,11 @@
 package com.sytoss.edu.elevator.bom.house;
 
-import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.house.buttons.UpFloorButton;
 import com.sytoss.edu.elevator.bom.house.floors.FirstFloor;
 import com.sytoss.edu.elevator.bom.house.floors.MiddleFloor;
+import com.sytoss.edu.elevator.commands.CommandManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ public class HouseBuilder {
     @Autowired
     private ElevatorDriver elevatorDriver;
 
-    public House build(int shaftCount, int floorCount) {
+    public House build (int shaftCount, int floorCount) {
         House result = new House();
         result.setElevatorDriver(elevatorDriver);
         for (int i = 0; i < shaftCount; i++) {

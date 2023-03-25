@@ -11,12 +11,13 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith({MockitoExtension.class})
 
-public class FirstFloorTest  {
+public class FirstFloorTest {
     @Mock
     private UpFloorButton upFloorButton;
+
     @Test
-    public void pressUpButton(){
-        FirstFloor firstFloor =new FirstFloor(upFloorButton);
+    public void pressUpButton () {
+        FirstFloor firstFloor = new FirstFloor(upFloorButton);
         firstFloor.pressUpButton();
 
         verify(upFloorButton).press(firstFloor.getFloorNumber());

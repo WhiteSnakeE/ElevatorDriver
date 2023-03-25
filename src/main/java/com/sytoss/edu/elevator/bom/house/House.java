@@ -22,7 +22,7 @@ public class House {
     @Setter
     private ElevatorDriver elevatorDriver;
 
-    public Shaft moveSequenceToShaft() {
+    public Shaft moveSequenceToShaft () {
 
         if (elevatorDriver.getOrderSequenceOfStops().isEmpty()) {
             return null;
@@ -56,7 +56,7 @@ public class House {
         return nearestCabin;
     }
 
-    private int getFirstStop() {
+    private int getFirstStop () {
         return elevatorDriver.getOrderSequenceOfStops().get(0).getStopFloors().get(0);
     }
 }

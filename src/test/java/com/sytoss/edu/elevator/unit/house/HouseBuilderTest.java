@@ -12,10 +12,11 @@ public class HouseBuilderTest extends IntegrationTest {
     private HouseBuilder houseBuilder;
 
     @Test
-    public void buildTest(){
-        House resultHouse=houseBuilder.build(2,16);
+    public void buildTest () {
+        House resultHouse = houseBuilder.build(2, 16);
 
-        Assertions.assertEquals(2,resultHouse.getShafts().size());
-        Assertions.assertEquals(16,resultHouse.getFloors().size());
+        Assertions.assertNotNull(resultHouse.getElevatorDriver());
+        Assertions.assertEquals(2, resultHouse.getShafts().size());
+        Assertions.assertEquals(16, resultHouse.getFloors().size());
     }
 }

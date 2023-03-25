@@ -19,7 +19,7 @@ public class ElevatorConfiguration {
     private int floorsCount;
 
     @Bean("house")
-    public House getHouse() {
+    public House getHouse () {
         return houseBuilder.build(shaftCount, floorsCount);
     }
 }
