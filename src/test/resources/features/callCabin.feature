@@ -1,7 +1,8 @@
 Feature: Call cabin
 
-  Scenario: passenger pushing up button
-    Given cabin with index 0 and Engine has EngineState "STAYING" and Shaft has current position 3
-    And cabin with index 1 and Engine has EngineState "STAYING" and Shaft has current position 4
+  Scenario: calling a cabin for both free cabins with direction "UPWARDS"
+    Given shaft with index 0 has free cabin and cabin position 3
+    And shaft with index 1 has free cabin and cabin position 4
     When passenger on floor 5 presses UpFloorButton with direction "UPWARDS"
-    Then controller should create sequence of stops with floor 5 for Cabin with index 1 and Direction "UPWARDS"
+    Then Shaft with index 1 should have sequence of stops with floor 5 and direction "UPWARDS"
+    And Shaft with index 0 should not have sequence of stops
