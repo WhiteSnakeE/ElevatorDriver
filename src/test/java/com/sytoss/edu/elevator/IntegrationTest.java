@@ -12,7 +12,6 @@ import org.junit.platform.suite.api.IncludeEngines;
 import org.junit.platform.suite.api.SelectClasspathResource;
 import org.junit.platform.suite.api.Suite;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import static io.cucumber.core.options.Constants.PLUGIN_PROPERTY_NAME;
@@ -23,28 +22,24 @@ import static io.cucumber.core.options.Constants.PLUGIN_PROPERTY_NAME;
 @CucumberContextConfiguration
 @SelectClasspathResource("features")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")
+@Getter
 public class IntegrationTest extends AbstractControllerTest {
-    @Autowired
-    @Getter
-    @SpyBean
-    private ElevatorDriver elevatorDriver;
-
-    @Getter
-    @SpyBean
-    @Autowired
-    private FloorService floorService;
-
-    @Getter
-    @SpyBean
-    @Autowired
-    private FindNearestCabinCommand findNearestCabinCommand;
-
-    @Getter
-    @SpyBean
-    @Autowired
-    private PressUpButtonCommand pressUpButtonCommand;
-    @Getter
     @SpyBean
     @Autowired
     private House house;
+    @Autowired
+    @SpyBean
+    private ElevatorDriver elevatorDriver;
+    @Autowired
+    @SpyBean
+    private FloorService floorService;
+    @Autowired
+    @SpyBean
+    private FindNearestCabinCommand findNearestCabinCommand;
+
+    @SpyBean
+    @Autowired
+    private PressUpButtonCommand pressUpButtonCommand;
+
+
 }

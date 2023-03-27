@@ -23,6 +23,6 @@ public class PressUpButtonCommand implements Command {
         int numberFloor = (int) params.get("numberFloor");
         Direction direction = (Direction) params.get("Direction");
         elevatorDriver.addNewSequenceToOrder(numberFloor, direction);
-        commandManager.getCommand(CommandManager.FIND_NEAREST_CABIN_COMMAND).execute(null);
+        commandManager.getCommand(Command.FIND_NEAREST_CABIN_COMMAND).execute(null);
     }
 }

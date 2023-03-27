@@ -13,6 +13,10 @@ public class Shaft extends Entity {
     private SequenceOfStops sequenceOfStops;
     private Engine engine;
 
+    public boolean isFree () {
+        return sequenceOfStops == null;
+    }
+
     public Shaft () {
         engine = new Engine();
         cabinPosition = 1;

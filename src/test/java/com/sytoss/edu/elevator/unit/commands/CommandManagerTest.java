@@ -1,16 +1,17 @@
 package com.sytoss.edu.elevator.unit.commands;
 
-import com.sytoss.edu.elevator.IntegrationTest;
 import com.sytoss.edu.elevator.commands.Command;
 import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.commands.FindNearestCabinCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-public class CommandManagerTest extends IntegrationTest {
+@SpringBootTest
+public class CommandManagerTest {
     @Autowired
-    CommandManager commandManager;
+    private CommandManager commandManager;
 
     @Test
     public void getCommandTest () {
