@@ -16,21 +16,11 @@ import java.util.List;
 public class ElevatorDriver extends Entity {
     private final ArrayList<SequenceOfStops> orderSequenceOfStops = new ArrayList<>();
 
-    public void runCommands () {
-        log.info("Run runCommands ");
-        log.info("orderSequenceOfStops size {} ", orderSequenceOfStops.size());
-        for (SequenceOfStops sequenceOfStops : orderSequenceOfStops) {
-            log.info("Direction {}; StopFloors{}", sequenceOfStops.getDirection(), sequenceOfStops.getStopFloors());
-        }
-    }
-
     public void addNewSequenceToOrder (int floorNumber, Direction direction) {
         SequenceOfStops sequenceOfStops = new SequenceOfStops();
         sequenceOfStops.setDirection(direction);
         sequenceOfStops.setStopFloors(new ArrayList<>(List.of(floorNumber)));
         orderSequenceOfStops.add(sequenceOfStops);
-
-        runCommands();
     }
 
     public void removeSequenceFromOrder () {

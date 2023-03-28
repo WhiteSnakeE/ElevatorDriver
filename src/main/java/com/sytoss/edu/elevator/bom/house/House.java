@@ -18,12 +18,10 @@ public class House {
     @Getter
     private List<Floor> floors = new ArrayList<>();
 
-    public Shaft moveSequenceToShaft (ElevatorDriver elevatorDriver) {
+    public Shaft moveSequenceToShaft (List<SequenceOfStops> orderSequenceOfStops) {
 
-        Shaft nearestCabin = findNearestCabin(elevatorDriver.getOrderSequenceOfStops());
-
-        nearestCabin.setSequenceOfStops(elevatorDriver.getOrderSequenceOfStops().get(0));
-        elevatorDriver.removeSequenceFromOrder();
+        Shaft nearestCabin = findNearestCabin(orderSequenceOfStops);
+        nearestCabin.setSequenceOfStops(orderSequenceOfStops.get(0));
 
         return nearestCabin;
     }

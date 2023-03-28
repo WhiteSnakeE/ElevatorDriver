@@ -25,8 +25,6 @@ public class ElevatorDriverTest {
         Assertions.assertNotEquals(0, elevatorDriver.getOrderSequenceOfStops().size());
         Assertions.assertEquals(List.of(5), elevatorDriver.getOrderSequenceOfStops().get(0).getStopFloors());
         Assertions.assertEquals(Direction.UPWARDS, elevatorDriver.getOrderSequenceOfStops().get(0).getDirection());
-
-        verify(elevatorDriver).runCommands();
     }
 
     @Test

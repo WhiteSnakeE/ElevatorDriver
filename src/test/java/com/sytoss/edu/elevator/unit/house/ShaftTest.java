@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 public class ShaftTest {
     @Test
-    public void isFree(){
+    public void isFreeTest(){
         Shaft shaft= new Shaft();
         Assertions.assertTrue(shaft.isFree());
     }

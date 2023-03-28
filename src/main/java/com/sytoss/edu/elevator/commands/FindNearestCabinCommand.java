@@ -17,6 +17,7 @@ public class FindNearestCabinCommand implements Command {
 
     @Override
     public void execute (HashMap<String, Object> params) {
-        Shaft shaft = house.moveSequenceToShaft(elevatorDriver);
+        Shaft shaft = house.moveSequenceToShaft(elevatorDriver.getOrderSequenceOfStops());
+        elevatorDriver.removeSequenceFromOrder();
     }
 }

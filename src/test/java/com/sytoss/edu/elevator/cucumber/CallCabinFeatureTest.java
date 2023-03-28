@@ -19,11 +19,11 @@ public class CallCabinFeatureTest extends IntegrationTest {
 
 
     @Given("shaft with index {int} has free cabin and cabin position {int}")
-    public void shaftWithIdAndEngineHasEngineStateAndShaftHasCurrentPosition (Integer cabinId,
+    public void shaftWithIdAndEngineHasEngineStateAndShaftHasCurrentPosition (Integer cabinIndex,
             Integer currentPosition) {
 
-        getHouse().getShafts().get(cabinId).setSequenceOfStops(null);
-        getHouse().getShafts().get(cabinId).setCabinPosition(currentPosition);
+        getHouse().getShafts().get(cabinIndex).setSequenceOfStops(null);
+        getHouse().getShafts().get(cabinIndex).setCabinPosition(currentPosition);
     }
 
     @When("passenger on floor {int} presses UpFloorButton with direction {string}")
@@ -43,11 +43,9 @@ public class CallCabinFeatureTest extends IntegrationTest {
         verify(getFloorService()).goUpCabinRequest(floorRequested);
         verify(getFindNearestCabinCommand()).execute(null);
         verify(getPressUpButtonCommand()).execute(Mockito.any());
-        verify(getHouse()).moveSequenceToShaft(getElevatorDriver());
+        verify(getHouse()).moveSequenceToShaft(getElevatorDriver().getOrderSequenceOfStops());
         verify(getElevatorDriver()).addNewSequenceToOrder(floorRequested, Direction.valueOf(direction));
-        verify(getElevatorDriver()).runCommands();
         verify(getElevatorDriver()).removeSequenceFromOrder();
-
     }
 
     @Then("Shaft with index {int} should not have sequence of stops")
