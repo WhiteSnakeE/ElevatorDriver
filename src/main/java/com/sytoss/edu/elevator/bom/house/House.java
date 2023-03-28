@@ -19,20 +19,28 @@ public class House {
     private List<Floor> floors = new ArrayList<>();
 
     public Shaft moveSequenceToShaft (List<SequenceOfStops> orderSequenceOfStops) {
-
         Shaft nearestCabin = findNearestCabin(orderSequenceOfStops);
-        nearestCabin.setSequenceOfStops(orderSequenceOfStops.get(0));
 
-        return nearestCabin;
+        if (nearestCabin == null) {
+            return null;
+        } else {
+            nearestCabin.setSequenceOfStops(orderSequenceOfStops.get(0));
+            return nearestCabin;
+        }
     }
 
     private Shaft findNearestCabin (List<SequenceOfStops> orderSequenceOfStops) {
         List<Shaft> freeShafts = getFreeShafts();
+
+        if (freeShafts.isEmpty()) {
+            return null;
+        }
+
         int firstStop = orderSequenceOfStops.get(0).getStopFloors().get(0);
         int minLength = Integer.MAX_VALUE;
         Shaft nearestCabin = freeShafts.get(0);
 
-        for (Shaft shaft : shafts) {
+        for (Shaft shaft : freeShafts) {
             int currentLength = Math.abs(firstStop - shaft.getCabinPosition());
             if (currentLength < minLength) {
                 nearestCabin = shaft;

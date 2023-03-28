@@ -16,7 +16,7 @@ import static org.mockito.Mockito.verify;
 public class FindNearestCabinCommandTest {
     @Autowired
     private FindNearestCabinCommand findNearestCabinCommand;
-    @MockBean
+    @SpyBean
     @Autowired
     private House house;
     @Autowired

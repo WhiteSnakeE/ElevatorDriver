@@ -24,22 +24,19 @@ import static io.cucumber.core.options.Constants.PLUGIN_PROPERTY_NAME;
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")
 @Getter
 public class IntegrationTest extends AbstractControllerTest {
-    @SpyBean
+
     @Autowired
     private House house;
+
     @Autowired
-    @SpyBean
     private ElevatorDriver elevatorDriver;
+
     @Autowired
-    @SpyBean
     private FloorService floorService;
+
     @Autowired
-    @SpyBean
     private FindNearestCabinCommand findNearestCabinCommand;
 
-    @SpyBean
     @Autowired
     private PressUpButtonCommand pressUpButtonCommand;
-
-
 }
