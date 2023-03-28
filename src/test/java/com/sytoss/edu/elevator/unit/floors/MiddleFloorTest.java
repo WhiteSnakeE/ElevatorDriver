@@ -11,6 +11,7 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith({MockitoExtension.class})
 public class MiddleFloorTest {
+
     @Mock
     private UpFloorButton upFloorButton;
 
@@ -20,6 +21,5 @@ public class MiddleFloorTest {
         middleFloor.pressUpButton();
 
         verify(upFloorButton).press(middleFloor.getFloorNumber());
-
     }
 }

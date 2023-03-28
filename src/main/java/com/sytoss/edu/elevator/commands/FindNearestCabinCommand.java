@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 @Component
 public class FindNearestCabinCommand implements Command {
+
     @Autowired
     private House house;
     @Autowired

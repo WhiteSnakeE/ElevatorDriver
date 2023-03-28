@@ -10,16 +10,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class HouseBuilderTest {
+
     @Autowired
     private HouseBuilder houseBuilder;
-
     @Value("${house.elevatorCountCabin}")
     private int shaftCount;
     @Value("${house.floorsCount}")
     private int floorsCount;
+
     @Test
     public void buildTest () {
-
         House resultHouse = houseBuilder.build(shaftCount, floorsCount);
 
         Assertions.assertEquals(shaftCount, resultHouse.getShafts().size());

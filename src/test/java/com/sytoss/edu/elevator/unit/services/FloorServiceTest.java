@@ -19,6 +19,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class FloorServiceTest {
+
     @SpyBean
     @Autowired
     private House house;
@@ -47,5 +48,4 @@ public class FloorServiceTest {
         floorService.goUpCabinRequest(2);
         verify(middleFloor).pressUpButton();
     }
-
 }

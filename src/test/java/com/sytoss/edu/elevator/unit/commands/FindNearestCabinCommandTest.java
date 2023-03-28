@@ -14,6 +14,7 @@ import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 public class FindNearestCabinCommandTest {
+
     @Autowired
     private FindNearestCabinCommand findNearestCabinCommand;
     @MockBean
@@ -31,6 +32,4 @@ public class FindNearestCabinCommandTest {
         verify(house).moveSequenceToShaft(elevatorDriver.getOrderSequenceOfStops());
         verify(elevatorDriver).removeSequenceFromOrder();
     }
-
-
 }

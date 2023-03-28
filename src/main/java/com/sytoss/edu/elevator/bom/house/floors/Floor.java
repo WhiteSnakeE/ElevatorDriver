@@ -4,6 +4,7 @@ import com.sytoss.edu.elevator.bom.Entity;
 import lombok.Getter;
 
 public abstract class Floor extends Entity {
+
     @Getter
     private final int floorNumber;
 

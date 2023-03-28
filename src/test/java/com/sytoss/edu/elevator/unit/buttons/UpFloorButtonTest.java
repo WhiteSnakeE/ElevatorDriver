@@ -27,10 +27,6 @@ public class UpFloorButtonTest {
         params.put("numberFloor", 5);
         params.put("Direction", Direction.UPWARDS);
 
-
         verify(command).execute(params);
-
     }
-
-
 }

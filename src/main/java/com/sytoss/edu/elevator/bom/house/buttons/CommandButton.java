@@ -5,6 +5,7 @@ import com.sytoss.edu.elevator.commands.Command;
 import java.util.HashMap;
 
 public abstract class CommandButton {
+
     private Command command;
 
     CommandButton (Command command) {

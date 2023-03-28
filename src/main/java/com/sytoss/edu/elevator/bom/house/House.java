@@ -1,6 +1,5 @@
 package com.sytoss.edu.elevator.bom.house;
 
-import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.house.floors.Floor;
@@ -12,6 +11,7 @@ import java.util.List;
 
 @Slf4j
 public class House {
+
     @Getter
     private List<Shaft> shafts = new ArrayList<>();
 
@@ -19,10 +19,8 @@ public class House {
     private List<Floor> floors = new ArrayList<>();
 
     public Shaft moveSequenceToShaft (List<SequenceOfStops> orderSequenceOfStops) {
-
         Shaft nearestCabin = findNearestCabin(orderSequenceOfStops);
         nearestCabin.setSequenceOfStops(orderSequenceOfStops.get(0));
-
         return nearestCabin;
     }
 
@@ -32,7 +30,7 @@ public class House {
         int minLength = Integer.MAX_VALUE;
         Shaft nearestCabin = freeShafts.get(0);
 
-        for (Shaft shaft : shafts) {
+        for (Shaft shaft : freeShafts) {
             int currentLength = Math.abs(firstStop - shaft.getCabinPosition());
             if (currentLength < minLength) {
                 nearestCabin = shaft;
@@ -51,5 +49,4 @@ public class House {
         }
         return result;
     }
-
 }

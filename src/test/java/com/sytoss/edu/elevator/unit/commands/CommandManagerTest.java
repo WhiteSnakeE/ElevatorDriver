@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class CommandManagerTest {
+
     @Autowired
     private CommandManager commandManager;
 

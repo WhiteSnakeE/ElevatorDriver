@@ -11,6 +11,7 @@ import java.util.ArrayList;
 @Setter
 @ToString
 public class SequenceOfStops extends Entity {
+
     private ArrayList<Integer> stopFloors;
     private Direction direction;
 }

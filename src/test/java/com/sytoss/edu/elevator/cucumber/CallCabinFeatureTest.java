@@ -15,8 +15,8 @@ import static org.mockito.Mockito.verify;
 
 @Slf4j
 public class CallCabinFeatureTest extends IntegrationTest {
-    private ResponseEntity<String> response;
 
+    private ResponseEntity<String> response;
 
     @Given("shaft with index {int} has free cabin and cabin position {int}")
     public void shaftWithIdAndEngineHasEngineStateAndShaftHasCurrentPosition (Integer cabinIndex,

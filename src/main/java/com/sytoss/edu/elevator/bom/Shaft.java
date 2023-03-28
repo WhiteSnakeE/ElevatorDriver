@@ -21,5 +21,4 @@ public class Shaft extends Entity {
         engine = new Engine();
         cabinPosition = 1;
     }
-
 }

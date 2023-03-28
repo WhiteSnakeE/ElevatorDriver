@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class ShaftTest {
+
     @Test
-    public void isFreeTest(){
-        Shaft shaft= new Shaft();
+    public void isFreeTest () {
+        Shaft shaft = new Shaft();
         Assertions.assertTrue(shaft.isFree());
     }
-
 }

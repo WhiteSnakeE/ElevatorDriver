@@ -16,7 +16,6 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import static io.cucumber.core.options.Constants.PLUGIN_PROPERTY_NAME;
 
-
 @Suite
 @IncludeEngines("cucumber")
 @CucumberContextConfiguration
@@ -24,6 +23,7 @@ import static io.cucumber.core.options.Constants.PLUGIN_PROPERTY_NAME;
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")
 @Getter
 public class IntegrationTest extends AbstractControllerTest {
+
     @SpyBean
     @Autowired
     private House house;
@@ -40,6 +40,4 @@ public class IntegrationTest extends AbstractControllerTest {
     @SpyBean
     @Autowired
     private PressUpButtonCommand pressUpButtonCommand;
-
-
 }
