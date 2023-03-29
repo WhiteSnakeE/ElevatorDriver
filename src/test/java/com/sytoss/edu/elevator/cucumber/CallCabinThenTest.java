@@ -5,6 +5,9 @@ import com.sytoss.edu.elevator.bom.enums.Direction;
 import io.cucumber.java.en.Then;
 import org.junit.jupiter.api.Assertions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CallCabinThenTest extends IntegrationTest {
     @Then("Shaft with index {int} should have sequence of stops with floor {int} and direction {string}")
     public void shaftShouldCreateSequenceOfStopsWithFloorAndIdAndDirection (Integer shaftIndex, Integer floorRequested,
@@ -21,6 +24,13 @@ public class CallCabinThenTest extends IntegrationTest {
     @Then("ElevatorDriver has sequence of stops with floor {int}")
     public void elevatorDriverHasSequenceOfStopsWithFloor(Integer floorNumber) {
         Assertions.assertEquals(floorNumber, getElevatorDriver().getOrderSequenceOfStops().get(0).getStopFloors().get(0));
-        getElevatorDriver().getOrderSequenceOfStops().clear();
+    }
+
+    @Then("Shaft with index {int} should have sequence of stops with floors {intList} and direction {string}")
+    public void shaftWithIndexShouldHaveSequence(Integer shaftIndex, List<Integer> floors,String direction){
+        for (int i=0;i<floors.size();++i){
+            Assertions.assertEquals(floors.get(i),getHouse().getShafts().get(shaftIndex).getSequenceOfStops().getStopFloors().get(i));
+            Assertions.assertEquals(Direction.valueOf(direction),getHouse().getShafts().get(shaftIndex).getSequenceOfStops().getDirection());
+        }
     }
 }

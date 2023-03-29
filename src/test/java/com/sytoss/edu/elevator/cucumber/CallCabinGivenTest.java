@@ -2,10 +2,10 @@ package com.sytoss.edu.elevator.cucumber;
 
 import com.sytoss.edu.elevator.IntegrationTest;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
+import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import io.cucumber.java.en.Given;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CallCabinGivenTest extends IntegrationTest {
@@ -25,5 +25,13 @@ public class CallCabinGivenTest extends IntegrationTest {
 
         getHouse().getShafts().get(shaftIndex).setCabinPosition(cabinPosition);
         getHouse().getShafts().get(shaftIndex).setSequenceOfStops(sequence);
+    }
+
+    @Given("All shaft are free and no sequence of stops in queue")
+    public void allShaftFreeAndNoSequence(){
+        for (Shaft shaft: getHouse().getShafts()){
+            shaft.setSequenceOfStops(null);
+        }
+        getElevatorDriver().getOrderSequenceOfStops().clear();
     }
 }

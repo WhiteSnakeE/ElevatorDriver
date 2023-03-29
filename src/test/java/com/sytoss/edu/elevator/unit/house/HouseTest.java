@@ -29,5 +29,6 @@ public class HouseTest {
         Assertions.assertEquals(7, shaft.getSequenceOfStops().getStopFloors().get(0));
         Assertions.assertEquals(Direction.UPWARDS, shaft.getSequenceOfStops().getDirection());
         Assertions.assertNull(house.getShafts().get(1).getSequenceOfStops());
+
     }
 }

@@ -15,9 +15,18 @@ Feature: Call cabin
     And Shaft with index 0 should have sequence of stops with floor 10 and direction "UPWARDS"
 
   Scenario: calling a cabin with both busy cabins with same direction
-    Given shaft with index 0 has sequence of stops with floor 10 and Direction "UPWARDS" and cabin position 4
+    Given All shaft are free and no sequence of stops in queue
+    And shaft with index 0 has sequence of stops with floor 10 and Direction "UPWARDS" and cabin position 4
     And shaft with index 1 has sequence of stops with floor 10 and Direction "UPWARDS" and cabin position 6
     When passenger on floor 3 presses UpFloorButton with direction "UPWARDS"
     Then Shaft with index 1 should have sequence of stops with floor 10 and direction "UPWARDS"
     And Shaft with index 0 should have sequence of stops with floor 10 and direction "UPWARDS"
     And ElevatorDriver has sequence of stops with floor 3
+
+  Scenario: calling a cabin with both busy cabins with same direction: update case
+    Given All shaft are free and no sequence of stops in queue
+    And shaft with index 0 has sequence of stops with floor 10 and Direction "UPWARDS" and cabin position 4
+    And shaft with index 1 has sequence of stops with floor 10 and Direction "UPWARDS" and cabin position 6
+    When passenger on floor 8 presses UpFloorButton with direction "UPWARDS"
+    Then Shaft with index 1 should have sequence of stops with floors 8, 10 and direction "UPWARDS"
+    And  Shaft with index 0 should have sequence of stops with floor 10 and direction "UPWARDS"
