@@ -141,6 +141,9 @@ Shaft "1" o-- "1 engine" Engine
 
 entity House {
   id: int
+    moveSequenceToShaft()
+    mergeSequenceOfStops()
+    updateSequenceOfStops()
 }
 
 House "1" o-- "N floors" Floor
