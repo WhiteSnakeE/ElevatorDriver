@@ -25,7 +25,9 @@ public class ElevatorDriver extends Entity {
     }
 
     public void removeSequenceFromOrder () {
-        orderSequenceOfStops.remove(0);
+        if (!orderSequenceOfStops.isEmpty()) {
+            orderSequenceOfStops.remove(0);
+        }
     }
 }
 
