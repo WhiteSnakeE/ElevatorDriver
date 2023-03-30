@@ -35,4 +35,10 @@ public class ElevatorDriverTest {
 
         Assertions.assertEquals(0, elevatorDriver.getOrderSequenceOfStops().size());
     }
+
+    @Test
+    public void removeSequenceFromOrderFailedTest() {
+        elevatorDriver.getOrderSequenceOfStops().clear();
+        Assertions.assertThrows(IllegalStateException.class, () -> elevatorDriver.removeSequenceFromOrder());
+    }
 }
