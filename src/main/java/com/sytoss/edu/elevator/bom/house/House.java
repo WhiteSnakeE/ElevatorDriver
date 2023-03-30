@@ -20,12 +20,23 @@ public class House {
 
     public Shaft moveSequenceToShaft (List<SequenceOfStops> orderSequenceOfStops) {
         Shaft nearestCabin = findNearestCabin(orderSequenceOfStops);
+
+        if (nearestCabin == null) {
+            return null;
+        }
+
         nearestCabin.setSequenceOfStops(orderSequenceOfStops.get(0));
         return nearestCabin;
     }
 
     private Shaft findNearestCabin (List<SequenceOfStops> orderSequenceOfStops) {
         List<Shaft> freeShafts = getFreeShafts();
+
+        if (freeShafts.isEmpty()) {
+            log.info("No free cabins were found.");
+            return null;
+        }
+
         int firstStop = orderSequenceOfStops.get(0).getStopFloors().get(0);
         int minLength = Integer.MAX_VALUE;
         Shaft nearestCabin = freeShafts.get(0);
