@@ -14,6 +14,7 @@ import java.util.List;
 @Setter
 @Slf4j
 public class ElevatorDriver extends Entity {
+
     private final ArrayList<SequenceOfStops> orderSequenceOfStops = new ArrayList<>();
 
     public void addNewSequenceToOrder (int floorNumber, Direction direction) {
@@ -24,6 +25,9 @@ public class ElevatorDriver extends Entity {
     }
 
     public void removeSequenceFromOrder () {
+        if (orderSequenceOfStops.isEmpty()) {
+           throw new IllegalStateException("Order sequence of stops is empty!");
+        }
         orderSequenceOfStops.remove(0);
     }
 }

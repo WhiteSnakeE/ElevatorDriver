@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class UpFloorButton extends FloorButton {
+
     public UpFloorButton (Command command) {
         super(command);
     }

@@ -38,5 +38,4 @@ public abstract class AbstractApplicationTest extends AbstractJunitTest {
             throw new RuntimeException(e);
         }
     }
-
 }

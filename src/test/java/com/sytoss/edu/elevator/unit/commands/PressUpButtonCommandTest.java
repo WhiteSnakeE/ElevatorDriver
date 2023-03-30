@@ -18,6 +18,7 @@ import static org.mockito.Mockito.verify;
 
 @SpringBootTest
 public class PressUpButtonCommandTest {
+
     @Autowired
     private PressUpButtonCommand pressUpButtonCommand;
     @MockBean

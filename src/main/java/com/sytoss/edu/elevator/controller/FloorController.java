@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class FloorController {
+
     private final FloorService floorService;
 
     @PostMapping("/floorButton/{floorNumber}/up")

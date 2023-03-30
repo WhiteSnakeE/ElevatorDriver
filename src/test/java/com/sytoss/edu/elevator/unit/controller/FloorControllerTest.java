@@ -15,13 +15,13 @@ import static org.mockito.Mockito.verify;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class FloorControllerTest {
+
     @LocalServerPort
     private int applicationPort;
 
     private String getBaseUrl () {
         return "http://localhost:" + applicationPort;
     }
-
     private ResponseEntity<Void> response;
     @SpyBean
     @Autowired
@@ -35,5 +35,4 @@ public class FloorControllerTest {
 
         Assertions.assertEquals(200, response.getStatusCode().value());
     }
-
 }

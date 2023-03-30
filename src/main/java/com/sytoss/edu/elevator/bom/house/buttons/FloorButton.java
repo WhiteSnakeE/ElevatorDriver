@@ -6,6 +6,7 @@ import com.sytoss.edu.elevator.commands.Command;
 import java.util.HashMap;
 
 public abstract class FloorButton extends CommandButton {
+
     public FloorButton (Command command) {
         super(command);
     }

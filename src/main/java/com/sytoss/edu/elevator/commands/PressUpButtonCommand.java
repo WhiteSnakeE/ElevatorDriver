@@ -11,6 +11,7 @@ import java.util.HashMap;
 @Slf4j
 @Component
 public class PressUpButtonCommand implements Command {
+
     @Autowired
     private ElevatorDriver elevatorDriver;
 
