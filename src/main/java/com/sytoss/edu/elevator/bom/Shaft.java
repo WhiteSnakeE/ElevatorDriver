@@ -40,6 +40,6 @@ public class Shaft extends Entity {
     }
 
     public boolean isSameDirection (Direction direction, Integer currentPosition) {
-        return cabinPosition <= currentPosition && direction == Direction.UPWARDS;
+        return cabinPosition <= currentPosition && direction == this.sequenceOfStops.getDirection();
     }
 }

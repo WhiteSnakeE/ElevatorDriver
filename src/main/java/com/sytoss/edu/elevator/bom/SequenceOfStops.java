@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 @ToString
 public class SequenceOfStops extends Entity {
+
     private List<Integer> stopFloors;
     private Direction direction;
 }

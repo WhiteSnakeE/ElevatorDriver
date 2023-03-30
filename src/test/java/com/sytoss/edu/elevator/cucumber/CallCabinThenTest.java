@@ -5,10 +5,10 @@ import com.sytoss.edu.elevator.bom.enums.Direction;
 import io.cucumber.java.en.Then;
 import org.junit.jupiter.api.Assertions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CallCabinThenTest extends IntegrationTest {
+
     @Then("Shaft with index {int} should have sequence of stops with floor {int} and direction {string}")
     public void shaftShouldCreateSequenceOfStopsWithFloorAndIdAndDirection (Integer shaftIndex, Integer floorRequested,
             String direction) {

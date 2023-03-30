@@ -9,6 +9,7 @@ import io.cucumber.java.en.Given;
 import java.util.List;
 
 public class CallCabinGivenTest extends IntegrationTest {
+
     @Given("shaft with index {int} has free cabin and cabin position {int}")
     public void shaftWithIdAndEngineHasEngineStateAndShaftHasCurrentPosition (Integer cabinIndex,
             Integer currentPosition) {

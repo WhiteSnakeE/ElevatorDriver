@@ -13,6 +13,7 @@ import java.util.List;
 
 @Slf4j
 public class House {
+
     @Getter
     private List<Shaft> shafts = new ArrayList<>();
 

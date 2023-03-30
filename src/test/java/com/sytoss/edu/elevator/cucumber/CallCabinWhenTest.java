@@ -6,6 +6,7 @@ import io.cucumber.java.en.When;
 import org.springframework.http.ResponseEntity;
 
 public class CallCabinWhenTest extends IntegrationTest {
+
     @When("passenger on floor {int} presses UpFloorButton with direction {string}")
     public void passengerOnFloorPressesUpFloorButtonWithDirection (Integer floorNumber, String direction) {
         String buttonDirection = (direction.equals("UPWARDS") ? "/up" : "/down");

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShaftTest {
+
     @Test
     public void isFreeTest(){
         Shaft shaft= new Shaft();
@@ -42,8 +43,12 @@ public class ShaftTest {
 
     @Test
     public void isSameDirectionTest(){
+        SequenceOfStops sequence = new SequenceOfStops();
+        sequence.setDirection(Direction.UPWARDS);
+
         Shaft shaft=new Shaft();
         shaft.setCabinPosition(1);
+        shaft.setSequenceOfStops(sequence);
 
         Assertions.assertTrue(shaft.isSameDirection(Direction.UPWARDS,5));
 
