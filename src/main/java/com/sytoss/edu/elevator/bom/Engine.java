@@ -9,6 +9,10 @@ public class Engine extends Entity {
 
     private EngineState engineState=EngineState.STAYING;
     public void start(Direction direction){
+        if(engineState==EngineState.GOING_UP||engineState==EngineState.GOING_DOWN){
+            return;
+        }
+
         if(direction==Direction.UPWARDS){
             engineState=EngineState.GOING_UP;
         }

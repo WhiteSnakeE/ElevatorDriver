@@ -28,6 +28,7 @@ public class Shaft extends Entity {
     }
 
     public Shaft () {
+        cabin=new Cabin();
         engine = new Engine();
         cabinPosition = 1;
     }
@@ -42,7 +43,9 @@ public class Shaft extends Entity {
             this.sequenceOfStops.setStopFloors(stops);
         }
     }
-    public void clearSequence(){}
+    public void clearSequence(){
+        this.sequenceOfStops.getStopFloors().remove(0);
+    }
 
     public boolean isSameDirection (Direction direction, Integer currentPosition) {
         return cabinPosition <= currentPosition && direction == this.sequenceOfStops.getDirection();
