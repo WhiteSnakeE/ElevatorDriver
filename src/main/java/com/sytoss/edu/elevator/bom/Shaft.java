@@ -36,6 +36,8 @@ public class Shaft extends Entity {
         HashMap<String,Object> paramsOpenDoor=new HashMap<>();
         paramsOpenDoor.put("Shaft",this);
 
+        //log.info("Cabin with ");
+
 
     }
     public void updateSequence( List<SequenceOfStops> orderSequenceOfStops){
