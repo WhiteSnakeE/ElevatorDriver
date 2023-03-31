@@ -20,6 +20,8 @@ public class FindNearestCabinCommand implements Command {
     public void execute (HashMap<String, Object> params) {
         Shaft shaft = house.moveSequenceToShaft(elevatorDriver.getOrderSequenceOfStops());
 
+
+
         if (shaft != null) {
             elevatorDriver.removeSequenceFromOrder();
         }

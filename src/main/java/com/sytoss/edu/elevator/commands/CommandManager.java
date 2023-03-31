@@ -11,9 +11,11 @@ public class CommandManager {
 
     @Autowired
     private ObjectProvider<PressUpButtonCommand> pressUpButtonCommandProvider;
-
     @Autowired
     private ObjectProvider<FindNearestCabinCommand> findNearestCabinCommandProvider;
+    @Autowired
+    private ObjectProvider<OpenDoorCommand> openDoorCommandObjectProvider;
+
 
     private final HashMap<String, Command> commandMap = new HashMap<>();
 
@@ -23,6 +25,8 @@ public class CommandManager {
                 return findNearestCabinCommandProvider.getObject();
             case Command.PRESS_UP_BUTTON:
                 return pressUpButtonCommandProvider.getObject();
+            case Command.OPEN_DOOR_COMMAND:
+                return openDoorCommandObjectProvider.getObject();
             default:
                 throw new IllegalArgumentException("Unknown command: " + nameCommand);
         }

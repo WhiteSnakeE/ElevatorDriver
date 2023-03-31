@@ -33,4 +33,8 @@ public class CallCabinThenTest extends IntegrationTest {
             Assertions.assertEquals(Direction.valueOf(direction),getHouse().getShafts().get(shaftIndex).getSequenceOfStops().getDirection());
         }
     }
+
+    @Then("commands should have be invoked for shaft with index {int}: openDoor, checkOverweight, closeDoor for floor {int}")
+    public void commandsShouldHaveBeInvokedForShaftWithIndexOpenDoorCheckOverweightCloseDoorForFloor (Integer shaftIndex, Integer floorNumber) {
+    }
 }

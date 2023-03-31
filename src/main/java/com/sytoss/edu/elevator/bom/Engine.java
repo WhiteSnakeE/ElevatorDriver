@@ -7,4 +7,6 @@ import lombok.Setter;
 public class Engine extends Entity {
 
     private EngineState engineState;
+    public void start(){}
+    public void stop(){}
 }
