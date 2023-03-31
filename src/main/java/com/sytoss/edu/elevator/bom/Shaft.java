@@ -1,10 +1,12 @@
 package com.sytoss.edu.elevator.bom;
 
 import com.sytoss.edu.elevator.bom.enums.Direction;
+import com.sytoss.edu.elevator.commands.CommandManager;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,7 +16,6 @@ import java.util.List;
 @Slf4j
 @Getter
 @Setter
-@ToString
 public class Shaft extends Entity {
 
     private int cabinPosition;
@@ -30,16 +31,7 @@ public class Shaft extends Entity {
         engine = new Engine();
         cabinPosition = 1;
     }
-    public void activate(){
-        log.info("Cabin with id:"+this.getId());
 
-        HashMap<String,Object> paramsOpenDoor=new HashMap<>();
-        paramsOpenDoor.put("Shaft",this);
-
-        //log.info("Cabin with ");
-
-
-    }
     public void updateSequence( List<SequenceOfStops> orderSequenceOfStops){
         if (this.sequenceOfStops == null) {
             this.sequenceOfStops=orderSequenceOfStops.get(0);
@@ -55,4 +47,5 @@ public class Shaft extends Entity {
     public boolean isSameDirection (Direction direction, Integer currentPosition) {
         return cabinPosition <= currentPosition && direction == this.sequenceOfStops.getDirection();
     }
+
 }
