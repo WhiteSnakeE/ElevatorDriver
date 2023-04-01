@@ -2,9 +2,9 @@ package com.sytoss.edu.elevator;
 
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.house.House;
-import com.sytoss.edu.elevator.commands.FindNearestCabinCommand;
-import com.sytoss.edu.elevator.commands.PressUpButtonCommand;
+import com.sytoss.edu.elevator.commands.*;
 import com.sytoss.edu.elevator.services.FloorService;
+import io.cucumber.junit.CucumberOptions;
 import io.cucumber.spring.CucumberContextConfiguration;
 import lombok.Getter;
 import org.junit.platform.suite.api.ConfigurationParameter;
@@ -22,10 +22,12 @@ import static io.cucumber.core.options.Constants.PLUGIN_PROPERTY_NAME;
 @CucumberContextConfiguration
 @SelectClasspathResource("features")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")
+@CucumberOptions(features = "src/test/resources/features", glue = "com.sytoss.edu.elevator", tags="not @SingleRun")
 @Getter
 public class IntegrationTest extends AbstractControllerTest {
 
     @Autowired
+    @SpyBean
     private House house;
 
     @Autowired
@@ -39,4 +41,24 @@ public class IntegrationTest extends AbstractControllerTest {
 
     @Autowired
     private PressUpButtonCommand pressUpButtonCommand;
+
+    @Autowired
+    @SpyBean
+    private CommandManager commandManager;
+
+    @Autowired
+    @SpyBean
+    private CloseDoorCommand closeDoorCommand;
+
+    @Autowired
+    @SpyBean
+    private OpenDoorCommand openDoorCommand;
+
+    @Autowired
+    @SpyBean
+    private MoveCabinCommand moveCabinCommand;
+
+    @Autowired
+    @SpyBean
+    private StopCabinCommand stopCabinCommand;
 }

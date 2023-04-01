@@ -23,4 +23,9 @@ public class CucumberHooks extends IntegrationTest {
     public List<Integer> intList (String value) {
         return Arrays.stream(value.split(",")).map(s -> Integer.valueOf(s.trim())).collect(Collectors.toList());
     }
+
+    @ParameterType(".*")
+    public List<String> stringList (String value) {
+        return Arrays.stream(value.split(",")).map(String::trim).collect(Collectors.toList());
+    }
 }

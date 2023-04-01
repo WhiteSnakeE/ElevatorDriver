@@ -4,8 +4,11 @@ import com.sytoss.edu.elevator.IntegrationTest;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import io.cucumber.java.en.Then;
 import org.junit.jupiter.api.Assertions;
+import org.mockito.Mockito;
 
 import java.util.List;
+
+import static org.mockito.Mockito.atLeastOnce;
 
 public class CallCabinThenTest extends IntegrationTest {
 
@@ -34,7 +37,11 @@ public class CallCabinThenTest extends IntegrationTest {
         }
     }
 
-    @Then("commands should have be invoked for shaft with index {int}: openDoor, checkOverweight, closeDoor for floor {int}")
-    public void commandsShouldHaveBeInvokedForShaftWithIndexOpenDoorCheckOverweightCloseDoorForFloor (Integer shaftIndex, Integer floorNumber) {
+    @Then("commands should have be invoked for shaft with index {int}: {stringList}")
+    public void commandsShouldHaveBeInvokedForShaftWithIndexOpenDoorCheckOverweightCloseDoorForFloor (Integer shaftIndex,
+            List<String>commands) {
+        for (String command : commands) {
+            Mockito.verify(getCommandManager().getCommand(command), atLeastOnce()).execute(Mockito.any());
+        }
     }
 }

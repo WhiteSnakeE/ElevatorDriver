@@ -3,12 +3,14 @@ package com.sytoss.edu.elevator.commands;
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.house.House;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 
 @Component
+@Slf4j
 public class FindNearestCabinCommand implements Command {
 
     @Autowired
@@ -24,6 +26,8 @@ public class FindNearestCabinCommand implements Command {
         if (shaft != null) {
             elevatorDriver.removeSequenceFromOrder();
         }
+
+        log.info("Sequence of stops of found cabin: {}", shaft.getSequenceOfStops().getStopFloors());
 
         HashMap<String,Object> paramsActivateCommand=new HashMap<>();
         paramsActivateCommand.put("Shaft",shaft);

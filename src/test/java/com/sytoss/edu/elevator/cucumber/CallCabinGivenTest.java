@@ -35,4 +35,15 @@ public class CallCabinGivenTest extends IntegrationTest {
         }
         getElevatorDriver().getOrderSequenceOfStops().clear();
     }
+
+    @Given("shaft with index {int} has sequence of stops with floors {intList} and Direction {string} and cabin position {int}")
+    public void shaftWithIndexHasSequenceOfStopsWithFloorAndDirectionAndCabinPosition(Integer shaftIndex,
+            List<Integer> floors, String direction, Integer cabinPosition) {
+        SequenceOfStops sequence = new SequenceOfStops();
+        sequence.setDirection(Direction.valueOf(direction));
+        sequence.setStopFloors(floors);
+
+        getHouse().getShafts().get(shaftIndex).setSequenceOfStops(sequence);
+        getHouse().getShafts().get(shaftIndex).setCabinPosition(cabinPosition);
+    }
 }
