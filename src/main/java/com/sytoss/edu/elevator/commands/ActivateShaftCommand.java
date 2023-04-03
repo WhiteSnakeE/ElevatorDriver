@@ -24,7 +24,7 @@ public class ActivateShaftCommand implements Command {
             log.info("Cabin with id {} in the same floor as requested floor", shaft.getCabin().getId());
 
             cabinManipulation(shaft, params);
-            //shaft.clearSequence();
+            shaft.clearSequence();
 
             return;
         }
@@ -32,19 +32,21 @@ public class ActivateShaftCommand implements Command {
         log.info("Cabin with id {} start to move and now current floor is {} ", shaft.getCabin().getId(), shaft.getCabinPosition());
         int lastFloor = getLastFloorInSequence(shaft);
 
-        int indexCurFloor = 0;
-        List<Integer> stopFloors = shaft.getSequenceOfStops().getStopFloors();
-
         while (shaft.getCabinPosition() <= lastFloor) {
-            commandManager.getCommand("MoveCabinCommand").execute(params);
+            if(shaft.getSequenceOfStops().getStopFloors()==null){
+                return;
+            }
+
+            commandManager.getCommand(MOVE_CABIN_COMMAND).execute(params);
             shaft.setCabinPosition(1 + shaft.getCabinPosition());
             log.info("Cabin with id {} on floor №{}", shaft.getCabin().getId(), shaft.getCabinPosition());
-            if (shaft.getCabinPosition() == stopFloors.get(indexCurFloor)) {
-                commandManager.getCommand("StopCabinCommand").execute(params);
+
+            if ( shaft.getSequenceOfStops().getStopFloors().contains(shaft.getCabinPosition())) {
+                commandManager.getCommand(STOP_CABIN_COMMAND).execute(params);
                 log.info("Cabin with id {} stop", shaft.getCabin().getId());
                 cabinManipulation(shaft, params);
-                ++indexCurFloor;
-                //shaft.clearSequence();
+
+                shaft.clearSequence();
             }
         }
     }
@@ -53,21 +55,15 @@ public class ActivateShaftCommand implements Command {
         return shaft.getSequenceOfStops().getStopFloors().get(shaft.getSequenceOfStops().getStopFloors().size() - 1);
     }
 
-    private Integer getFirstFloorInSequence (Shaft shaft) {
-        return shaft.getSequenceOfStops().getStopFloors().get(0);
-    }
-
     private void cabinManipulation(Shaft shaft, HashMap<String, Object> params) {
-        commandManager.getCommand("OpenDoorCommand").execute(params);
+        commandManager.getCommand(OPEN_DOOR_COMMAND).execute(params);
         log.info("Door in cabin with id {} was opened", shaft.getCabin().getId());
 
         if (!shaft.getCabin().isOverWeight()) {
             log.info("Cabin with id {} is not overweight", shaft.getCabin().getId());
-        } else {
-            //TODO Aleksandr Pobizinsky
         }
 
-        commandManager.getCommand("CloseDoorCommand").execute(params);
+        commandManager.getCommand(CLOSE_DOOR_COMMAND).execute(params);
         log.info("Door in cabin with id {} was closed", shaft.getCabin().getId());
     }
 }

@@ -3,8 +3,10 @@ package com.sytoss.edu.elevator.unit.commands;
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.house.House;
+import com.sytoss.edu.elevator.commands.ActivateShaftCommand;
 import com.sytoss.edu.elevator.commands.FindNearestCabinCommand;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -23,6 +25,9 @@ public class FindNearestCabinCommandTest {
     @Autowired
     @SpyBean
     private ElevatorDriver elevatorDriver;
+    @Autowired
+    @SpyBean
+    private ActivateShaftCommand activateShaftCommand;
 
     @Test
     public void executeTest () {
@@ -31,5 +36,6 @@ public class FindNearestCabinCommandTest {
         findNearestCabinCommand.execute(null);
         verify(house).moveSequenceToShaft(elevatorDriver.getOrderSequenceOfStops());
         verify(elevatorDriver).removeSequenceFromOrder();
+        verify(activateShaftCommand).execute(Mockito.any());
     }
 }
