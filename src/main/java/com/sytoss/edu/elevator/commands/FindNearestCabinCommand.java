@@ -27,6 +27,11 @@ public class FindNearestCabinCommand implements Command {
             elevatorDriver.removeSequenceFromOrder();
         }
 
+        if (shaft == null) {
+            log.info("Shaft to merge was not found!");
+            return;
+        }
+
         log.info("Sequence of stops of found cabin: {}", shaft.getSequenceOfStops().getStopFloors());
 
         HashMap<String, Object> paramsActivateCommand = new HashMap<>();

@@ -1,6 +1,7 @@
 package com.sytoss.edu.elevator.commands;
 
 import com.sytoss.edu.elevator.bom.Shaft;
+import com.sytoss.edu.elevator.bom.enums.EngineState;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,11 +33,14 @@ public class ActivateShaftCommand implements Command {
         int lastFloor = getLastFloorInSequence(shaft);
 
         while (shaft.getCabinPosition() <= lastFloor) {
-            if (shaft.getSequenceOfStops().getStopFloors() == null) {
+            if (shaft.getSequenceOfStops() == null) {
                 return;
             }
 
-            commandManager.getCommand(MOVE_CABIN_COMMAND).execute(params);
+            if (shaft.getEngine().getEngineState() == EngineState.STAYING) {
+                commandManager.getCommand(MOVE_CABIN_COMMAND).execute(params);
+            }
+
             shaft.setCabinPosition(1 + shaft.getCabinPosition());
             log.info("Cabin with id {} on floor №{}", shaft.getCabin().getId(), shaft.getCabinPosition());
 

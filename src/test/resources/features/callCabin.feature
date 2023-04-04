@@ -11,7 +11,7 @@ Feature: Call cabin
     Given All shaft are free and no sequence of stops in queue
     And shaft with index 0 has sequence of stops with floor 10 and Direction "UPWARDS" and cabin position 4
     And shaft with index 1 has free cabin and cabin position 6
-    When passenger on floor 2 presses UpFloorButton with direction "UPWARDS"
+    When call process findNearestCabin for floor 2 with direction "UPWARDS"
     Then Shaft with index 1 should have sequence of stops with floor 2 and direction "UPWARDS"
     And Shaft with index 0 should have sequence of stops with floor 10 and direction "UPWARDS"
 
@@ -19,7 +19,7 @@ Feature: Call cabin
     Given All shaft are free and no sequence of stops in queue
     And shaft with index 0 has sequence of stops with floor 10 and Direction "UPWARDS" and cabin position 4
     And shaft with index 1 has sequence of stops with floor 10 and Direction "UPWARDS" and cabin position 6
-    When passenger on floor 3 presses UpFloorButton with direction "UPWARDS"
+    When call process findNearestCabin for floor 3 with direction "UPWARDS"
     Then Shaft with index 1 should have sequence of stops with floor 10 and direction "UPWARDS"
     And Shaft with index 0 should have sequence of stops with floor 10 and direction "UPWARDS"
     And ElevatorDriver has sequence of stops with floor 3

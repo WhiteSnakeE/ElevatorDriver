@@ -43,7 +43,7 @@ public class Shaft extends Entity {
     public void clearSequence () {
         this.sequenceOfStops.getStopFloors().remove(0);
         if (this.sequenceOfStops.getStopFloors().isEmpty()) {
-            this.sequenceOfStops.setStopFloors(null);
+            this.sequenceOfStops = null;
         }
     }
 
