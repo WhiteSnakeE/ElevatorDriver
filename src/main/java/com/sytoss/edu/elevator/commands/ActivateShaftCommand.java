@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.List;
 
 @Slf4j
 @Component
@@ -33,7 +32,7 @@ public class ActivateShaftCommand implements Command {
         int lastFloor = getLastFloorInSequence(shaft);
 
         while (shaft.getCabinPosition() <= lastFloor) {
-            if(shaft.getSequenceOfStops().getStopFloors()==null){
+            if (shaft.getSequenceOfStops().getStopFloors() == null) {
                 return;
             }
 
@@ -41,7 +40,7 @@ public class ActivateShaftCommand implements Command {
             shaft.setCabinPosition(1 + shaft.getCabinPosition());
             log.info("Cabin with id {} on floor №{}", shaft.getCabin().getId(), shaft.getCabinPosition());
 
-            if ( shaft.getSequenceOfStops().getStopFloors().contains(shaft.getCabinPosition())) {
+            if (shaft.getSequenceOfStops().getStopFloors().contains(shaft.getCabinPosition())) {
                 commandManager.getCommand(STOP_CABIN_COMMAND).execute(params);
                 log.info("Cabin with id {} stop", shaft.getCabin().getId());
                 cabinManipulation(shaft, params);
@@ -55,7 +54,7 @@ public class ActivateShaftCommand implements Command {
         return shaft.getSequenceOfStops().getStopFloors().get(shaft.getSequenceOfStops().getStopFloors().size() - 1);
     }
 
-    private void cabinManipulation(Shaft shaft, HashMap<String, Object> params) {
+    private void cabinManipulation (Shaft shaft, HashMap<String, Object> params) {
         commandManager.getCommand(OPEN_DOOR_COMMAND).execute(params);
         log.info("Door in cabin with id {} was opened", shaft.getCabin().getId());
 

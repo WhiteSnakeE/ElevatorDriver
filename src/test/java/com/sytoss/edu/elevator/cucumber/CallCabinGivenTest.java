@@ -18,7 +18,7 @@ public class CallCabinGivenTest extends IntegrationTest {
     }
 
     @Given("shaft with index {int} has sequence of stops with floor {int} and Direction {string} and cabin position {int}")
-    public void shaftWithIndexAndSequenceOfStopsAndDirectionAndCabinPosition(Integer shaftIndex, Integer floorNumber,
+    public void shaftWithIndexAndSequenceOfStopsAndDirectionAndCabinPosition (Integer shaftIndex, Integer floorNumber,
             String direction, Integer cabinPosition) {
         SequenceOfStops sequence = new SequenceOfStops();
         sequence.setDirection(Direction.valueOf(direction));
@@ -29,15 +29,15 @@ public class CallCabinGivenTest extends IntegrationTest {
     }
 
     @Given("All shaft are free and no sequence of stops in queue")
-    public void allShaftFreeAndNoSequence(){
-        for (Shaft shaft: getHouse().getShafts()){
+    public void allShaftFreeAndNoSequence () {
+        for (Shaft shaft : getHouse().getShafts()) {
             shaft.setSequenceOfStops(null);
         }
         getElevatorDriver().getOrderSequenceOfStops().clear();
     }
 
     @Given("shaft with index {int} has sequence of stops with floors {intList} and Direction {string} and cabin position {int}")
-    public void shaftWithIndexHasSequenceOfStopsWithFloorAndDirectionAndCabinPosition(Integer shaftIndex,
+    public void shaftWithIndexHasSequenceOfStopsWithFloorAndDirectionAndCabinPosition (Integer shaftIndex,
             List<Integer> floors, String direction, Integer cabinPosition) {
         SequenceOfStops sequence = new SequenceOfStops();
         sequence.setDirection(Direction.valueOf(direction));

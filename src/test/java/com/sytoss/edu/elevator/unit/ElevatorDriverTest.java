@@ -10,8 +10,6 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.util.List;
 
-import static org.mockito.Mockito.verify;
-
 @SpringBootTest
 public class ElevatorDriverTest {
 
@@ -37,7 +35,7 @@ public class ElevatorDriverTest {
     }
 
     @Test
-    public void removeSequenceFromOrderFailedTest() {
+    public void removeSequenceFromOrderFailedTest () {
         elevatorDriver.getOrderSequenceOfStops().clear();
         Assertions.assertThrows(IllegalStateException.class, () -> elevatorDriver.removeSequenceFromOrder());
     }

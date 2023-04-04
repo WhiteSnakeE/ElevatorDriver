@@ -26,7 +26,7 @@ public class ElevatorDriver extends Entity {
 
     public void removeSequenceFromOrder () {
         if (orderSequenceOfStops.isEmpty()) {
-           throw new IllegalStateException("Order sequence of stops is empty!");
+            throw new IllegalStateException("Order sequence of stops is empty!");
         }
         orderSequenceOfStops.remove(0);
     }

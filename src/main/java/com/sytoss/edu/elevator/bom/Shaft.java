@@ -1,16 +1,12 @@
 package com.sytoss.edu.elevator.bom;
 
 import com.sytoss.edu.elevator.bom.enums.Direction;
-import com.sytoss.edu.elevator.commands.CommandManager;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
@@ -28,14 +24,14 @@ public class Shaft extends Entity {
     }
 
     public Shaft () {
-        cabin=new Cabin();
+        cabin = new Cabin();
         engine = new Engine();
         cabinPosition = 1;
     }
 
-    public void updateSequence( List<SequenceOfStops> orderSequenceOfStops){
-        if (this.sequenceOfStops == null) {
-            this.sequenceOfStops=orderSequenceOfStops.get(0);
+    public void updateSequence (List<SequenceOfStops> orderSequenceOfStops) {
+        if (this.sequenceOfStops == null||this.sequenceOfStops.getStopFloors()==null) {
+            this.sequenceOfStops = orderSequenceOfStops.get(0);
         } else {
             ArrayList<Integer> stops = new ArrayList<>(this.sequenceOfStops.getStopFloors());
             stops.addAll(orderSequenceOfStops.get(0).getStopFloors());
@@ -43,9 +39,10 @@ public class Shaft extends Entity {
             this.sequenceOfStops.setStopFloors(stops);
         }
     }
-    public void clearSequence(){
+
+    public void clearSequence () {
         this.sequenceOfStops.getStopFloors().remove(0);
-        if (this.sequenceOfStops.getStopFloors().isEmpty()){
+        if (this.sequenceOfStops.getStopFloors().isEmpty()) {
             this.sequenceOfStops.setStopFloors(null);
         }
     }
@@ -53,5 +50,4 @@ public class Shaft extends Entity {
     public boolean isSameDirection (Direction direction, Integer currentPosition) {
         return cabinPosition <= currentPosition && direction == this.sequenceOfStops.getDirection();
     }
-
 }

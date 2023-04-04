@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -58,11 +57,12 @@ public class House {
     }
 
     private List<Shaft> getFreeShafts () {
-     return shafts.stream().filter(Shaft::isFree).toList();
+        return shafts.stream().filter(Shaft::isFree).toList();
     }
 
-    private List<Shaft> shaftWithAppropriateDirection (Direction currentDirection, List<SequenceOfStops> orderSequenceOfStops) {
-        return shafts.stream().filter(shaft -> shaft.isSameDirection(currentDirection,orderSequenceOfStops.get(0).getStopFloors().get(0))).toList();
+    private List<Shaft> shaftWithAppropriateDirection (Direction currentDirection,
+            List<SequenceOfStops> orderSequenceOfStops) {
+        return shafts.stream().filter(shaft -> shaft.isSameDirection(currentDirection, orderSequenceOfStops.get(0).getStopFloors().get(0))).toList();
     }
 }
 

@@ -29,8 +29,8 @@ public class FindNearestCabinCommand implements Command {
 
         log.info("Sequence of stops of found cabin: {}", shaft.getSequenceOfStops().getStopFloors());
 
-        HashMap<String,Object> paramsActivateCommand=new HashMap<>();
-        paramsActivateCommand.put("Shaft",shaft);
+        HashMap<String, Object> paramsActivateCommand = new HashMap<>();
+        paramsActivateCommand.put("Shaft", shaft);
         commandManager.getCommand("ActivateShaftCommand").execute(paramsActivateCommand);
 
     }

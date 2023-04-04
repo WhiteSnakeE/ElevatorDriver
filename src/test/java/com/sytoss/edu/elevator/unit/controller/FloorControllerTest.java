@@ -22,6 +22,7 @@ public class FloorControllerTest {
     private String getBaseUrl () {
         return "http://localhost:" + applicationPort;
     }
+
     private ResponseEntity<Void> response;
     @SpyBean
     @Autowired

@@ -22,7 +22,7 @@ import static io.cucumber.core.options.Constants.PLUGIN_PROPERTY_NAME;
 @CucumberContextConfiguration
 @SelectClasspathResource("features")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")
-@CucumberOptions(features = "src/test/resources/features", glue = "com.sytoss.edu.elevator", tags="not @SingleRun")
+@CucumberOptions(features = "src/test/resources/features", glue = "com.sytoss.edu.elevator", tags = "not @SingleRun")
 @Getter
 public class IntegrationTest extends AbstractControllerTest {
 
