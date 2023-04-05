@@ -1,5 +1,6 @@
 package com.sytoss.edu.elevator.commands;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -7,22 +8,16 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 
 @Component
+@RequiredArgsConstructor
 public class CommandManager {
 
-    @Autowired
-    private ObjectProvider<PressUpButtonCommand> pressUpButtonCommandProvider;
-    @Autowired
-    private ObjectProvider<FindNearestCabinCommand> findNearestCabinCommandProvider;
-    @Autowired
-    private ObjectProvider<ActivateShaftCommand> activateShaftCommandProvider;
-    @Autowired
-    private ObjectProvider<MoveCabinCommand> moveCabinCommandObjectProvider;
-    @Autowired
-    private ObjectProvider<StopCabinCommand> stopDoorCommandObjectProvider;
-    @Autowired
-    private ObjectProvider<OpenDoorCommand> openDoorCommandObjectProvider;
-    @Autowired
-    private ObjectProvider<CloseDoorCommand> closeDoorCommandObjectProvider;
+    private final ObjectProvider<PressUpButtonCommand> pressUpButtonCommandProvider;
+    private final ObjectProvider<FindNearestCabinCommand> findNearestCabinCommandProvider;
+    private final ObjectProvider<ActivateShaftCommand> activateShaftCommandProvider;
+    private final ObjectProvider<MoveCabinCommand> moveCabinCommandObjectProvider;
+    private final ObjectProvider<StopCabinCommand> stopDoorCommandObjectProvider;
+    private final ObjectProvider<OpenDoorCommand> openDoorCommandObjectProvider;
+    private final ObjectProvider<CloseDoorCommand> closeDoorCommandObjectProvider;
 
     private final HashMap<String, Command> commandMap = new HashMap<>();
 
