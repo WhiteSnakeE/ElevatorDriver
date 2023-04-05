@@ -10,12 +10,9 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.util.List;
 
-@SpringBootTest
 public class ElevatorDriverTest {
 
-    @SpyBean
-    @Autowired
-    private ElevatorDriver elevatorDriver;
+    private final ElevatorDriver elevatorDriver = new ElevatorDriver();
 
     @Test
     public void addNewSequenceToOrderTest () {
@@ -37,6 +34,6 @@ public class ElevatorDriverTest {
     @Test
     public void removeSequenceFromOrderFailedTest () {
         elevatorDriver.getOrderSequenceOfStops().clear();
-        Assertions.assertThrows(IllegalStateException.class, () -> elevatorDriver.removeSequenceFromOrder());
+        Assertions.assertThrows(IllegalStateException.class, elevatorDriver::removeSequenceFromOrder);
     }
 }

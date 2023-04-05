@@ -1,6 +1,7 @@
 package com.sytoss.edu.elevator.unit.buttons;
 
 import com.sytoss.edu.elevator.bom.enums.Direction;
+import com.sytoss.edu.elevator.bom.house.buttons.CommandButton;
 import com.sytoss.edu.elevator.bom.house.buttons.UpFloorButton;
 import com.sytoss.edu.elevator.commands.Command;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,7 @@ public class UpFloorButtonTest {
     public void pressTest () {
         UpFloorButton upFloorButton = new UpFloorButton(command);
         upFloorButton.press(5);
+
         HashMap<String, Object> params = new HashMap<>();
 
         params.put("numberFloor", 5);

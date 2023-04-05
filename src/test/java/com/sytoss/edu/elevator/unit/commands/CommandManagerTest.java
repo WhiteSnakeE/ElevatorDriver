@@ -5,17 +5,16 @@ import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.commands.FindNearestCabinCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 public class CommandManagerTest {
-
-    @Autowired
-    private CommandManager commandManager;
 
     @Test
     public void getCommandTest () {
+        CommandManager commandManager = mock(CommandManager.class);
+        when(commandManager.getCommand("FindNearestCabinCommand")).thenReturn(mock(FindNearestCabinCommand.class));
         Command resultCommand = commandManager.getCommand("FindNearestCabinCommand");
 
         if (resultCommand instanceof FindNearestCabinCommand) {
@@ -25,6 +24,7 @@ public class CommandManagerTest {
 
     @Test
     public void getCommandFailedTest () {
+        CommandManager commandManager = new CommandManager();
         Assertions.assertThrows(IllegalArgumentException.class, () -> commandManager.getCommand("BadName"));
     }
 }

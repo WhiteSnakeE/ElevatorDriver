@@ -15,10 +15,5 @@ public class OpenDoorCommand implements Command {
         Shaft shaft = (Shaft) params.get("Shaft");
         shaft.getCabin().openDoor();
         log.info("Shaft with id [{}] has [DOOR STATE]: [OPENED]", shaft.getId());
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
     }
 }

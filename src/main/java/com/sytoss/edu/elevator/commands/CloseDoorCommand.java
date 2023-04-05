@@ -9,6 +9,7 @@ import java.util.HashMap;
 @Component
 @Slf4j
 public class CloseDoorCommand implements Command {
+
     @Override
     public void execute (HashMap<String, Object> params) {
         Shaft shaft = (Shaft) params.get("Shaft");

@@ -6,16 +6,16 @@ import com.sytoss.edu.elevator.bom.house.floors.FirstFloor;
 import com.sytoss.edu.elevator.bom.house.floors.MiddleFloor;
 import com.sytoss.edu.elevator.commands.Command;
 import com.sytoss.edu.elevator.commands.CommandManager;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class HouseBuilder {
 
-    @Autowired
-    private CommandManager commandManager;
+    private final CommandManager commandManager;
 
     public House build (int shaftCount, int floorCount) {
         House result = new House();

@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 @Slf4j
 @Getter
@@ -29,18 +28,18 @@ public class Shaft extends Entity {
         cabinPosition = 1;
     }
 
-    public synchronized boolean updateSequence (List<SequenceOfStops> orderSequenceOfStops) {
+    public synchronized boolean updateSequence (ElevatorDriver elevatorDriver) {
         boolean isNeedActivate = false;
         if (this.sequenceOfStops == null || this.sequenceOfStops.getStopFloors() == null) {
-            this.sequenceOfStops = orderSequenceOfStops.get(0);
-            orderSequenceOfStops.remove(0);
+            this.sequenceOfStops = elevatorDriver.getOrderSequenceOfStops().get(0);
+            elevatorDriver.removeSequenceFromOrder();
             isNeedActivate = true;
         } else {
             ArrayList<Integer> stops = new ArrayList<>(this.sequenceOfStops.getStopFloors());
-            stops.addAll(orderSequenceOfStops.get(0).getStopFloors());
+            stops.addAll(elevatorDriver.getOrderSequenceOfStops().get(0).getStopFloors());
             Collections.sort(stops);
             this.sequenceOfStops.setStopFloors(stops);
-            orderSequenceOfStops.remove(0);
+            elevatorDriver.removeSequenceFromOrder();
         }
         log.info("Shaft with id {} and sequence of stops of found cabin: {}",getId() ,sequenceOfStops.getStopFloors());
         return isNeedActivate;

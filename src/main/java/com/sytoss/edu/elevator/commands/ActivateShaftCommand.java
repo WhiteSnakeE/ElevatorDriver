@@ -2,18 +2,18 @@ package com.sytoss.edu.elevator.commands;
 
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.EngineState;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class ActivateShaftCommand implements Command {
 
-    @Autowired
-    private CommandManager commandManager;
+    private final CommandManager commandManager;
 
     @Override
     public void execute (HashMap<String, Object> params) {

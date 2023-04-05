@@ -42,7 +42,6 @@ public class CommandManager {
                 return openDoorCommandObjectProvider.getObject();
             case Command.CLOSE_DOOR_COMMAND:
                 return closeDoorCommandObjectProvider.getObject();
-
             default:
                 throw new IllegalArgumentException("Unknown command: " + nameCommand);
         }

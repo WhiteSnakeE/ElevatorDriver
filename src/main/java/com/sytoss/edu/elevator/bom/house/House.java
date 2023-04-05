@@ -1,5 +1,6 @@
 package com.sytoss.edu.elevator.bom.house;
 
+import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
@@ -11,22 +12,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
+@Getter
 public class House {
 
-    @Getter
     private List<Shaft> shafts = new ArrayList<>();
 
-    @Getter
     private List<Floor> floors = new ArrayList<>();
 
-    public Shaft moveSequenceToShaft (List<SequenceOfStops> orderSequenceOfStops) {
-        Shaft nearestCabin = findNearestCabin(orderSequenceOfStops);
+    public Shaft moveSequenceToShaft (ElevatorDriver elevatorDriver) {
+        Shaft nearestCabin = findNearestCabin(elevatorDriver.getOrderSequenceOfStops());
 
         if (nearestCabin == null) {
             return null;
         }
 
-        boolean isNeedActivate = nearestCabin.updateSequence(new ArrayList<>(orderSequenceOfStops));
+        boolean isNeedActivate = nearestCabin.updateSequence(elevatorDriver);
 
         if (!isNeedActivate) {
             return null;
