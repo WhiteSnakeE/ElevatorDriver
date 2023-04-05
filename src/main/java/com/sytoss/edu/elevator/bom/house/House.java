@@ -25,7 +25,13 @@ public class House {
         if (nearestCabin == null) {
             return null;
         }
-        nearestCabin.updateSequence(orderSequenceOfStops);
+
+        boolean isNeedActivate = nearestCabin.updateSequence(new ArrayList<>(orderSequenceOfStops));
+
+        if (!isNeedActivate) {
+            return null;
+        }
+
         return nearestCabin;
     }
 

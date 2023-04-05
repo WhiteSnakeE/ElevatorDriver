@@ -20,19 +20,16 @@ public class FindNearestCabinCommand implements Command {
     @Autowired
     private CommandManager commandManager;
 
+    private int counter = 0;
+
     @Override
     public void execute (HashMap<String, Object> params) {
         Shaft shaft = house.moveSequenceToShaft(elevatorDriver.getOrderSequenceOfStops());
-        if (shaft != null) {
-            elevatorDriver.removeSequenceFromOrder();
-        }
+
 
         if (shaft == null) {
-            log.info("Shaft to merge was not found!");
             return;
         }
-
-        log.info("Sequence of stops of found cabin: {}", shaft.getSequenceOfStops().getStopFloors());
 
         HashMap<String, Object> paramsActivateCommand = new HashMap<>();
         paramsActivateCommand.put("Shaft", shaft);

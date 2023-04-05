@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 public class ElevatorDriver extends Entity {
 
-    private final ArrayList<SequenceOfStops> orderSequenceOfStops = new ArrayList<>();
+    private final List<SequenceOfStops> orderSequenceOfStops = new ArrayList<>();
 
     public void addNewSequenceToOrder (int floorNumber, Direction direction) {
         SequenceOfStops sequenceOfStops = new SequenceOfStops();

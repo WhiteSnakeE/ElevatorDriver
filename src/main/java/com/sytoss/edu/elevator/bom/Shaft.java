@@ -29,22 +29,25 @@ public class Shaft extends Entity {
         cabinPosition = 1;
     }
 
-    public void updateSequence (List<SequenceOfStops> orderSequenceOfStops) {
-        if (this.sequenceOfStops == null||this.sequenceOfStops.getStopFloors()==null) {
+    public synchronized boolean updateSequence (List<SequenceOfStops> orderSequenceOfStops) {
+        boolean isNeedActivate = false;
+        if (this.sequenceOfStops == null || this.sequenceOfStops.getStopFloors() == null) {
             this.sequenceOfStops = orderSequenceOfStops.get(0);
+            orderSequenceOfStops.remove(0);
+            isNeedActivate = true;
         } else {
             ArrayList<Integer> stops = new ArrayList<>(this.sequenceOfStops.getStopFloors());
             stops.addAll(orderSequenceOfStops.get(0).getStopFloors());
             Collections.sort(stops);
             this.sequenceOfStops.setStopFloors(stops);
+            orderSequenceOfStops.remove(0);
         }
+        log.info("Shaft with id {} and sequence of stops of found cabin: {}",getId() ,sequenceOfStops.getStopFloors());
+        return isNeedActivate;
     }
 
     public void clearSequence () {
-        this.sequenceOfStops.getStopFloors().remove(0);
-        if (this.sequenceOfStops.getStopFloors().isEmpty()) {
-            this.sequenceOfStops = null;
-        }
+        this.sequenceOfStops = null;
     }
 
     public boolean isSameDirection (Direction direction, Integer currentPosition) {
