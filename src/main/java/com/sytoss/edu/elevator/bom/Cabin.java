@@ -2,9 +2,11 @@ package com.sytoss.edu.elevator.bom;
 
 import com.sytoss.edu.elevator.bom.enums.DoorState;
 import com.sytoss.edu.elevator.bom.enums.OverWeightState;
+import lombok.Getter;
 
 public class Cabin extends Entity {
 
+    @Getter
     private DoorState doorState = DoorState.CLOSED;
     private OverWeightState overWeightState = OverWeightState.NOT_OVERWEIGHT;
 

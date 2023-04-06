@@ -15,5 +15,9 @@ public class OpenDoorCommand implements Command {
         Shaft shaft = (Shaft) params.get("Shaft");
         shaft.getCabin().openDoor();
         log.info("Shaft with id [{}] has [DOOR STATE]: [OPENED]", shaft.getId());
+
+        while (shaft.getCabin().isOverWeight()) {
+            log.info("Cabin in shaft with id [{}] is: [OVERWEIGHT]", shaft.getId());
+        }
     }
 }
