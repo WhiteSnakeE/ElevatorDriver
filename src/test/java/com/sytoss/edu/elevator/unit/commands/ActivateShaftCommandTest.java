@@ -34,8 +34,8 @@ public class ActivateShaftCommandTest {
         HashMap<String, Object> params = new HashMap<>();
         params.put("Shaft", shaft);
 
-        when(commandManager.getCommand(Command.OPEN_DOOR_COMMAND)).thenReturn(spy(OpenDoorCommand.class));
-        when(commandManager.getCommand(Command.CLOSE_DOOR_COMMAND)).thenReturn(spy(CloseDoorCommand.class));
+        when(commandManager.getCommand(Command.OPEN_DOOR_COMMAND)).thenReturn(mock(OpenDoorCommand.class));
+        when(commandManager.getCommand(Command.CLOSE_DOOR_COMMAND)).thenReturn(mock(CloseDoorCommand.class));
         when(commandManager.getCommand(Command.MOVE_CABIN_COMMAND)).thenReturn(spy(MoveCabinCommand.class));
         when(commandManager.getCommand(Command.STOP_CABIN_COMMAND)).thenReturn(spy(StopCabinCommand.class));
 

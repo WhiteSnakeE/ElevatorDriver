@@ -7,13 +7,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-@ExtendWith({MockitoExtension.class})
 public class FirstFloorTest {
 
     @Mock
-    private UpFloorButton upFloorButton;
+    private UpFloorButton upFloorButton=mock(UpFloorButton.class);
 
     @Test
     public void pressUpButton () {
