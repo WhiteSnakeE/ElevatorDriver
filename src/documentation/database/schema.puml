@@ -4,6 +4,7 @@ entity House {
 id: int
 numberOfFloors: int
 numberOfShafts: int
+orderSequenceOfStops: varchar
 }
 
 entity Shaft {
@@ -12,35 +13,9 @@ cabinPosition: int
 doorState: varchar
 engineState: varchar
 houseId: int
+sequenceOfStops: varchar
 }
 
 House "1 houseId" o-- "N numberOfShafts" Shaft
-
-entity OrderSequenceOfStops {
-id: int
-stopFloors: array
-direction: varchar
-}
-
-entity ElevatorDriver {
-id: int
-houseId: int
-}
-
-entity SequenceOfStopsDistributor {
-id: int
-sequenceOfStopsId: int
-elevatorDriverId: int
-shaftId: int
-done: boolean
-}
-
-House "1" o-- "1" ElevatorDriver
-
-SequenceOfStopsDistributor "N" --o "1" ElevatorDriver
-
-SequenceOfStopsDistributor "N" --o "1" OrderSequenceOfStops
-
-Shaft "1" o-- "1" SequenceOfStopsDistributor
 
 @enduml
