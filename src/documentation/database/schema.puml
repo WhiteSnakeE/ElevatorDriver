@@ -12,6 +12,7 @@ id: int
 cabinPosition: int
 doorState: varchar
 engineState: varchar
+overweightState: varchar
 houseId: int
 sequenceOfStops: varchar
 }
