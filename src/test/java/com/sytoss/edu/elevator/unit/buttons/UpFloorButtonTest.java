@@ -22,6 +22,7 @@ public class UpFloorButtonTest {
     public void pressTest () {
         UpFloorButton upFloorButton = new UpFloorButton(command);
         upFloorButton.press(5);
+
         HashMap<String, Object> params = new HashMap<>();
 
         params.put("numberFloor", 5);

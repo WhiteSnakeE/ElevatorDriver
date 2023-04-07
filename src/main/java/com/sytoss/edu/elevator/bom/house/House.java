@@ -1,5 +1,6 @@
 package com.sytoss.edu.elevator.bom.house;
 
+import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
@@ -8,25 +9,29 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
+@Getter
 public class House {
 
-    @Getter
     private List<Shaft> shafts = new ArrayList<>();
 
-    @Getter
     private List<Floor> floors = new ArrayList<>();
 
-    public Shaft moveSequenceToShaft (List<SequenceOfStops> orderSequenceOfStops) {
-        Shaft nearestCabin = findNearestCabin(orderSequenceOfStops);
+    public Shaft moveSequenceToShaft (ElevatorDriver elevatorDriver) {
+        Shaft nearestCabin = findNearestCabin(elevatorDriver.getOrderSequenceOfStops());
 
         if (nearestCabin == null) {
             return null;
         }
-        nearestCabin.updateSequence(orderSequenceOfStops);
+
+        boolean isNeedActivate = nearestCabin.updateSequence(elevatorDriver);
+
+        if (!isNeedActivate) {
+            return null;
+        }
+
         return nearestCabin;
     }
 
@@ -58,11 +63,12 @@ public class House {
     }
 
     private List<Shaft> getFreeShafts () {
-     return shafts.stream().filter(Shaft::isFree).toList();
+        return shafts.stream().filter(Shaft::isFree).toList();
     }
 
-    private List<Shaft> shaftWithAppropriateDirection (Direction currentDirection, List<SequenceOfStops> orderSequenceOfStops) {
-        return shafts.stream().filter(shaft -> shaft.isSameDirection(currentDirection,orderSequenceOfStops.get(0).getStopFloors().get(0))).toList();
+    private List<Shaft> shaftWithAppropriateDirection (Direction currentDirection,
+            List<SequenceOfStops> orderSequenceOfStops) {
+        return shafts.stream().filter(shaft -> shaft.isSameDirection(currentDirection, orderSequenceOfStops.get(0).getStopFloors().get(0))).toList();
     }
 }
 

@@ -3,25 +3,34 @@ package com.sytoss.edu.elevator.commands;
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.house.House;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 
 @Component
+@Slf4j
+@RequiredArgsConstructor
 public class FindNearestCabinCommand implements Command {
 
-    @Autowired
-    private House house;
-    @Autowired
-    private ElevatorDriver elevatorDriver;
+    private final House house;
+
+    private final ElevatorDriver elevatorDriver;
+
+    private final CommandManager commandManager;
+
 
     @Override
     public void execute (HashMap<String, Object> params) {
-        Shaft shaft = house.moveSequenceToShaft(elevatorDriver.getOrderSequenceOfStops());
+        Shaft shaft = house.moveSequenceToShaft(elevatorDriver);
 
-        if (shaft != null) {
-            elevatorDriver.removeSequenceFromOrder();
+        if (shaft == null) {
+            return;
         }
+
+        HashMap<String, Object> paramsActivateCommand = new HashMap<>();
+        paramsActivateCommand.put("Shaft", shaft);
+        commandManager.getCommand(ACTIVATE_SHAFT_COMMAND).execute(paramsActivateCommand);
     }
 }

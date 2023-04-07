@@ -7,36 +7,31 @@ import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.commands.FindNearestCabinCommand;
 import com.sytoss.edu.elevator.commands.PressUpButtonCommand;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.util.HashMap;
 
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
-@SpringBootTest
+
 public class PressUpButtonCommandTest {
 
-    @Autowired
-    private PressUpButtonCommand pressUpButtonCommand;
-    @MockBean
-    private ElevatorDriver elevatorDriver;
-    @SpyBean
-    private CommandManager commandManager;
-    @MockBean
-    private FindNearestCabinCommand findNearestCabinCommand;
+    private final ElevatorDriver elevatorDriver = mock(ElevatorDriver.class);
+
+    private final CommandManager commandManager = mock(CommandManager.class);
+
+    private final PressUpButtonCommand pressUpButtonCommand = new PressUpButtonCommand(elevatorDriver, commandManager);
 
     @Test
     public void executeTest () {
         HashMap<String, Object> params = new HashMap<>();
         params.put("numberFloor", 5);
         params.put("Direction", Direction.UPWARDS);
+
+        when(commandManager.getCommand(Command.FIND_NEAREST_CABIN_COMMAND)).thenReturn(mock(FindNearestCabinCommand.class));
+
         pressUpButtonCommand.execute(params);
 
         verify(elevatorDriver).addNewSequenceToOrder(5, Direction.UPWARDS);
-        verify(commandManager).getCommand(Command.FIND_NEAREST_CABIN_COMMAND);
-        verify(findNearestCabinCommand).execute(null);
+        verify(commandManager.getCommand(Command.FIND_NEAREST_CABIN_COMMAND)).execute(null);
     }
 }
