@@ -28,6 +28,6 @@ public class CallCabinWhenTest extends IntegrationTest {
     public void startCabinWithIndexMovingSequenceOfStopsTo(Integer shaftIndex) {
         HashMap<String, Object> paramsExec = new HashMap<>();
         paramsExec.put("Shaft", getHouse().getShafts().get(shaftIndex));
-        getCommandManager().getCommand(Command.ACTIVATE_SHAFT_COMMAND).execute(paramsExec);
+        getCommandManager().getCommand(Command.MOVE_CABIN_COMMAND).execute(paramsExec);
     }
 }

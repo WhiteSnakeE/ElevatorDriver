@@ -10,6 +10,7 @@ import java.util.HashMap;
 @Slf4j
 public class OpenDoorCommand implements Command {
 
+    private final int timeSleep=0;
     @Override
     public void execute (HashMap<String, Object> params) {
         Shaft shaft = (Shaft) params.get("Shaft");
@@ -19,5 +20,11 @@ public class OpenDoorCommand implements Command {
         while (shaft.getCabin().isOverWeight()) {
             log.info("Cabin in shaft with id [{}] is: [OVERWEIGHT]", shaft.getId());
         }
+        try {
+            Thread.sleep(timeSleep);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

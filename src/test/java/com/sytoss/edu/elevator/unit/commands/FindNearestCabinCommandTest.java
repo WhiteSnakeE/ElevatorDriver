@@ -4,7 +4,7 @@ import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.house.House;
-import com.sytoss.edu.elevator.commands.ActivateShaftCommand;
+import com.sytoss.edu.elevator.commands.MoveCabinCommand;
 import com.sytoss.edu.elevator.commands.Command;
 import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.commands.FindNearestCabinCommand;
@@ -29,24 +29,24 @@ public class FindNearestCabinCommandTest {
     public void executeTest () {
         elevatorDriver.addNewSequenceToOrder(5, Direction.UPWARDS);
 
-        ActivateShaftCommand activateShaftCommand = mock(ActivateShaftCommand.class);
+        MoveCabinCommand moveCabinCommand = mock(MoveCabinCommand.class);
         Shaft shaft = mock(Shaft.class);
 
         when(house.moveSequenceToShaft(elevatorDriver)).thenReturn(shaft);
-        when(commandManager.getCommand(Command.ACTIVATE_SHAFT_COMMAND)).thenReturn(activateShaftCommand);
+        when(commandManager.getCommand(Command.MOVE_CABIN_COMMAND)).thenReturn(moveCabinCommand);
 
         HashMap<String, Object> params = new HashMap<>();
         params.put("Shaft", shaft);
 
         findNearestCabinCommand.execute(null);
         verify(house).moveSequenceToShaft(elevatorDriver);
-        verify(commandManager.getCommand(Command.ACTIVATE_SHAFT_COMMAND)).execute(params);
+        verify(commandManager.getCommand(Command.MOVE_CABIN_COMMAND)).execute(params);
     }
 
     @Test
     public void executeShaftIsNullTest() {
-        when(commandManager.getCommand(Command.ACTIVATE_SHAFT_COMMAND)).thenReturn(mock(ActivateShaftCommand.class));
+        when(commandManager.getCommand(Command.MOVE_CABIN_COMMAND)).thenReturn(mock(MoveCabinCommand.class));
         findNearestCabinCommand.execute(null);
-        verify(commandManager.getCommand(Command.ACTIVATE_SHAFT_COMMAND), times(0)).execute(Mockito.any());
+        verify(commandManager.getCommand(Command.MOVE_CABIN_COMMAND), times(0)).execute(Mockito.any());
     }
 }

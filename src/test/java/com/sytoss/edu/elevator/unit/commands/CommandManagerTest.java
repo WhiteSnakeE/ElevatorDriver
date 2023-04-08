@@ -12,9 +12,9 @@ public class CommandManagerTest {
 
     private final ObjectProvider<PressUpButtonCommand> pressUpButtonCommandProvider = mock(ObjectProvider.class);
     private final ObjectProvider<FindNearestCabinCommand> findNearestCabinCommandProvider= mock(ObjectProvider.class);
-    private final ObjectProvider<ActivateShaftCommand> activateShaftCommandProvider = mock(ObjectProvider.class);
-    private final ObjectProvider<MoveCabinCommand> moveCabinCommandObjectProvider = mock(ObjectProvider.class);
-    private final ObjectProvider<StopCabinCommand> stopDoorCommandObjectProvider = mock(ObjectProvider.class);
+    private final ObjectProvider<MoveCabinCommand> activateShaftCommandProvider = mock(ObjectProvider.class);
+    private final ObjectProvider<StartEngineCommand> moveCabinCommandObjectProvider = mock(ObjectProvider.class);
+    private final ObjectProvider<StopEngineCommand> stopDoorCommandObjectProvider = mock(ObjectProvider.class);
     private final ObjectProvider<OpenDoorCommand> openDoorCommandObjectProvider = mock(ObjectProvider.class);
     private final ObjectProvider<CloseDoorCommand> closeDoorCommandObjectProvider = mock(ObjectProvider.class);
 

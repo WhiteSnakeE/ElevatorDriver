@@ -2,27 +2,28 @@ package com.sytoss.edu.elevator.unit.commands;
 
 import com.sytoss.edu.elevator.bom.Engine;
 import com.sytoss.edu.elevator.bom.Shaft;
-import com.sytoss.edu.elevator.commands.StopCabinCommand;
+import com.sytoss.edu.elevator.bom.enums.Direction;
+import com.sytoss.edu.elevator.commands.StartEngineCommand;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
 import static org.mockito.Mockito.*;
 
-public class StopCabinCommandTest {
+public class StartEngineCommandTest {
 
-    private final StopCabinCommand stopCabinCommand = new StopCabinCommand();
+    private final StartEngineCommand startEngineCommand = new StartEngineCommand();
 
     @Test
     public void executeTest() {
         Shaft shaft = mock(Shaft.class);
+        Engine engine = mock(Engine.class);
         HashMap<String, Object> params = new HashMap<>();
         params.put("Shaft", shaft);
-        Engine engine = mock(Engine.class);
+        params.put("Direction", Direction.UPWARDS);
 
         when(shaft.getEngine()).thenReturn(engine);
-        stopCabinCommand.execute(params);
-
-        verify(engine).stop();
+        startEngineCommand.execute(params);
+        verify(engine).start(Direction.UPWARDS);
     }
 }

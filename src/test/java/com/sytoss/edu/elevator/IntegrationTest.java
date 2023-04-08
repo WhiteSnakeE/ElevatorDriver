@@ -25,7 +25,6 @@ import static io.cucumber.core.options.Constants.PLUGIN_PROPERTY_NAME;
 @CucumberOptions(features = "src/test/resources/features", glue = "com.sytoss.edu.elevator", tags = "not @SingleRun")
 @Getter
 public class IntegrationTest extends AbstractControllerTest {
-
     @Autowired
     @SpyBean
     private House house;
@@ -45,20 +44,16 @@ public class IntegrationTest extends AbstractControllerTest {
     @Autowired
     @SpyBean
     private CommandManager commandManager;
-
     @Autowired
     @SpyBean
     private CloseDoorCommand closeDoorCommand;
-
     @Autowired
     @SpyBean
     private OpenDoorCommand openDoorCommand;
-
     @Autowired
     @SpyBean
-    private MoveCabinCommand moveCabinCommand;
-
+    private StartEngineCommand startEngineCommand;
     @Autowired
     @SpyBean
-    private StopCabinCommand stopCabinCommand;
+    private StopEngineCommand stopEngineCommand;
 }
