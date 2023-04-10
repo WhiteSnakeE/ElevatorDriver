@@ -7,9 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 
 import java.util.List;
-import java.util.Objects;
 
-import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.times;
 
 public class CallCabinThenTest extends IntegrationTest {

@@ -6,32 +6,21 @@ import com.sytoss.edu.elevator.bom.house.floors.Floor;
 import com.sytoss.edu.elevator.bom.house.floors.MiddleFloor;
 import com.sytoss.edu.elevator.services.FloorService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@SpringBootTest
 public class FloorServiceTest {
 
-    @SpyBean
-    @Autowired
-    private House house;
-    @Mock
-    private FirstFloor firstFloor;
-    @Mock
-    private MiddleFloor middleFloor;
-    @Autowired
-    private FloorService floorService;
+    private final House house = mock(House.class);
+    private final FloorService floorService = new FloorService(house);
 
     @Test
     public void goUpCabinRequestToFirstFloorTest () {
+        FirstFloor firstFloor = mock(FirstFloor.class);
+
         when(house.getFloors()).thenReturn(List.of(firstFloor));
         floorService.goUpCabinRequest(1);
         verify(firstFloor).pressUpButton();
@@ -39,6 +28,9 @@ public class FloorServiceTest {
 
     @Test
     public void goUpCabinRequestToMiddleFloorTest () {
+        FirstFloor firstFloor = mock(FirstFloor.class);
+        MiddleFloor middleFloor = mock(MiddleFloor.class);
+
         List<Floor> list = new ArrayList<>();
         list.add(firstFloor);
         for (int i = 2; i <= 4; ++i) {

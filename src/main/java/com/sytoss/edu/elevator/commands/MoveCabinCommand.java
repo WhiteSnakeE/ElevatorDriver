@@ -1,6 +1,5 @@
 package com.sytoss.edu.elevator.commands;
 
-import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.EngineState;
 import com.sytoss.edu.elevator.bom.house.House;
@@ -43,14 +42,14 @@ public class MoveCabinCommand implements Command {
 
         log.info("Shaft with id [{}] start process: [{}]", shaft.getId(), shaft.getCabinPosition());
         Floor floor = (Floor) currentFloor.next();
-        if ((startPosition == getFirstFloor(shaft))){
+        if ((startPosition == getFirstFloor(shaft))) {
             commandManager.getCommand(OPEN_DOOR_COMMAND).execute(params);
             commandManager.getCommand(CLOSE_DOOR_COMMAND).execute(params);
             floor = (Floor) currentFloor.next();
         }
 
 
-        while (currentFloor.hasNext()&&floor.getFloorNumber()<=getLastFloor(shaft)){
+        while (currentFloor.hasNext() && floor.getFloorNumber() <= getLastFloor(shaft)) {
             if (shaft.getEngine().getEngineState().equals(EngineState.STAYING)) {
                 commandManager.getCommand(START_ENGINE_COMMAND).execute(params);
             }
@@ -61,7 +60,7 @@ public class MoveCabinCommand implements Command {
             }
 
 
-            if (shaft.getSequenceOfStops().getStopFloors().contains(shaft.getCabinPosition())){
+            if (shaft.getSequenceOfStops().getStopFloors().contains(shaft.getCabinPosition())) {
                 commandManager.getCommand(STOP_ENGINE_COMMAND).execute(params);
                 commandManager.getCommand(OPEN_DOOR_COMMAND).execute(params);
                 commandManager.getCommand(CLOSE_DOOR_COMMAND).execute(params);
@@ -70,7 +69,7 @@ public class MoveCabinCommand implements Command {
                     commandManager.getCommand(START_ENGINE_COMMAND).execute(params);
                 }
             }
-            floor=(Floor) currentFloor.next();
+            floor = (Floor) currentFloor.next();
         }
         shaft.clearSequence();
         log.info("Shaft with id [{}] end process on floor: [{}]", shaft.getId(), shaft.getCabinPosition());
@@ -78,7 +77,7 @@ public class MoveCabinCommand implements Command {
     }
 
 
-    private int getLastFloor(Shaft shaft) {
+    private int getLastFloor (Shaft shaft) {
         return shaft.getSequenceOfStops().getStopFloors().get(shaft.getSequenceOfStops().getStopFloors().size() - 1);
     }
 

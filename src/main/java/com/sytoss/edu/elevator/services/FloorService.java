@@ -3,14 +3,14 @@ package com.sytoss.edu.elevator.services;
 import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.buttons.FloorWithUpButton;
 import com.sytoss.edu.elevator.bom.house.floors.Floor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class FloorService {
 
-    @Autowired
-    private House house;
+    private final House house;
 
     public void goUpCabinRequest (int floorNumber) {
         Floor floor = house.getFloors().get(floorNumber - 1);
