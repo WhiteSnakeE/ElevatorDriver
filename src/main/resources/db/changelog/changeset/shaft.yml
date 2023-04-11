@@ -1,0 +1,69 @@
+databaseChangeLog:
+  - changeSet:
+      id: shaft_1
+      author: egorBP
+      changes:
+        - createTable:
+            tableName: shaft
+            columns:
+              - column:
+                  name: id
+                  type: LONG
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cabinPosition
+                  type: INT
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: doorState
+                  type: varchar(10)
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: engineState
+                  type: varchar(10)
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: overweightState
+                  type: varchar(20)
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: houseId
+                  type: INT
+                  constraints:
+                    unique: false
+                    nullable: false
+              - column:
+                  name: sequenceOfStops
+                  type: varchar(512)
+                  constraints:
+                    unique: false
+                    nullable: false
+  - changeSet:
+      id: shaft_2
+      author: egorBP
+      changes:
+        - addPrimaryKey:
+            tableName: shaft
+            columnNames: id
+            constraintName: PK_SHAFT
+  - changeSet:
+      id: shaft_3
+      author: egorBP
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: shaft
+            baseColumnNames: houseId
+            constraintName: FK_HOUSE_SHAFT
+            referencedTableName: house
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
