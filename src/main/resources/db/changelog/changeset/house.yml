@@ -28,7 +28,7 @@ databaseChangeLog:
                   type: varchar(512)
                   constraints:
                     unique: false
-                    nullable: false
+                    nullable: true
   - changeSet:
       id: house_2
       author: egorBP

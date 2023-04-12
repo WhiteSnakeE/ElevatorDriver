@@ -37,7 +37,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: houseId
-                  type: INT
+                  type: LONG
                   constraints:
                     unique: false
                     nullable: false
@@ -46,7 +46,7 @@ databaseChangeLog:
                   type: varchar(512)
                   constraints:
                     unique: false
-                    nullable: false
+                    nullable: true
   - changeSet:
       id: shaft_2
       author: egorBP
