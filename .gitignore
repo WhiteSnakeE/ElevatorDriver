@@ -16,6 +16,9 @@ dist/
 # Log files
 *.log
 
+#DB
+./db/
+
 # Package files
 *.jar
 
