@@ -16,7 +16,7 @@ public class HouseController {
     private final HouseService houseService;
 
     @PostMapping("/register")
-    private void saveRequest(
+    public void saveRequest(
             @RequestBody HouseDTO houseDTO) {
         houseService.saveRequest(houseDTO);
     }
