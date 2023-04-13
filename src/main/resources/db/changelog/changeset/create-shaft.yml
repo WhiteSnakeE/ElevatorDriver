@@ -37,7 +37,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: HOUSE_ID
-                  type: INT
+                  type: LONG
                   constraints:
                     unique: false
                     nullable: false

@@ -5,18 +5,16 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.UUID;
 
 @Entity
 @Builder
-@Table(name = "house")
+@Table(name = "HOUSE")
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
 public class HouseConverter {
 
     @Id
@@ -24,17 +22,12 @@ public class HouseConverter {
     @Getter
     private long id;
 
-    @Column(name = "NUMBEROFFLOORS")
+    @Column(name = "NUMBER_OF_FLOORS")
     private int numberOfFloors;
 
-    @Column(name = "NUMBEROFSHAFTS")
+    @Column(name = "NUMBER_OF_SHAFTS")
     private int numberOfShafts;
 
-    @Column(name = "ORDERSEQUENCEOFSTOPS")
+    @Column(name = "ORDER_SEQUENCE_OF_STOPS")
     private String orderSequenceOfStops;
-
-    public HouseConverter fromDTO(HouseDTO houseDTO) {
-        Long id = UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
-        return HouseConverter.builder().id(id).numberOfFloors(houseDTO.getNumberOfFloors()).numberOfShafts(houseDTO.getNumberOfShafts()).build();
-    }
 }
