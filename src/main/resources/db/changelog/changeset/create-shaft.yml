@@ -53,6 +53,7 @@ databaseChangeLog:
                   constraints:
                     unique: false
                     nullable: true
+
   - changeSet:
       id: insert_shaft_1
       author: egorBP
@@ -75,6 +76,7 @@ databaseChangeLog:
               - column:
                   name: HOUSE_ID
                   value: 1
+
   - changeSet:
       id: insert_shaft_2
       author: egorBP
