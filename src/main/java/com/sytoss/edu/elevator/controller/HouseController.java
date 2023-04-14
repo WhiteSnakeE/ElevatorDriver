@@ -1,6 +1,6 @@
 package com.sytoss.edu.elevator.controller;
 
-import com.sytoss.edu.elevator.dto.HouseDTO;
+import com.sytoss.edu.elevator.params.HouseParams;
 import com.sytoss.edu.elevator.services.HouseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +17,7 @@ public class HouseController {
 
     @PostMapping("/register")
     public void saveRequest(
-            @RequestBody HouseDTO houseDTO) {
-        houseService.saveRequest(houseDTO);
+            @RequestBody HouseParams houseParams) {
+        houseService.saveRequest(houseParams);
     }
 }

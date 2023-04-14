@@ -1,7 +1,7 @@
 package com.sytoss.edu.elevator.unit.controller;
 
 import com.sytoss.edu.elevator.controller.HouseController;
-import com.sytoss.edu.elevator.dto.HouseDTO;
+import com.sytoss.edu.elevator.params.HouseParams;
 import com.sytoss.edu.elevator.services.HouseService;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +15,7 @@ public class HouseControllerTest {
 
     @Test
     public void saveRequestTest() {
-        HouseDTO houseDTO = mock(HouseDTO.class);
+        HouseParams houseDTO = mock(HouseParams.class);
         houseController.saveRequest(houseDTO);
         verify(houseService).saveRequest(houseDTO);
     }

@@ -14,13 +14,13 @@ public class ElevatorConfiguration {
     private HouseBuilder houseBuilder;
 
     @Value("${house.elevatorCountCabin}")
-    private int shaftCount;
+    private int shaftsCount;
 
     @Value("${house.floorsCount}")
     private int floorsCount;
 
     @Bean("house")
     public House getHouse () {
-        return houseBuilder.build(shaftCount, floorsCount);
+        return houseBuilder.build(shaftsCount, floorsCount);
     }
 }

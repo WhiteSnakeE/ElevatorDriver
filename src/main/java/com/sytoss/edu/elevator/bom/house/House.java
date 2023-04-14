@@ -1,6 +1,7 @@
 package com.sytoss.edu.elevator.bom.house;
 
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
+import com.sytoss.edu.elevator.bom.Entity;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @Getter
-public class House {
+public class House extends Entity {
 
     private List<Shaft> shafts = new ArrayList<>();
 
