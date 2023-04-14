@@ -9,8 +9,11 @@ databaseChangeLog:
               - column:
                   name: ID
                   type: LONG
+                  autoIncrement: true
                   constraints:
                     nullable: false
+                    primaryKey: true
+                    primaryKeyName: PK_SHAFT
               - column:
                   name: CABIN_POSITION
                   type: INT
@@ -41,35 +44,15 @@ databaseChangeLog:
                   constraints:
                     unique: false
                     nullable: false
+                    foreignKeyName: FK_HOUSE_SHAFT
+                    references: HOUSE(ID)
+                    deleteCascade: true
               - column:
                   name: SEQUENCE_OF_STOPS
                   type: varchar(512)
                   constraints:
                     unique: false
                     nullable: true
-
-  - changeSet:
-      id: add_primary_key_shaft_1
-      author: egorBP
-      changes:
-        - addPrimaryKey:
-            tableName: SHAFT
-            columnNames: ID
-            constraintName: PK_SHAFT
-
-  - changeSet:
-      id: add_foreign_key_shaft_1
-      author: egorBP
-      changes:
-        - addForeignKeyConstraint:
-            baseTableName: SHAFT
-            baseColumnNames: HOUSE_ID
-            constraintName: FK_HOUSE_SHAFT
-            referencedTableName: HOUSE
-            referencedColumnNames: ID
-            onDelete: CASCADE
-            onUpdate: CASCADE
-
   - changeSet:
       id: insert_shaft_1
       author: egorBP
@@ -77,9 +60,6 @@ databaseChangeLog:
         - insert:
             tableName: SHAFT
             columns:
-              - column:
-                  name: ID
-                  value: 1
               - column:
                   name: CABIN_POSITION
                   value: 1
@@ -95,7 +75,6 @@ databaseChangeLog:
               - column:
                   name: HOUSE_ID
                   value: 1
-
   - changeSet:
       id: insert_shaft_2
       author: egorBP
@@ -103,9 +82,6 @@ databaseChangeLog:
         - insert:
             tableName: SHAFT
             columns:
-              - column:
-                  name: ID
-                  value: 2
               - column:
                   name: CABIN_POSITION
                   value: 1

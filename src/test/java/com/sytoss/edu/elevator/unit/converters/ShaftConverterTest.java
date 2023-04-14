@@ -1,14 +1,15 @@
 package com.sytoss.edu.elevator.unit.converters;
 
+import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
-import com.sytoss.edu.elevator.bom.enums.DoorState;
-import com.sytoss.edu.elevator.bom.enums.EngineState;
-import com.sytoss.edu.elevator.bom.enums.OverWeightState;
+import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.converters.ShaftConverter;
 import com.sytoss.edu.elevator.dto.HouseDTO;
 import com.sytoss.edu.elevator.dto.ShaftDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.mockito.Mockito.spy;
 
@@ -24,13 +25,18 @@ public class ShaftConverterTest {
         houseDTO.setNumberOfFloors(16);
 
         Shaft shaft = spy(Shaft.class);
+        SequenceOfStops sequence = new SequenceOfStops();
+        sequence.setStopFloors(List.of(1, 2, 3));
+        sequence.setDirection(Direction.UPWARDS);
+        sequence.setId(123L);
+        shaft.setSequenceOfStops(sequence);
         ShaftDTO shaftDTO = shaftConverter.toDTO(shaft, houseDTO);
 
-        Assertions.assertEquals(shaft.getId(), shaftDTO.getId());
-        Assertions.assertEquals(shaft.getEngine().getEngineState(), EngineState.valueOf(shaftDTO.getEngineState()));
-        Assertions.assertEquals(shaft.getCabin().getDoorState(), DoorState.valueOf(shaftDTO.getDoorState()));
-        Assertions.assertEquals(shaft.getCabin().getOverWeightState(), OverWeightState.valueOf(shaftDTO.getOverweightState()));
+        Assertions.assertEquals(shaft.getEngine().getEngineState(), shaftDTO.getEngineState());
+        Assertions.assertEquals(shaft.getCabin().getDoorState(), shaftDTO.getDoorState());
+        Assertions.assertEquals(shaft.getCabin().getOverWeightState(), shaftDTO.getOverweightState());
         Assertions.assertEquals(shaft.getCabinPosition(), shaftDTO.getCabinPosition());
         Assertions.assertEquals(houseDTO.getId(), shaftDTO.getHouseDTO().getId());
+        Assertions.assertEquals("{\"id\":123,\"stopFloors\":[1,2,3],\"direction\":\"UPWARDS\"}", shaftDTO.getSequenceOfStops());
     }
 }

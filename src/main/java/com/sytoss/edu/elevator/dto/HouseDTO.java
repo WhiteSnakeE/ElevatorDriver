@@ -16,6 +16,7 @@ public class HouseDTO {
 
     @Id
     @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "NUMBER_OF_FLOORS")

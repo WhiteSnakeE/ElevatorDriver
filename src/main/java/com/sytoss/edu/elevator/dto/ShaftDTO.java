@@ -1,5 +1,8 @@
 package com.sytoss.edu.elevator.dto;
 
+import com.sytoss.edu.elevator.bom.enums.DoorState;
+import com.sytoss.edu.elevator.bom.enums.EngineState;
+import com.sytoss.edu.elevator.bom.enums.OverWeightState;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,6 +17,7 @@ public class ShaftDTO {
 
     @Id
     @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(name = "SEQUENCE_OF_STOPS")
@@ -23,13 +27,16 @@ public class ShaftDTO {
     private int cabinPosition;
 
     @Column(name = "DOOR_STATE")
-    private String doorState;
+    @Enumerated(value = EnumType.STRING)
+    private DoorState doorState;
 
     @Column(name = "ENGINE_STATE")
-    private String engineState;
+    @Enumerated(value = EnumType.STRING)
+    private EngineState engineState;
 
     @Column(name = "OVERWEIGHT_STATE")
-    private String overweightState;
+    @Enumerated(value = EnumType.STRING)
+    private OverWeightState overweightState;
 
     @ManyToOne
     @JoinColumn(name = "HOUSE_ID", referencedColumnName = "ID")

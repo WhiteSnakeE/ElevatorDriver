@@ -1,5 +1,6 @@
 package com.sytoss.edu.elevator.unit.services;
 
+import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.HouseBuilder;
 import com.sytoss.edu.elevator.commands.CommandManager;
@@ -23,13 +24,15 @@ public class HouseServiceTest {
 
     private final HouseBuilder houseBuilder = new HouseBuilder(commandManager);
 
-    private final HouseConverter houseConverter = mock(HouseConverter.class);
+    private final HouseConverter houseConverter = spy(HouseConverter.class);
 
     private final ShaftConverter shaftConverter = mock(ShaftConverter.class);
 
+    private final ElevatorDriver elevatorDriver = mock(ElevatorDriver.class);
+
     private final House house = spy(House.class);
 
-    private final HouseService houseService = new HouseService(houseRepository, shaftRepository, houseBuilder, houseConverter, shaftConverter, house);
+    private final HouseService houseService = new HouseService(houseRepository, shaftRepository, houseBuilder, houseConverter, shaftConverter, house, elevatorDriver);
 
     @Test
     public void saveRequestTest() {
@@ -39,7 +42,7 @@ public class HouseServiceTest {
 
         verify(houseRepository).save(any());
         verify(shaftRepository, times(2)).save(any());
-        verify(houseConverter).toDTO(any());
+        verify(houseConverter).toDTO(any(), any());
         verify(shaftConverter, times(2)).toDTO(any(), any());
     }
 }

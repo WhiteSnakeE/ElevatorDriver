@@ -1,5 +1,6 @@
 package com.sytoss.edu.elevator.services;
 
+import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.HouseBuilder;
@@ -31,19 +32,19 @@ public class HouseService {
 
     private final House house;
 
+    private final ElevatorDriver elevatorDriver;
+
     private void changeHouseConfiguration(int shaftsCount, int floorsCount) {
         House houseTmp = houseBuilder.build(shaftsCount, floorsCount);
-        house.setId(houseTmp.getId());
-        house.getFloors().clear();
-        house.getShafts().clear();
-        house.getFloors().addAll(houseTmp.getFloors());
-        house.getShafts().addAll(houseTmp.getShafts());
+        house.setFloors(houseTmp.getFloors());
+        house.setShafts(houseTmp.getShafts());
     }
 
     public void saveRequest(HouseParams houseParams) {
         changeHouseConfiguration(houseParams.getNumberOfShafts(), houseParams.getNumberOfFloors());
-        HouseDTO houseDTO = houseConverter.toDTO(house);
+        HouseDTO houseDTO = houseConverter.toDTO(house, elevatorDriver.getOrderSequenceOfStops());
         houseRepository.save(houseDTO);
+        house.setId(houseDTO.getId());
 
         for (Shaft shaft : house.getShafts()) {
             ShaftDTO shaftDTO = shaftConverter.toDTO(shaft, houseDTO);
