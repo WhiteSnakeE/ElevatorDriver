@@ -49,6 +49,7 @@ public class HouseService {
         for (Shaft shaft : house.getShafts()) {
             ShaftDTO shaftDTO = shaftConverter.toDTO(shaft, houseDTO);
             shaftRepository.save(shaftDTO);
+            shaft.setId(shaftDTO.getId());
         }
     }
 }

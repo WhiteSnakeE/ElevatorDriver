@@ -11,8 +11,8 @@ public class UpFloorButton extends FloorButton {
         super(command);
     }
 
-    public void press (int floorNumber) {
+    public void press (int floorNumber, long houseId) {
         log.info("UpFloorButton: press floorNumber {} ", floorNumber);
-        super.press(floorNumber, Direction.UPWARDS);
+        super.press(floorNumber, Direction.UPWARDS, houseId);
     }
 }

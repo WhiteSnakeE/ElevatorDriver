@@ -6,6 +6,10 @@ import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.house.floors.Floor;
+import com.sytoss.edu.elevator.converters.HouseConverter;
+import com.sytoss.edu.elevator.converters.ShaftConverter;
+import com.sytoss.edu.elevator.repositories.HouseRepository;
+import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +26,8 @@ public class House extends Entity {
 
     private List<Floor> floors = new ArrayList<>();
 
-    public Shaft moveSequenceToShaft(ElevatorDriver elevatorDriver) {
+    public Shaft moveSequenceToShaft(ElevatorDriver elevatorDriver, ShaftRepository shaftRepository,
+            HouseRepository houseRepository, HouseConverter houseConverter, ShaftConverter shaftConverter) {
         Shaft nearestCabin = findNearestCabin(elevatorDriver.getOrderSequenceOfStops());
 
         if (nearestCabin == null) {
@@ -30,6 +35,26 @@ public class House extends Entity {
         }
 
         boolean isNeedActivate = nearestCabin.updateSequence(elevatorDriver);
+
+        String sequenceOfStops = shaftConverter.sequenceToStringInJSON(nearestCabin.getSequenceOfStops());
+        shaftRepository.updateSequenceById(nearestCabin.getId(), sequenceOfStops);
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        String orderSequenceOfStops = houseConverter.orderSequenceToStringInJSON(
+                elevatorDriver.getOrderSequenceOfStops()
+        );
+        houseRepository.updateOrderById(getId(), orderSequenceOfStops);
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         if (!isNeedActivate) {
             return null;

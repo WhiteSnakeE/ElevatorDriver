@@ -15,8 +15,8 @@ public class MiddleFloor extends Floor implements FloorWithUpButton {
     }
 
     @Override
-    public void pressUpButton () {
+    public void pressUpButton (long houseId) {
         log.info("MiddleFloor: pressUpButton ");
-        upFloorButton.press(getFloorNumber());
+        upFloorButton.press(getFloorNumber(), houseId);
     }
 }
