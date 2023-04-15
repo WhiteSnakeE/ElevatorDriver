@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class OpenDoorCommand implements Command {
 
     private final ShaftRepository shaftRepository;
-    private final int timeSleep = 5000;
+    private final int timeSleep = 0;
     @Override
     public void execute (HashMap<String, Object> params) {
         Shaft shaft = (Shaft) params.get("Shaft");
@@ -31,7 +31,7 @@ public class OpenDoorCommand implements Command {
                 shaftRepository.updateOverweightStateById(shaft.getId(), OverWeightState.OVERWEIGHT.toString());
 
                 try {
-                    Thread.sleep(timeSleep);
+                    Thread.sleep(5000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

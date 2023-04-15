@@ -6,6 +6,7 @@ import com.sytoss.edu.elevator.bom.house.HouseBuilder;
 import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.converters.HouseConverter;
 import com.sytoss.edu.elevator.converters.ShaftConverter;
+import com.sytoss.edu.elevator.dto.ShaftDTO;
 import com.sytoss.edu.elevator.params.HouseParams;
 import com.sytoss.edu.elevator.repositories.HouseRepository;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
@@ -36,8 +37,14 @@ public class HouseServiceTest {
 
     @Test
     public void saveRequestTest() {
+        ShaftDTO shaftDTO = mock(ShaftDTO.class);
+
         HouseParams houseDTO = spy(HouseParams.builder().build());
         houseDTO.setNumberOfShafts(2);
+
+        when(shaftConverter.toDTO(any(), any())).thenReturn(shaftDTO);
+        when(shaftDTO.getId()).thenReturn(123L);
+
         houseService.saveRequest(houseDTO);
 
         verify(houseRepository).save(any());

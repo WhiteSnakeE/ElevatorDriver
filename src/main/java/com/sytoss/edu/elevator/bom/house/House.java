@@ -39,22 +39,10 @@ public class House extends Entity {
         String sequenceOfStops = shaftConverter.sequenceToStringInJSON(nearestCabin.getSequenceOfStops());
         shaftRepository.updateSequenceById(nearestCabin.getId(), sequenceOfStops);
 
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
         String orderSequenceOfStops = houseConverter.orderSequenceToStringInJSON(
                 elevatorDriver.getOrderSequenceOfStops()
         );
         houseRepository.updateOrderById(getId(), orderSequenceOfStops);
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
 
         if (!isNeedActivate) {
             return null;

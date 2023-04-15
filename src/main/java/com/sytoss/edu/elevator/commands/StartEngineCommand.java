@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class StartEngineCommand implements Command {
 
     private final ShaftRepository shaftRepository;
-    private int timeSleep = 10000;
+    private int timeSleep = 0;
 
     @Override
     public void execute (HashMap<String, Object> params) {

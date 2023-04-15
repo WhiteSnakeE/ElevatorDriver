@@ -14,20 +14,22 @@ import static org.mockito.Mockito.*;
 
 public class FloorServiceTest {
 
-    private final House house = mock(House.class);
+    private final House house = spy(House.class);
     private final FloorService floorService = new FloorService(house);
 
     @Test
     public void goUpCabinRequestToFirstFloorTest () {
+        house.setId(123L);
         FirstFloor firstFloor = mock(FirstFloor.class);
 
         when(house.getFloors()).thenReturn(List.of(firstFloor));
         floorService.goUpCabinRequest(1);
-        verify(firstFloor).pressUpButton();
+        verify(firstFloor).pressUpButton(123L);
     }
 
     @Test
     public void goUpCabinRequestToMiddleFloorTest () {
+        house.setId(123L);
         FirstFloor firstFloor = mock(FirstFloor.class);
         MiddleFloor middleFloor = mock(MiddleFloor.class);
 
@@ -38,6 +40,6 @@ public class FloorServiceTest {
         }
         when(house.getFloors()).thenReturn(list);
         floorService.goUpCabinRequest(2);
-        verify(middleFloor).pressUpButton();
+        verify(middleFloor).pressUpButton(123L);
     }
 }

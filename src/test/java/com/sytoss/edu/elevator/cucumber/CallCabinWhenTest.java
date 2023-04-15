@@ -4,10 +4,16 @@ import com.sytoss.edu.elevator.IntegrationTest;
 import com.sytoss.edu.elevator.TestContext;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.commands.Command;
+import com.sytoss.edu.elevator.converters.HouseConverter;
+import com.sytoss.edu.elevator.converters.ShaftConverter;
+import com.sytoss.edu.elevator.repositories.HouseRepository;
+import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import io.cucumber.java.en.When;
 import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
+
+import static org.mockito.Mockito.mock;
 
 public class CallCabinWhenTest extends IntegrationTest {
 
@@ -21,7 +27,10 @@ public class CallCabinWhenTest extends IntegrationTest {
     @When("call process findNearestCabin for floor {int} with direction {string}")
     public void callProcessFindNearestCabinForFloor(int floor,String direction){
         getElevatorDriver().addNewSequenceToOrder(floor, Direction.valueOf(direction));
-        getHouse().moveSequenceToShaft(getElevatorDriver());
+        getHouse().moveSequenceToShaft(
+                getElevatorDriver(), mock(ShaftRepository.class), mock(HouseRepository.class),
+                getHouseConverter(), getShaftConverter()
+        );
     }
 
     @When("start cabin with index {int} moving sequence of stops to")

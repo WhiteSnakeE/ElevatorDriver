@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class CloseDoorCommand implements Command {
 
     private final ShaftRepository shaftRepository;
-    private final int timeSleep = 5000;
+    private final int timeSleep = 0;
 
     @Override
     public void execute (HashMap<String, Object> params) {
