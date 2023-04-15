@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class ShaftConverter {
 
     public ShaftDTO toDTO(Shaft shaft, HouseDTO houseDTO) {
-        return ShaftDTO.builder().id(shaft.getId()).cabinPosition(shaft.getCabinPosition()).doorState(shaft.getCabin()
+        return ShaftDTO.builder().cabinPosition(shaft.getCabinPosition()).doorState(shaft.getCabin()
                         .getDoorState()).engineState(shaft.getEngine().getEngineState())
                 .overweightState(shaft.getCabin().getOverWeightState()).houseDTO(houseDTO)
                 .sequenceOfStops(sequenceToStringInJSON(shaft.getSequenceOfStops())).build();
