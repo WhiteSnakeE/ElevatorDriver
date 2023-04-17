@@ -9,6 +9,7 @@ databaseChangeLog:
               - column:
                   name: ID
                   type: LONG
+                  autoIncrement: true
                   constraints:
                     nullable: false
                     primaryKey: true
@@ -61,9 +62,6 @@ databaseChangeLog:
             tableName: SHAFT
             columns:
               - column:
-                  name: ID
-                  value: 1
-              - column:
                   name: CABIN_POSITION
                   value: 1
               - column:
@@ -86,9 +84,6 @@ databaseChangeLog:
         - insert:
             tableName: SHAFT
             columns:
-              - column:
-                  name: ID
-                  value: 2
               - column:
                   name: CABIN_POSITION
                   value: 1

@@ -17,7 +17,7 @@ public class HouseBuilder {
 
     private final CommandManager commandManager;
 
-    public House build (int shaftCount, int floorCount) {
+    public House build(int shaftCount, int floorCount) {
         House result = new House();
         for (int i = 0; i < shaftCount; i++) {
             result.getShafts().add(new Shaft());

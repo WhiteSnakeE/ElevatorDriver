@@ -9,6 +9,7 @@ databaseChangeLog:
               - column:
                   name: ID
                   type: LONG
+                  autoIncrement: true
                   constraints:
                     nullable: false
                     primaryKey: true
@@ -31,7 +32,6 @@ databaseChangeLog:
                   constraints:
                     unique: false
                     nullable: true
-
   - changeSet:
       id: insert_house_1
       author: egorBP
@@ -39,9 +39,6 @@ databaseChangeLog:
         - insert:
             tableName: HOUSE
             columns:
-              - column:
-                  name: ID
-                  value: 1
               - column:
                   name: NUMBER_OF_FLOORS
                   value: 16

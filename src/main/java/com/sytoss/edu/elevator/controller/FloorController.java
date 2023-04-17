@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -16,7 +15,8 @@ public class FloorController {
     private final FloorService floorService;
 
     @PostMapping("/floorButton/{floorNumber}/up")
-    public void goUpCabinRequest (@PathVariable(value = "floorNumber") int floorNumber) {
+    public void goUpCabinRequest(
+            @PathVariable(value = "floorNumber") int floorNumber) {
         floorService.goUpCabinRequest(floorNumber);
     }
 }
