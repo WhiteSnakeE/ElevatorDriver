@@ -21,11 +21,14 @@ public class MoveCabinCommand implements Command {
     private final CommandManager commandManager;
     private final House house;
     private final ShaftRepository shaftRepository;
+    public final String SHAFT_PARAM = "Shaft";
+    public final String DIRECTION_PARAM = "Direction";
+
 
     @Override
     public void execute (HashMap<String, Object> params) {
-        Shaft shaft = (Shaft) params.get("Shaft");
-        params.put("Direction", shaft.getSequenceOfStops().getDirection());
+        Shaft shaft = (Shaft) params.get(SHAFT_PARAM);
+        params.put(DIRECTION_PARAM, shaft.getSequenceOfStops().getDirection());
         ListIterator currentFloor = house.getFloors().listIterator();
         int startPosition = shaft.getCabinPosition();
 

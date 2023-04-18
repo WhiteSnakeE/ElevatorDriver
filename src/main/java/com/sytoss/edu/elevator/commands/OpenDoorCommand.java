@@ -25,20 +25,13 @@ public class OpenDoorCommand implements Command {
         log.info("Shaft with id [{}] updated doorState in DB to: [{}]", shaft.getId(), shaft.getCabin().getDoorState());
         shaftRepository.updateDoorStateById(shaft.getId(), shaft.getCabin().getDoorState());
 
-        while (true) {
-            if (shaft.getCabin().isOverWeight()) {
-                log.info("Cabin in shaft with id [{}] is: [OVERWEIGHT]", shaft.getId());
-                shaftRepository.updateOverweightStateById(shaft.getId(), OverWeightState.OVERWEIGHT);
+        while (shaft.getCabin().isOverWeight()) {
+            log.info("Cabin in shaft with id [{}] is: [OVERWEIGHT]", shaft.getId());
 
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            } else {
-                log.info("Cabin in shaft with id [{}] is: [NOT_OVERWEIGHT]", shaft.getId());
-                shaftRepository.updateOverweightStateById(shaft.getId(), OverWeightState.NOT_OVERWEIGHT);
-                break;
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
 

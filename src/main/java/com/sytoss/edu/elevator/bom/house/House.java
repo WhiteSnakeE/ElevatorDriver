@@ -26,33 +26,7 @@ public class House extends Entity {
 
     private List<Floor> floors = new ArrayList<>();
 
-    public Shaft moveSequenceToShaft(ElevatorDriver elevatorDriver, ShaftRepository shaftRepository,
-            HouseRepository houseRepository, HouseConverter houseConverter, ShaftConverter shaftConverter) {
-        Shaft nearestCabin = findNearestCabin(elevatorDriver.getOrderSequenceOfStops());
-
-        if (nearestCabin == null) {
-            return null;
-        }
-
-        boolean isNeedActivate = nearestCabin.updateSequence(elevatorDriver);
-
-        String sequenceOfStops = shaftConverter.sequenceToStringInJSON(nearestCabin.getSequenceOfStops());
-        shaftRepository.updateSequenceById(nearestCabin.getId(), sequenceOfStops);
-
-        String orderSequenceOfStops = houseConverter.orderSequenceToStringInJSON(
-                elevatorDriver.getOrderSequenceOfStops()
-        );
-        houseRepository.updateOrderById(getId(), orderSequenceOfStops);
-
-        if (!isNeedActivate) {
-            return null;
-        }
-
-        return nearestCabin;
-    }
-
-
-    private Shaft findNearestCabin(List<SequenceOfStops> orderSequenceOfStops) {
+    public Shaft findNearestCabin(List<SequenceOfStops> orderSequenceOfStops) {
         List<Shaft> appropriateShafts = getFreeShafts();
 
         if (appropriateShafts.isEmpty()) {
