@@ -28,6 +28,6 @@ public class OpenDoorCommandTest {
         when(cabin.getDoorState()).thenReturn(DoorState.OPENED);
         openDoorCommand.execute(params);
         verify(cabin).openDoor();
-        verify(shaftRepository).updateDoorStateById(123L, DoorState.OPENED.toString());
+        verify(shaftRepository).updateDoorStateById(123L, DoorState.OPENED);
     }
 }

@@ -59,6 +59,7 @@ public class MoveCabinCommand implements Command {
 
             shaft.setCabinPosition(floor.getFloorNumber());
             shaftRepository.updateCabinPositionById(shaft.getId(), floor.getFloorNumber());
+
             log.info("Shaft with id [{}] update cabin position in DB to: [{}]", shaft.getId(), floor.getFloorNumber());
             if (startPosition != floor.getFloorNumber()) {
                 floor.visit(shaft);

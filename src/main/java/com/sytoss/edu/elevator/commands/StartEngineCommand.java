@@ -24,7 +24,7 @@ public class StartEngineCommand implements Command {
         log.info("Engine in shaft with id [{}] has engine state: [{}]", shaft.getId(), shaft.getEngine().getEngineState());
 
         log.info("Shaft with id [{}] updated engineState in DB to: [{}]", shaft.getId(), shaft.getEngine().getEngineState());
-        shaftRepository.updateEngineStateById(shaft.getId(), shaft.getEngine().getEngineState().toString());
+        shaftRepository.updateEngineStateById(shaft.getId(), shaft.getEngine().getEngineState());
 
         try {
             Thread.sleep(timeSleep);

@@ -23,12 +23,12 @@ public class OpenDoorCommand implements Command {
         log.info("Shaft with id [{}] has [DOOR STATE]: [OPENED]", shaft.getId());
 
         log.info("Shaft with id [{}] updated doorState in DB to: [{}]", shaft.getId(), shaft.getCabin().getDoorState());
-        shaftRepository.updateDoorStateById(shaft.getId(), shaft.getCabin().getDoorState().toString());
+        shaftRepository.updateDoorStateById(shaft.getId(), shaft.getCabin().getDoorState());
 
         while (true) {
             if (shaft.getCabin().isOverWeight()) {
                 log.info("Cabin in shaft with id [{}] is: [OVERWEIGHT]", shaft.getId());
-                shaftRepository.updateOverweightStateById(shaft.getId(), OverWeightState.OVERWEIGHT.toString());
+                shaftRepository.updateOverweightStateById(shaft.getId(), OverWeightState.OVERWEIGHT);
 
                 try {
                     Thread.sleep(5000);
@@ -37,7 +37,7 @@ public class OpenDoorCommand implements Command {
                 }
             } else {
                 log.info("Cabin in shaft with id [{}] is: [NOT_OVERWEIGHT]", shaft.getId());
-                shaftRepository.updateOverweightStateById(shaft.getId(), OverWeightState.NOT_OVERWEIGHT.toString());
+                shaftRepository.updateOverweightStateById(shaft.getId(), OverWeightState.NOT_OVERWEIGHT);
                 break;
             }
         }

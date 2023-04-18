@@ -29,6 +29,6 @@ public class StopEngineCommandTest {
         stopEngineCommand.execute(params);
 
         verify(engine).stop();
-        verify(shaftRepository).updateEngineStateById(123L, EngineState.STAYING.toString());
+        verify(shaftRepository).updateEngineStateById(123L, EngineState.STAYING);
     }
 }

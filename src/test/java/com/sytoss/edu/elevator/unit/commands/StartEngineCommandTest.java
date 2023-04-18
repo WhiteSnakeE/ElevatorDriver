@@ -31,6 +31,6 @@ public class StartEngineCommandTest {
 
         startEngineCommand.execute(params);
         verify(engine).start(Direction.UPWARDS);
-        verify(shaftRepository).updateEngineStateById(123L, EngineState.GOING_UP.toString());
+        verify(shaftRepository).updateEngineStateById(123L, EngineState.GOING_UP);
     }
 }

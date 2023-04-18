@@ -23,7 +23,7 @@ public class CloseDoorCommand implements Command {
         log.info("Shaft with id [{}] has [DOOR STATE]: [CLOSED]", shaft.getId());
 
         log.info("Shaft with id [{}] updated doorState in DB to: [{}]", shaft.getId(), shaft.getCabin().getDoorState());
-        shaftRepository.updateDoorStateById(shaft.getId(), shaft.getCabin().getDoorState().toString());
+        shaftRepository.updateDoorStateById(shaft.getId(), shaft.getCabin().getDoorState());
 
         try {
             Thread.sleep(timeSleep);

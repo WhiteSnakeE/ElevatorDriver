@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public interface HouseRepository extends JpaRepository<HouseDTO, Long> {
 
-    @Transactional
     @Modifying
-    @Query(value = "UPDATE HOUSE SET ORDER_SEQUENCE_OF_STOPS = :orderSequenceOfStops WHERE ID = :id", nativeQuery = true)
+    @Query("UPDATE HouseDTO House SET House.orderSequenceOfStops = :orderSequenceOfStops WHERE House.id = :id")
     void updateOrderById(@Param("id") Long id, @Param("orderSequenceOfStops") String orderSequenceOfStops);
 }

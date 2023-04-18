@@ -23,7 +23,7 @@ public class StopEngineCommand implements Command {
         log.info("Shaft with id [{}] has [ENGINE STATE]: [STAYING!!]", shaft.getId());
 
         log.info("Shaft with id [{}] updated engineState in DB to: [{}]", shaft.getId(), shaft.getEngine().getEngineState());
-        shaftRepository.updateEngineStateById(shaft.getId(), shaft.getEngine().getEngineState().toString());
+        shaftRepository.updateEngineStateById(shaft.getId(), shaft.getEngine().getEngineState());
 
         try {
             Thread.sleep(timeSleep);
