@@ -14,8 +14,8 @@ public class FirstFloorTest {
     @Test
     public void pressUpButton () {
         FirstFloor firstFloor = new FirstFloor(upFloorButton);
-        firstFloor.pressUpButton(123L);
+        firstFloor.pressUpButton();
 
-        verify(upFloorButton).press(firstFloor.getFloorNumber(), 123L);
+        verify(upFloorButton).press(firstFloor.getFloorNumber());
     }
 }

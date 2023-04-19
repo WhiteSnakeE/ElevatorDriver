@@ -24,7 +24,7 @@ public class FloorServiceTest {
 
         when(house.getFloors()).thenReturn(List.of(firstFloor));
         floorService.goUpCabinRequest(1);
-        verify(firstFloor).pressUpButton(123L);
+        verify(firstFloor).pressUpButton();
     }
 
     @Test
@@ -40,6 +40,6 @@ public class FloorServiceTest {
         }
         when(house.getFloors()).thenReturn(list);
         floorService.goUpCabinRequest(2);
-        verify(middleFloor).pressUpButton(123L);
+        verify(middleFloor).pressUpButton();
     }
 }

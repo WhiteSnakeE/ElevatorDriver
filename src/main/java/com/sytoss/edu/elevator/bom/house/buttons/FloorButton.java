@@ -11,11 +11,10 @@ public abstract class FloorButton extends CommandButton {
         super(command);
     }
 
-    public void press (int floorNumber, Direction direction, long houseId) {
+    public void press (int floorNumber, Direction direction) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("numberFloor", floorNumber);
         params.put("Direction", direction);
-        params.put("houseId", houseId);
         execute(params);
     }
 }

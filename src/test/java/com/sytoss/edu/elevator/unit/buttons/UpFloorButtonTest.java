@@ -25,14 +25,12 @@ public class UpFloorButtonTest {
 
     @Test
     public void pressTest () {
-        house.setId(123L);
         UpFloorButton upFloorButton = new UpFloorButton(command);
-        upFloorButton.press(5, house.getId());
+        upFloorButton.press(5);
 
         HashMap<String, Object> params = new HashMap<>();
 
         params.put("numberFloor", 5);
-        params.put("houseId",123L);
         params.put("Direction", Direction.UPWARDS);
 
         verify(command).execute(params);

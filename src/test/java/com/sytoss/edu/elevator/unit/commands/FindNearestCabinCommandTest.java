@@ -42,21 +42,23 @@ public class FindNearestCabinCommandTest {
     );
 
     @Test
-    public void executeTest () {
+    public void executeTest() {
         elevatorDriver.addNewSequenceToOrder(5, Direction.UPWARDS);
 
         MoveCabinCommand moveCabinCommand = mock(MoveCabinCommand.class);
         Shaft shaft = mock(Shaft.class);
 
-        when(house.moveSequenceToShaft(elevatorDriver, shaftRepository, houseRepository, houseConverter, shaftConverter)).thenReturn(shaft);
+        when(house.findNearestCabin(elevatorDriver.getOrderSequenceOfStops())).thenReturn(shaft);
         when(commandManager.getCommand(Command.MOVE_CABIN_COMMAND)).thenReturn(moveCabinCommand);
+        when(shaft.updateSequence(elevatorDriver)).thenReturn(true);
 
         HashMap<String, Object> params = new HashMap<>();
         params.put("Shaft", shaft);
 
         findNearestCabinCommand.execute(null);
-        verify(house).moveSequenceToShaft(elevatorDriver, shaftRepository, houseRepository, houseConverter, shaftConverter);
+        verify(house).findNearestCabin(elevatorDriver.getOrderSequenceOfStops());
         verify(commandManager.getCommand(Command.MOVE_CABIN_COMMAND)).execute(params);
+        verify(shaft).updateSequence(elevatorDriver);
     }
 
     @Test
