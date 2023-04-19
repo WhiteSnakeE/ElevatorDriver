@@ -3,6 +3,9 @@ package com.sytoss.edu.elevator.unit.converters;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
+import com.sytoss.edu.elevator.bom.enums.DoorState;
+import com.sytoss.edu.elevator.bom.enums.EngineState;
+import com.sytoss.edu.elevator.bom.enums.OverWeightState;
 import com.sytoss.edu.elevator.converters.ShaftConverter;
 import com.sytoss.edu.elevator.dto.HouseDTO;
 import com.sytoss.edu.elevator.dto.ShaftDTO;
@@ -20,7 +23,7 @@ public class ShaftConverterTest {
     @Test
     public void toDTOTest() {
         HouseDTO houseDTO = spy(HouseDTO.class);
-        houseDTO.setId(138277872);
+        houseDTO.setId(138277872L);
         houseDTO.setNumberOfShafts(2);
         houseDTO.setNumberOfFloors(16);
 
@@ -38,5 +41,41 @@ public class ShaftConverterTest {
         Assertions.assertEquals(shaft.getCabinPosition(), shaftDTO.getCabinPosition());
         Assertions.assertEquals(houseDTO.getId(), shaftDTO.getHouseDTO().getId());
         Assertions.assertEquals("{\"id\":123,\"stopFloors\":[1,2,3],\"direction\":\"UPWARDS\"}", shaftDTO.getSequenceOfStops());
+    }
+
+    @Test
+    public void fromDTOTest() {
+        ShaftDTO shaftDTO = ShaftDTO.builder().id(1L).sequenceOfStops(null).cabinPosition(1).doorState(DoorState.CLOSED).engineState(EngineState.STAYING).overweightState(OverWeightState.NOT_OVERWEIGHT).build();
+
+        Shaft shaft = shaftConverter.fromDTO(shaftDTO);
+
+        Assertions.assertEquals(1L, shaft.getId());
+        Assertions.assertEquals(DoorState.CLOSED, shaft.getCabin().getDoorState());
+        Assertions.assertEquals(EngineState.STAYING, shaft.getEngine().getEngineState());
+        Assertions.assertEquals(OverWeightState.NOT_OVERWEIGHT, shaft.getCabin().getOverWeightState());
+        Assertions.assertNull(shaft.getSequenceOfStops());
+    }
+
+    @Test
+    public void sequenceToStringInJSONTest() {
+        SequenceOfStops sequence = new SequenceOfStops();
+        sequence.setStopFloors(List.of(1, 2, 3));
+        sequence.setDirection(Direction.UPWARDS);
+        sequence.setId(123L);
+
+        String json = shaftConverter.sequenceToStringInJSON(sequence);
+
+        Assertions.assertEquals("{\"id\":123,\"stopFloors\":[1,2,3],\"direction\":\"UPWARDS\"}", json);
+    }
+
+    @Test
+    public void stringJSONToSequenceOfStops() {
+        String json = "{\"id\":123,\"stopFloors\":[1,2,3],\"direction\":\"UPWARDS\"}";
+
+        SequenceOfStops sequence = shaftConverter.stringJSONToSequenceOfStops(json);
+
+        Assertions.assertEquals(123L, sequence.getId());
+        Assertions.assertEquals(Direction.UPWARDS, sequence.getDirection());
+        Assertions.assertEquals(List.of(1, 2, 3), sequence.getStopFloors());
     }
 }

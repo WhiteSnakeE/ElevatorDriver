@@ -18,7 +18,7 @@ public class ShaftDTO {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "SEQUENCE_OF_STOPS")
     private String sequenceOfStops;
