@@ -12,7 +12,7 @@ public class FloorService {
 
     private final House house;
 
-    public void goUpCabinRequest (int floorNumber) {
+    public void goUpCabinRequest(int floorNumber) {
         Floor floor = house.getFloors().get(floorNumber - 1);
 
         if (floor instanceof FloorWithUpButton) {

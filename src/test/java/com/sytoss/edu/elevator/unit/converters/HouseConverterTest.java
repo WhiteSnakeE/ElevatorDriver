@@ -6,6 +6,7 @@ import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.HouseBuilder;
 import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.converters.HouseConverter;
+import com.sytoss.edu.elevator.converters.ShaftConverter;
 import com.sytoss.edu.elevator.dto.HouseDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -17,11 +18,13 @@ import static org.mockito.Mockito.mock;
 
 public class HouseConverterTest {
 
-    private final HouseConverter houseConverter = new HouseConverter();
-
     private final CommandManager commandManager = mock(CommandManager.class);
 
     private final HouseBuilder houseBuilder = new HouseBuilder(commandManager);
+
+    private final ShaftConverter shaftConverter = mock(ShaftConverter.class);
+
+    private final HouseConverter houseConverter = new HouseConverter(houseBuilder, shaftConverter);
 
     @Test
     public void toDTOTest() {
@@ -39,5 +42,10 @@ public class HouseConverterTest {
         Assertions.assertEquals(2, houseDTO.getNumberOfShafts());
         Assertions.assertEquals(16, houseDTO.getNumberOfFloors());
         Assertions.assertEquals("[{\"id\":123,\"stopFloors\":[1,2,3],\"direction\":\"UPWARDS\"}]", houseDTO.getOrderSequenceOfStops());
+    }
+
+    @Test
+    public void fromDTOTest() {
+
     }
 }

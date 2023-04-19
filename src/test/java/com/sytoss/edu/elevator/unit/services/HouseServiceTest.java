@@ -6,6 +6,7 @@ import com.sytoss.edu.elevator.bom.house.HouseBuilder;
 import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.converters.HouseConverter;
 import com.sytoss.edu.elevator.converters.ShaftConverter;
+import com.sytoss.edu.elevator.dto.HouseDTO;
 import com.sytoss.edu.elevator.dto.ShaftDTO;
 import com.sytoss.edu.elevator.params.HouseParams;
 import com.sytoss.edu.elevator.repositories.HouseRepository;
@@ -25,7 +26,7 @@ public class HouseServiceTest {
 
     private final HouseBuilder houseBuilder = new HouseBuilder(commandManager);
 
-    private final HouseConverter houseConverter = spy(HouseConverter.class);
+    private final HouseConverter houseConverter = mock(HouseConverter.class);
 
     private final ShaftConverter shaftConverter = mock(ShaftConverter.class);
 
@@ -38,14 +39,18 @@ public class HouseServiceTest {
     @Test
     public void saveRequestTest() {
         ShaftDTO shaftDTO = mock(ShaftDTO.class);
+        HouseDTO houseDTO = mock(HouseDTO.class);
 
-        HouseParams houseDTO = spy(HouseParams.builder().build());
-        houseDTO.setNumberOfShafts(2);
+        HouseParams houseParams = spy(HouseParams.builder().build());
+        houseParams.setNumberOfShafts(2);
 
         when(shaftConverter.toDTO(any(), any())).thenReturn(shaftDTO);
         when(shaftDTO.getId()).thenReturn(123L);
 
-        houseService.saveRequest(houseDTO);
+        when(houseConverter.toDTO(any(), any())).thenReturn(houseDTO);
+        when(houseDTO.getId()).thenReturn(123L);
+
+        houseService.saveRequest(houseParams);
 
         verify(houseRepository).save(any());
         verify(shaftRepository, times(2)).save(any());
