@@ -35,7 +35,6 @@ public class FindNearestCabinCommand implements Command {
     @Override
     public void execute(HashMap<String, Object> params) {
         houseRepository.updateOrderById(house.getId(), houseConverter.orderSequenceToStringInJSON(elevatorDriver.getOrderSequenceOfStops()));
-        //todo fix tests egorBP
         Shaft nearestCabin = house.findNearestCabin(elevatorDriver.getOrderSequenceOfStops());
 
         if (nearestCabin == null) {
