@@ -21,8 +21,10 @@ public class MoveCabinCommand implements Command {
     private final CommandManager commandManager;
     private final House house;
     private final ShaftRepository shaftRepository;
-    public final String SHAFT_PARAM = "Shaft";
-    public final String DIRECTION_PARAM = "Direction";
+    public static final String SHAFT_PARAM = "Shaft";
+    public static final String DIRECTION_PARAM = "Direction";
+
+    public static final String FLOOR_NUMBER_PARAM = "numberFloor";
 
 
     @Override

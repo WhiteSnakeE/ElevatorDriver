@@ -33,7 +33,7 @@ public class FindNearestCabinCommand implements Command {
     private final ShaftConverter shaftConverter;
 
     @Override
-    public void execute(HashMap<String, Object> params) {
+    public void execute (HashMap<String, Object> params) {
         houseRepository.updateOrderById(house.getId(), houseConverter.orderSequenceToStringInJSON(elevatorDriver.getOrderSequenceOfStops()));
         Shaft nearestCabin = house.findNearestCabin(elevatorDriver.getOrderSequenceOfStops());
 
@@ -46,9 +46,7 @@ public class FindNearestCabinCommand implements Command {
         String sequenceOfStops = shaftConverter.sequenceToStringInJSON(nearestCabin.getSequenceOfStops());
         shaftRepository.updateSequenceById(nearestCabin.getId(), sequenceOfStops);
 
-        String orderSequenceOfStops = houseConverter.orderSequenceToStringInJSON(
-                elevatorDriver.getOrderSequenceOfStops()
-        );
+        String orderSequenceOfStops = houseConverter.orderSequenceToStringInJSON(elevatorDriver.getOrderSequenceOfStops());
         houseRepository.updateOrderById(house.getId(), orderSequenceOfStops);
 
         if (!isNeedActivate) {
@@ -56,7 +54,7 @@ public class FindNearestCabinCommand implements Command {
         }
 
         HashMap<String, Object> paramsActivateCommand = new HashMap<>();
-        paramsActivateCommand.put("Shaft", nearestCabin);
+        paramsActivateCommand.put(MoveCabinCommand.SHAFT_PARAM, nearestCabin);
         commandManager.getCommand(MOVE_CABIN_COMMAND).execute(paramsActivateCommand);
     }
 }
