@@ -64,4 +64,7 @@ public class IntegrationTest extends AbstractControllerTest {
 
     @Autowired
     private HouseConverter houseConverter;
+
+    @Autowired
+    private HouseThreadPool houseThreadPool;
 }

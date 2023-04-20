@@ -23,7 +23,6 @@ public class PressUpButtonCommand implements Command {
 
     @Override
     public void execute (HashMap<String, Object> params) {
-        //todo fix tests egorBP
         log.info("Start PressUpButton.execute COMMAND with params: {}", params);
         int numberFloor = (int) params.get("numberFloor");
         Direction direction = (Direction) params.get("Direction");

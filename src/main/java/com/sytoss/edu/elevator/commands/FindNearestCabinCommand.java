@@ -1,5 +1,6 @@
 package com.sytoss.edu.elevator.commands;
 
+import com.sytoss.edu.elevator.HouseThreadPool;
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.house.House;
@@ -32,17 +33,18 @@ public class FindNearestCabinCommand implements Command {
 
     private final ShaftConverter shaftConverter;
 
+    private final HouseThreadPool houseThreadPool;
+
     @Override
     public void execute(HashMap<String, Object> params) {
         houseRepository.updateOrderById(house.getId(), houseConverter.orderSequenceToStringInJSON(elevatorDriver.getOrderSequenceOfStops()));
-        //todo fix tests egorBP
         Shaft nearestCabin = house.findNearestCabin(elevatorDriver.getOrderSequenceOfStops());
 
         if (nearestCabin == null) {
             return;
         }
 
-        boolean isNeedActivate = nearestCabin.updateSequence(elevatorDriver);
+        nearestCabin.updateSequence(elevatorDriver);
 
         String sequenceOfStops = shaftConverter.sequenceToStringInJSON(nearestCabin.getSequenceOfStops());
         shaftRepository.updateSequenceById(nearestCabin.getId(), sequenceOfStops);
@@ -52,12 +54,17 @@ public class FindNearestCabinCommand implements Command {
         );
         houseRepository.updateOrderById(house.getId(), orderSequenceOfStops);
 
-        if (!isNeedActivate) {
+        if (nearestCabin.getIsMoving().get()) {
             return;
         }
 
-        HashMap<String, Object> paramsActivateCommand = new HashMap<>();
-        paramsActivateCommand.put("Shaft", nearestCabin);
-        commandManager.getCommand(MOVE_CABIN_COMMAND).execute(paramsActivateCommand);
+        houseThreadPool.getFixedThreadPool().submit(() -> {
+            log.info("startMoveCabin: start threads for shaft with id {}", nearestCabin.getId());
+            HashMap<String, Object> paramsActivateCommand = new HashMap<>();
+            paramsActivateCommand.put("Shaft", nearestCabin);
+            paramsActivateCommand.put("Floors", house.getFloors());
+            commandManager.getCommand(MOVE_CABIN_COMMAND).execute(paramsActivateCommand);
+            log.info("startMoveCabin: finish threads for shaft with id {}", nearestCabin.getId());
+        });
     }
 }

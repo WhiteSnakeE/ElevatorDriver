@@ -11,7 +11,7 @@ public abstract class Floor extends Entity {
     @Getter
     private final int floorNumber;
 
-    private final int timeSleep = 0;
+    private final int timeSleep = 2000;
 
     public Floor(int floorNumber) {
         this.floorNumber = floorNumber;

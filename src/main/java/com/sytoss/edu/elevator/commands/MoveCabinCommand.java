@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.ListIterator;
 
 @Slf4j
@@ -19,7 +20,6 @@ import java.util.ListIterator;
 public class MoveCabinCommand implements Command {
 
     private final CommandManager commandManager;
-    private final House house;
     private final ShaftRepository shaftRepository;
     public final String SHAFT_PARAM = "Shaft";
     public final String DIRECTION_PARAM = "Direction";
@@ -28,8 +28,10 @@ public class MoveCabinCommand implements Command {
     @Override
     public void execute (HashMap<String, Object> params) {
         Shaft shaft = (Shaft) params.get(SHAFT_PARAM);
+        shaft.getIsMoving().set(true);
         params.put(DIRECTION_PARAM, shaft.getSequenceOfStops().getDirection());
-        ListIterator currentFloor = house.getFloors().listIterator();
+        List<Floor> floorList = (List<Floor>)params.get("Floors");
+        ListIterator currentFloor = floorList.listIterator();
         int startPosition = shaft.getCabinPosition();
 
         while (currentFloor.hasNext()) {
@@ -81,8 +83,8 @@ public class MoveCabinCommand implements Command {
             floor = (Floor) currentFloor.next();
         }
         shaft.clearSequence();
-
         shaftRepository.updateSequenceById(shaft.getId(), null);
+        shaft.getIsMoving().set(false);
         log.info("Shaft with id [{}] end process on floor: [{}]", shaft.getId(), shaft.getCabinPosition());
     }
 

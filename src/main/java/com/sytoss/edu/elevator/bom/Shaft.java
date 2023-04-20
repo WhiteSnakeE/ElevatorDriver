@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 @Getter
@@ -19,6 +20,7 @@ public class Shaft extends Entity {
     private SequenceOfStops sequenceOfStops;
     private Engine engine;
     private Cabin cabin;
+    private AtomicBoolean isMoving = new AtomicBoolean(false);
 
     public boolean isFree () {
         return sequenceOfStops == null;
@@ -30,12 +32,10 @@ public class Shaft extends Entity {
         cabinPosition = 1;
     }
 
-    public synchronized boolean updateSequence (ElevatorDriver elevatorDriver) {
-        boolean isNeedActivate = false;
+    public synchronized void updateSequence (ElevatorDriver elevatorDriver) {
         if (this.sequenceOfStops == null || this.sequenceOfStops.getStopFloors() == null) {
             this.sequenceOfStops = elevatorDriver.getOrderSequenceOfStops().get(0);
             elevatorDriver.removeSequenceFromOrder();
-            isNeedActivate = true;
         } else {
             ArrayList<Integer> stops = new ArrayList<>(this.sequenceOfStops.getStopFloors());
             stops.addAll(elevatorDriver.getOrderSequenceOfStops().get(0).getStopFloors());
@@ -44,7 +44,6 @@ public class Shaft extends Entity {
             elevatorDriver.removeSequenceFromOrder();
         }
         log.info("Shaft with id {} and sequence of stops of found cabin: {}",getId() ,sequenceOfStops.getStopFloors());
-        return isNeedActivate;
     }
 
     public void clearSequence () {

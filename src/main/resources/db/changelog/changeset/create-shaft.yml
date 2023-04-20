@@ -76,9 +76,7 @@ databaseChangeLog:
               - column:
                   name: HOUSE_ID
                   value: 1
-              - column:
-                  name: SEQUENCE_OF_STOPS
-                  value: "{\"id\":123,\"stopFloors\":[1,2],\"direction\":\"UPWARDS\"}"
+
 
   - changeSet:
       id: insert_shaft_2
@@ -89,7 +87,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: CABIN_POSITION
-                  value: 10
+                  value: 2
               - column:
                   name: DOOR_STATE
                   value: CLOSED
@@ -102,6 +100,3 @@ databaseChangeLog:
               - column:
                   name: HOUSE_ID
                   value: 1
-              - column:
-                  name: SEQUENCE_OF_STOPS
-                  value: "{\"id\":1234,\"stopFloors\":[11,12],\"direction\":\"UPWARDS\"}"

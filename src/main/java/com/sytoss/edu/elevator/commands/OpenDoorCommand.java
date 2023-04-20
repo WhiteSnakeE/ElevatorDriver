@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class OpenDoorCommand implements Command {
 
     private final ShaftRepository shaftRepository;
-    private final int timeSleep = 0;
+    private final int timeSleep = 4000;
     @Override
     public void execute (HashMap<String, Object> params) {
         Shaft shaft = (Shaft) params.get("Shaft");

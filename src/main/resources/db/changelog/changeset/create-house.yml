@@ -41,7 +41,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: NUMBER_OF_FLOORS
-                  value: 20
+                  value: 16
               - column:
                   name: NUMBER_OF_SHAFTS
                   value: 2
