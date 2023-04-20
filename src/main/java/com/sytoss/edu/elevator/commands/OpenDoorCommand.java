@@ -18,7 +18,7 @@ public class OpenDoorCommand implements Command {
     private final int timeSleep = 0;
     @Override
     public void execute (HashMap<String, Object> params) {
-        Shaft shaft = (Shaft) params.get(MoveCabinCommand.SHAFT_PARAM);
+        Shaft shaft = (Shaft) params.get(CommandManager.SHAFT_PARAM);
         shaft.getCabin().openDoor();
         log.info("Shaft with id [{}] has [DOOR STATE]: [OPENED]", shaft.getId());
 

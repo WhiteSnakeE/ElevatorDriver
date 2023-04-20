@@ -2,7 +2,7 @@ package com.sytoss.edu.elevator.bom.house.buttons;
 
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.commands.Command;
-import com.sytoss.edu.elevator.commands.MoveCabinCommand;
+import com.sytoss.edu.elevator.commands.CommandManager;
 
 import java.util.HashMap;
 
@@ -14,8 +14,8 @@ public abstract class FloorButton extends CommandButton {
 
     public void press (int floorNumber, Direction direction) {
         HashMap<String, Object> params = new HashMap<>();
-        params.put(MoveCabinCommand.FLOOR_NUMBER_PARAM, floorNumber);
-        params.put(MoveCabinCommand.DIRECTION_PARAM, direction);
+        params.put(CommandManager.FLOOR_NUMBER_PARAM, floorNumber);
+        params.put(CommandManager.DIRECTION_PARAM, direction);
         execute(params);
     }
 }

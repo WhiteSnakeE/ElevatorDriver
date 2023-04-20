@@ -24,8 +24,8 @@ public class PressUpButtonCommand implements Command {
     @Override
     public void execute (HashMap<String, Object> params) {
         log.info("Start PressUpButton.execute COMMAND with params: {}", params);
-        int numberFloor = (int) params.get(MoveCabinCommand.FLOOR_NUMBER_PARAM);
-        Direction direction = (Direction) params.get(MoveCabinCommand.DIRECTION_PARAM);
+        int numberFloor = (int) params.get(CommandManager.FLOOR_NUMBER_PARAM);
+        Direction direction = (Direction) params.get(CommandManager.DIRECTION_PARAM);
 
         elevatorDriver.addNewSequenceToOrder(numberFloor, direction);
 

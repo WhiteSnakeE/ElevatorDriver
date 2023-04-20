@@ -4,7 +4,6 @@ import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.EngineState;
 import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.floors.Floor;
-import com.sytoss.edu.elevator.converters.ShaftConverter;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,16 +20,11 @@ public class MoveCabinCommand implements Command {
     private final CommandManager commandManager;
     private final House house;
     private final ShaftRepository shaftRepository;
-    public static final String SHAFT_PARAM = "Shaft";
-    public static final String DIRECTION_PARAM = "Direction";
-
-    public static final String FLOOR_NUMBER_PARAM = "numberFloor";
-
 
     @Override
     public void execute (HashMap<String, Object> params) {
-        Shaft shaft = (Shaft) params.get(SHAFT_PARAM);
-        params.put(DIRECTION_PARAM, shaft.getSequenceOfStops().getDirection());
+        Shaft shaft = (Shaft) params.get(CommandManager.SHAFT_PARAM);
+        params.put(CommandManager.DIRECTION_PARAM, shaft.getSequenceOfStops().getDirection());
         ListIterator currentFloor = house.getFloors().listIterator();
         int startPosition = shaft.getCabinPosition();
 

@@ -18,7 +18,7 @@ public class StopEngineCommand implements Command {
 
     @Override
     public void execute (HashMap<String, Object> params) {
-        Shaft shaft = (Shaft) params.get(MoveCabinCommand.SHAFT_PARAM);
+        Shaft shaft = (Shaft) params.get(CommandManager.SHAFT_PARAM);
         shaft.getEngine().stop();
         log.info("Shaft with id [{}] has [ENGINE STATE]: [STAYING!!]", shaft.getId());
 

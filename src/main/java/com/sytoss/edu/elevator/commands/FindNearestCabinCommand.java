@@ -54,7 +54,7 @@ public class FindNearestCabinCommand implements Command {
         }
 
         HashMap<String, Object> paramsActivateCommand = new HashMap<>();
-        paramsActivateCommand.put(MoveCabinCommand.SHAFT_PARAM, nearestCabin);
+        paramsActivateCommand.put(CommandManager.SHAFT_PARAM, nearestCabin);
         commandManager.getCommand(MOVE_CABIN_COMMAND).execute(paramsActivateCommand);
     }
 }
