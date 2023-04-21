@@ -7,13 +7,17 @@ import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.HouseBuilder;
 import com.sytoss.edu.elevator.commands.CommandManager;
+import com.sytoss.edu.elevator.converters.HouseConverter;
+import com.sytoss.edu.elevator.converters.ShaftConverter;
+import com.sytoss.edu.elevator.repositories.HouseRepository;
+import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class HouseTest {
 
@@ -21,19 +25,21 @@ public class HouseTest {
 
     private final House house = houseBuilder.build(2, 16);
 
-    private final ElevatorDriver elevatorDriver = mock(ElevatorDriver.class);
-
     @Test
-    public void moveSequenceToShaftTest () {
-        SequenceOfStops sequence = new SequenceOfStops();
-        sequence.setDirection(Direction.UPWARDS);
-        sequence.setStopFloors(List.of(7));
+    public void findNearestCabinTest() {
+        List<SequenceOfStops> orderSequenceOfStops = new ArrayList<>();
+        SequenceOfStops sequence1 = new SequenceOfStops();
+        sequence1.setId(123L);
+        sequence1.setDirection(Direction.UPWARDS);
+        sequence1.setStopFloors(List.of(3));
+        orderSequenceOfStops.add(sequence1);
 
-        when(elevatorDriver.getOrderSequenceOfStops()).thenReturn(List.of(sequence));
-        Shaft shaft = house.moveSequenceToShaft(elevatorDriver);
+        house.getShafts().get(0).setCabinPosition(12);
+        house.getShafts().get(0).setId(0L);
+        house.getShafts().get(1).setId(1L);
 
-        Assertions.assertEquals(7, shaft.getSequenceOfStops().getStopFloors().get(0));
-        Assertions.assertEquals(Direction.UPWARDS, shaft.getSequenceOfStops().getDirection());
-        Assertions.assertNull(house.getShafts().get(1).getSequenceOfStops());
+        Shaft shaft = house.findNearestCabin(orderSequenceOfStops);
+
+        Assertions.assertEquals(1L, shaft.getId());
     }
 }

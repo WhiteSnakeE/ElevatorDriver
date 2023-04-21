@@ -6,6 +6,10 @@ import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.house.floors.Floor;
+import com.sytoss.edu.elevator.converters.HouseConverter;
+import com.sytoss.edu.elevator.converters.ShaftConverter;
+import com.sytoss.edu.elevator.repositories.HouseRepository;
+import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -22,24 +26,7 @@ public class House extends Entity {
 
     private List<Floor> floors = new ArrayList<>();
 
-    public Shaft moveSequenceToShaft(ElevatorDriver elevatorDriver) {
-        Shaft nearestCabin = findNearestCabin(elevatorDriver.getOrderSequenceOfStops());
-
-        if (nearestCabin == null) {
-            return null;
-        }
-
-        boolean isNeedActivate = nearestCabin.updateSequence(elevatorDriver);
-
-        if (!isNeedActivate) {
-            return null;
-        }
-
-        return nearestCabin;
-    }
-
-
-    private Shaft findNearestCabin(List<SequenceOfStops> orderSequenceOfStops) {
+    public Shaft findNearestCabin(List<SequenceOfStops> orderSequenceOfStops) {
         List<Shaft> appropriateShafts = getFreeShafts();
 
         if (appropriateShafts.isEmpty()) {

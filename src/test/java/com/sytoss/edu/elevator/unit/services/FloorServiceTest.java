@@ -14,11 +14,12 @@ import static org.mockito.Mockito.*;
 
 public class FloorServiceTest {
 
-    private final House house = mock(House.class);
+    private final House house = spy(House.class);
     private final FloorService floorService = new FloorService(house);
 
     @Test
     public void goUpCabinRequestToFirstFloorTest () {
+        house.setId(123L);
         FirstFloor firstFloor = mock(FirstFloor.class);
 
         when(house.getFloors()).thenReturn(List.of(firstFloor));
@@ -28,6 +29,7 @@ public class FloorServiceTest {
 
     @Test
     public void goUpCabinRequestToMiddleFloorTest () {
+        house.setId(123L);
         FirstFloor firstFloor = mock(FirstFloor.class);
         MiddleFloor middleFloor = mock(MiddleFloor.class);
 

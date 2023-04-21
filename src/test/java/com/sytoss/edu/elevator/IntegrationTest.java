@@ -3,6 +3,8 @@ package com.sytoss.edu.elevator;
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.commands.*;
+import com.sytoss.edu.elevator.converters.HouseConverter;
+import com.sytoss.edu.elevator.converters.ShaftConverter;
 import com.sytoss.edu.elevator.services.FloorService;
 import io.cucumber.junit.CucumberOptions;
 import io.cucumber.spring.CucumberContextConfiguration;
@@ -25,6 +27,7 @@ import static io.cucumber.core.options.Constants.PLUGIN_PROPERTY_NAME;
 @CucumberOptions(features = "src/test/resources/features", glue = "com.sytoss.edu.elevator", tags = "not @SingleRun")
 @Getter
 public class IntegrationTest extends AbstractControllerTest {
+
     @Autowired
     @SpyBean
     private House house;
@@ -44,15 +47,19 @@ public class IntegrationTest extends AbstractControllerTest {
     @Autowired
     @SpyBean
     private CommandManager commandManager;
+
     @Autowired
     @SpyBean
     private CloseDoorCommand closeDoorCommand;
+
     @Autowired
     @SpyBean
     private OpenDoorCommand openDoorCommand;
+
     @Autowired
     @SpyBean
     private StartEngineCommand startEngineCommand;
+
     @Autowired
     @SpyBean
     private StopEngineCommand stopEngineCommand;

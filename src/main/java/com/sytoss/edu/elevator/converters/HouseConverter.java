@@ -17,7 +17,7 @@ public class HouseConverter {
                 .numberOfShafts(house.getShafts().size()).orderSequenceOfStops(orderSequenceToStringInJSON(orderSequenceOfStops)).build();
     }
 
-    private String orderSequenceToStringInJSON(List<SequenceOfStops> orderSequenceOfStops) {
+    public String orderSequenceToStringInJSON(List<SequenceOfStops> orderSequenceOfStops) {
         if (orderSequenceOfStops == null || orderSequenceOfStops.isEmpty()) {
             return null;
         }

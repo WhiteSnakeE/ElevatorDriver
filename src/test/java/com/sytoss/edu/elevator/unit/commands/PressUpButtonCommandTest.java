@@ -6,6 +6,8 @@ import com.sytoss.edu.elevator.commands.Command;
 import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.commands.FindNearestCabinCommand;
 import com.sytoss.edu.elevator.commands.PressUpButtonCommand;
+import com.sytoss.edu.elevator.converters.HouseConverter;
+import com.sytoss.edu.elevator.repositories.HouseRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -19,11 +21,14 @@ public class PressUpButtonCommandTest {
 
     private final CommandManager commandManager = mock(CommandManager.class);
 
-    private final PressUpButtonCommand pressUpButtonCommand = new PressUpButtonCommand(elevatorDriver, commandManager);
+    private final PressUpButtonCommand pressUpButtonCommand = new PressUpButtonCommand(
+            elevatorDriver, commandManager
+    );
 
     @Test
-    public void executeTest () {
+    public void executeTest() {
         HashMap<String, Object> params = new HashMap<>();
+
         params.put("numberFloor", 5);
         params.put("Direction", Direction.UPWARDS);
 

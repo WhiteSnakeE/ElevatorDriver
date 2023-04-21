@@ -2,26 +2,37 @@ package com.sytoss.edu.elevator.cucumber;
 
 import com.sytoss.edu.elevator.IntegrationTest;
 import com.sytoss.edu.elevator.TestContext;
+import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.commands.Command;
+import com.sytoss.edu.elevator.converters.HouseConverter;
+import com.sytoss.edu.elevator.converters.ShaftConverter;
+import com.sytoss.edu.elevator.repositories.HouseRepository;
+import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import io.cucumber.java.en.When;
 import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
 
+import static org.mockito.Mockito.mock;
+
 public class CallCabinWhenTest extends IntegrationTest {
 
     @When("passenger on floor {int} presses UpFloorButton with direction {string}")
-    public void passengerOnFloorPressesUpFloorButtonWithDirection (Integer floorNumber, String direction) {
+    public void passengerOnFloorPressesUpFloorButtonWithDirection(Integer floorNumber, String direction) {
         String buttonDirection = (direction.equals("UPWARDS") ? "/up" : "/down");
         String url = "/api/floorButton/" + floorNumber + buttonDirection;
         ResponseEntity<String> response = doPost(url, null, String.class);
         TestContext.getInstance().setResponse(response);
     }
+
     @When("call process findNearestCabin for floor {int} with direction {string}")
-    public void callProcessFindNearestCabinForFloor(int floor,String direction){
+    public void callProcessFindNearestCabinForFloor(int floor, String direction) {
         getElevatorDriver().addNewSequenceToOrder(floor, Direction.valueOf(direction));
-        getHouse().moveSequenceToShaft(getElevatorDriver());
+        Shaft shaft = getHouse().findNearestCabin(getElevatorDriver().getOrderSequenceOfStops());
+        if (shaft != null) {
+            shaft.updateSequence(getElevatorDriver());
+        }
     }
 
     @When("start cabin with index {int} moving sequence of stops to")
