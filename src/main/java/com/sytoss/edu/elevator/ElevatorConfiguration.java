@@ -10,6 +10,7 @@ import com.sytoss.edu.elevator.dto.HouseDTO;
 import com.sytoss.edu.elevator.dto.ShaftDTO;
 import com.sytoss.edu.elevator.repositories.HouseRepository;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
+import com.sytoss.edu.elevator.utils.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -45,7 +46,7 @@ public class ElevatorConfiguration {
         List<HouseDTO> houseDTOList = houseRepository.findAll();
         HouseDTO houseDTO = houseDTOList.get(houseDTOList.size() - 1);
         List<ShaftDTO> shaftDTOList = shaftRepository.findByHouseDTOId(houseDTO.getId());
-        elevatorDriver.setOrderSequenceOfStops(houseConverter.stringJSONToOrderSequence(houseDTO.getOrderSequenceOfStops()));
+        elevatorDriver.setOrderSequenceOfStops(JsonUtil.stringJSONToOrderSequence(houseDTO.getOrderSequenceOfStops()));
 
         House house = houseConverter.fromDTO(houseDTO, shaftDTOList);
 
