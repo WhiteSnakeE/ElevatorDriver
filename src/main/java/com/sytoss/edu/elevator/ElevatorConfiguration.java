@@ -54,9 +54,8 @@ public class ElevatorConfiguration {
                 threads.add(fixedThreadPool.submit(() -> {
                     log.info("startMoveCabin: start threads for shaft with id {}", shaft.getId());
                     HashMap<String, Object> paramsActivateCommand = new HashMap<>();
-                    //todo after merging e23-19 update shaft_param, floor_param (egorBP)
-                    paramsActivateCommand.put("Shaft", shaft);
-                    paramsActivateCommand.put("Floors", house.getFloors());
+                    paramsActivateCommand.put(CommandManager.SHAFT_PARAM, shaft);
+                    paramsActivateCommand.put(CommandManager.FLOORS_PARAM, house.getFloors());
                     commandManager.getCommand(Command.MOVE_CABIN_COMMAND).execute(paramsActivateCommand);
                     log.info("startMoveCabin: finish threads for shaft with id {}", shaft.getId());
                 }));

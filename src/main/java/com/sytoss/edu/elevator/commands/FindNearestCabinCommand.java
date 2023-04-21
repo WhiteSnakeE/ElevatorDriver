@@ -36,7 +36,7 @@ public class FindNearestCabinCommand implements Command {
     private final HouseThreadPool houseThreadPool;
 
     @Override
-    public void execute(HashMap<String, Object> params) {
+    public void execute (HashMap<String, Object> params) {
         houseRepository.updateOrderById(house.getId(), houseConverter.orderSequenceToStringInJSON(elevatorDriver.getOrderSequenceOfStops()));
         Shaft nearestCabin = house.findNearestCabin(elevatorDriver.getOrderSequenceOfStops());
 
@@ -49,9 +49,7 @@ public class FindNearestCabinCommand implements Command {
         String sequenceOfStops = shaftConverter.sequenceToStringInJSON(nearestCabin.getSequenceOfStops());
         shaftRepository.updateSequenceById(nearestCabin.getId(), sequenceOfStops);
 
-        String orderSequenceOfStops = houseConverter.orderSequenceToStringInJSON(
-                elevatorDriver.getOrderSequenceOfStops()
-        );
+        String orderSequenceOfStops = houseConverter.orderSequenceToStringInJSON(elevatorDriver.getOrderSequenceOfStops());
         houseRepository.updateOrderById(house.getId(), orderSequenceOfStops);
 
         if (nearestCabin.getIsMoving().get()) {
@@ -61,8 +59,8 @@ public class FindNearestCabinCommand implements Command {
         houseThreadPool.getFixedThreadPool().submit(() -> {
             log.info("startMoveCabin: start threads for shaft with id {}", nearestCabin.getId());
             HashMap<String, Object> paramsActivateCommand = new HashMap<>();
-            paramsActivateCommand.put("Shaft", nearestCabin);
-            paramsActivateCommand.put("Floors", house.getFloors());
+            paramsActivateCommand.put(CommandManager.SHAFT_PARAM, nearestCabin);
+            paramsActivateCommand.put(CommandManager.FLOORS_PARAM, house.getFloors());
             commandManager.getCommand(MOVE_CABIN_COMMAND).execute(paramsActivateCommand);
             log.info("startMoveCabin: finish threads for shaft with id {}", nearestCabin.getId());
         });

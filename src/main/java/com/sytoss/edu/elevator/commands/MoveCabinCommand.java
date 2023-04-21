@@ -2,9 +2,7 @@ package com.sytoss.edu.elevator.commands;
 
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.EngineState;
-import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.floors.Floor;
-import com.sytoss.edu.elevator.converters.ShaftConverter;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,15 +19,12 @@ public class MoveCabinCommand implements Command {
 
     private final CommandManager commandManager;
     private final ShaftRepository shaftRepository;
-    public final String SHAFT_PARAM = "Shaft";
-    public final String DIRECTION_PARAM = "Direction";
-
 
     @Override
     public void execute (HashMap<String, Object> params) {
-        Shaft shaft = (Shaft) params.get(SHAFT_PARAM);
+        Shaft shaft = (Shaft) params.get(CommandManager.SHAFT_PARAM);
         shaft.getIsMoving().set(true);
-        params.put(DIRECTION_PARAM, shaft.getSequenceOfStops().getDirection());
+        params.put(CommandManager.DIRECTION_PARAM, shaft.getSequenceOfStops().getDirection());
         List<Floor> floorList = (List<Floor>)params.get("Floors");
         ListIterator currentFloor = floorList.listIterator();
         int startPosition = shaft.getCabinPosition();
