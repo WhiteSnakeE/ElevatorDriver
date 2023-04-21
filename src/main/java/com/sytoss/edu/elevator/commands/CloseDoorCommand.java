@@ -18,7 +18,7 @@ public class CloseDoorCommand implements Command {
 
     @Override
     public void execute (HashMap<String, Object> params) {
-        Shaft shaft = (Shaft) params.get("Shaft");
+        Shaft shaft = (Shaft) params.get(CommandManager.SHAFT_PARAM);
         shaft.getCabin().closeDoor();
         log.info("Shaft with id [{}] has [DOOR STATE]: [CLOSED]", shaft.getId());
 

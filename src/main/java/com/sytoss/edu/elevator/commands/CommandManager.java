@@ -17,6 +17,9 @@ public class CommandManager {
     private final ObjectProvider<StopEngineCommand> stopEngineCommandObjectProvider;
     private final ObjectProvider<OpenDoorCommand> openDoorCommandObjectProvider;
     private final ObjectProvider<CloseDoorCommand> closeDoorCommandObjectProvider;
+    public static final String SHAFT_PARAM = "Shaft";
+    public static final String DIRECTION_PARAM = "Direction";
+    public static final String FLOOR_NUMBER_PARAM = "numberFloor";
 
     private final HashMap<String, Command> commandMap = new HashMap<>();
 

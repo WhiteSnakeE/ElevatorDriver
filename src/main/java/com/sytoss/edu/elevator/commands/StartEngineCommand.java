@@ -19,7 +19,7 @@ public class StartEngineCommand implements Command {
 
     @Override
     public void execute (HashMap<String, Object> params) {
-        Shaft shaft = (Shaft) params.get("Shaft");
+        Shaft shaft = (Shaft) params.get(CommandManager.SHAFT_PARAM);
         shaft.getEngine().start((Direction) params.get("Direction"));
         log.info("Engine in shaft with id [{}] has engine state: [{}]", shaft.getId(), shaft.getEngine().getEngineState());
 

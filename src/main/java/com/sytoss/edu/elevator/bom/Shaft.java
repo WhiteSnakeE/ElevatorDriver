@@ -1,8 +1,6 @@
 package com.sytoss.edu.elevator.bom;
 
 import com.sytoss.edu.elevator.bom.enums.Direction;
-import com.sytoss.edu.elevator.converters.HouseConverter;
-import com.sytoss.edu.elevator.repositories.HouseRepository;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
