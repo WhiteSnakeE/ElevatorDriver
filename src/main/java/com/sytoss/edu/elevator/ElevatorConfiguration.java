@@ -37,11 +37,10 @@ public class ElevatorConfiguration {
 
     private final CommandManager commandManager;
 
+    private final HouseThreadPool houseThreadPool;
+
     @Bean("house")
     public House getHouse() {
-        ExecutorService fixedThreadPool = Executors.newFixedThreadPool(4);
-        List<Future> threads = new ArrayList<>();
-
         List<HouseDTO> houseDTOList = houseRepository.findAll();
         HouseDTO houseDTO = houseDTOList.get(houseDTOList.size() - 1);
         List<ShaftDTO> shaftDTOList = shaftRepository.findByHouseDTOId(houseDTO.getId());
@@ -51,18 +50,16 @@ public class ElevatorConfiguration {
 
         for (Shaft shaft : house.getShafts()) {
             if (shaft.getSequenceOfStops() != null) {
-                threads.add(fixedThreadPool.submit(() -> {
+                houseThreadPool.getFixedThreadPool().submit(() -> {
                     log.info("startMoveCabin: start threads for shaft with id {}", shaft.getId());
                     HashMap<String, Object> paramsActivateCommand = new HashMap<>();
                     paramsActivateCommand.put(CommandManager.SHAFT_PARAM, shaft);
                     paramsActivateCommand.put(CommandManager.FLOORS_PARAM, house.getFloors());
                     commandManager.getCommand(Command.MOVE_CABIN_COMMAND).execute(paramsActivateCommand);
                     log.info("startMoveCabin: finish threads for shaft with id {}", shaft.getId());
-                }));
+                });
             }
         }
-
-        fixedThreadPool.shutdown();
 
         return house;
     }
