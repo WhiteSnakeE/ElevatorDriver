@@ -1,6 +1,7 @@
 package com.sytoss.edu.elevator.commands;
 
 import com.sytoss.edu.elevator.bom.Shaft;
+import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.enums.EngineState;
 import com.sytoss.edu.elevator.bom.house.floors.Floor;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
@@ -12,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 
+import static com.sytoss.edu.elevator.commands.CommandManager.*;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -22,7 +25,7 @@ public class MoveCabinCommand implements Command {
 
     @Override
     public void execute (HashMap<String, Object> params) {
-        Shaft shaft = (Shaft) params.get(CommandManager.SHAFT_PARAM);
+        Shaft shaft = (Shaft) params.get(SHAFT_PARAM);
         params.put(CommandManager.DIRECTION_PARAM, shaft.getSequenceOfStops().getDirection());
         List<Floor> floorList = (List<Floor>)params.get("Floors");
         ListIterator currentFloor = floorList.listIterator();
@@ -41,46 +44,14 @@ public class MoveCabinCommand implements Command {
             return;
         }
 
-
-        log.info("Shaft with id [{}] start process: [{}]", shaft.getId(), shaft.getCabinPosition());
-        Floor floor = (Floor) currentFloor.next();
-        if ((startPosition == getFirstFloor(shaft))) {
-            commandManager.getCommand(OPEN_DOOR_COMMAND).execute(params);
-            commandManager.getCommand(CLOSE_DOOR_COMMAND).execute(params);
-            floor = (Floor) currentFloor.next();
-        }
-
-
-        while (currentFloor.hasNext() && floor.getFloorNumber() <= getLastFloor(shaft)) {
-            if (shaft.getEngine().getEngineState().equals(EngineState.STAYING)) {
-                commandManager.getCommand(START_ENGINE_COMMAND).execute(params);
-            }
-
-            shaft.setCabinPosition(floor.getFloorNumber());
-            shaftRepository.updateCabinPositionById(shaft.getId(), floor.getFloorNumber());
-
-            log.info("Shaft with id [{}] update cabin position in DB to: [{}]", shaft.getId(), floor.getFloorNumber());
-            if (startPosition != floor.getFloorNumber()) {
-                floor.visit(shaft);
-            }
-
-
-            if (shaft.getSequenceOfStops().getStopFloors().contains(shaft.getCabinPosition())) {
-                commandManager.getCommand(STOP_ENGINE_COMMAND).execute(params);
-                commandManager.getCommand(OPEN_DOOR_COMMAND).execute(params);
-                commandManager.getCommand(CLOSE_DOOR_COMMAND).execute(params);
-
-                if (getLastFloor(shaft) != shaft.getCabinPosition()) {
-                    commandManager.getCommand(START_ENGINE_COMMAND).execute(params);
-                }
-            }
-            floor = (Floor) currentFloor.next();
-        }
-        shaft.clearSequence();
-        shaftRepository.updateSequenceById(shaft.getId(), null);
-        log.info("Shaft with id [{}] end process on floor: [{}]", shaft.getId(), shaft.getCabinPosition());
+        currentFloor.next();
+        HashMap<String, Object> paramsActivateCommand = new HashMap<>();
+        paramsActivateCommand.put(SHAFT_PARAM, shaft);
+        paramsActivateCommand.put(ITERATOR_PARAM, currentFloor);
+        paramsActivateCommand.put(DIRECTION_PARAM, Direction.UPWARDS);
+        commandManager.getCommand(START_ENGINE_COMMAND).execute(paramsActivateCommand);
+        commandManager.getCommand(VISIT_FLOOR_COMMAND).execute(paramsActivateCommand);
     }
-
 
     private int getLastFloor (Shaft shaft) {
         return shaft.getSequenceOfStops().getStopFloors().get(shaft.getSequenceOfStops().getStopFloors().size() - 1);

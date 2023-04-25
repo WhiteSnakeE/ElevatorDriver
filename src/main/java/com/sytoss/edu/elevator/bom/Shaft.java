@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ListIterator;
 
 @Slf4j
 @Getter
@@ -74,24 +75,24 @@ public class Shaft extends Entity {
         return shaftListeners.remove(shaftListener);
     }
 
-    public void setCabinPosition(int currentFloor) {
+    public void setCabinPosition(int currentFloor, ListIterator listIterator) {
         cabinPosition = currentFloor;
 
-        CabinPositionChangedEvent event = new CabinPositionChangedEvent(this);
+        CabinPositionChangedEvent event = new CabinPositionChangedEvent(this, listIterator);
         shaftListeners.forEach(shaftListener -> shaftListener.handleCabinPositionChanged(event));
     }
 
-    public void openDoor() {
+    public void openDoor(ListIterator listIterator) {
         cabin.openDoor();
 
-        DoorStateChangedEvent event = new DoorStateChangedEvent(this);
+        DoorStateChangedEvent event = new DoorStateChangedEvent(this, listIterator);
         shaftListeners.forEach(shaftListener -> shaftListener.handleDoorStateChanged(event));
     }
 
-    public void closeDoor() {
+    public void closeDoor(ListIterator listIterator) {
         cabin.closeDoor();
 
-        DoorStateChangedEvent event = new DoorStateChangedEvent(this);
+        DoorStateChangedEvent event = new DoorStateChangedEvent(this, listIterator);
         shaftListeners.forEach(shaftListener -> shaftListener.handleDoorStateChanged(event));
     }
 }

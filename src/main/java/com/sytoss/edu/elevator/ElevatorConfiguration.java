@@ -49,6 +49,8 @@ public class ElevatorConfiguration {
 
         House house = houseConverter.fromDTO(houseDTO, shaftDTOList);
 
+        setListeners(house);
+
         for (Shaft shaft : house.getShafts()) {
             if (shaft.getSequenceOfStops() != null) {
                 houseThreadPool.getFixedThreadPool().submit(() -> {
@@ -63,5 +65,11 @@ public class ElevatorConfiguration {
         }
 
         return house;
+    }
+
+    private void setListeners(House house) {
+        for (Shaft shaft : house.getShafts()) {
+            shaft.addShaftListener(elevatorDriver);
+        }
     }
 }

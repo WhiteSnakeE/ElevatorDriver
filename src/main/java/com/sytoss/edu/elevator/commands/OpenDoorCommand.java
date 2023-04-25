@@ -8,6 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.ListIterator;
+
+import static com.sytoss.edu.elevator.commands.CommandManager.ITERATOR_PARAM;
 
 @Component
 @Slf4j
@@ -15,11 +18,11 @@ import java.util.HashMap;
 public class OpenDoorCommand implements Command {
 
     private final ShaftRepository shaftRepository;
-    private final int timeSleep = 0;
+
     @Override
     public void execute (HashMap<String, Object> params) {
         Shaft shaft = (Shaft) params.get(CommandManager.SHAFT_PARAM);
-        shaft.getCabin().openDoor();
+        shaft.openDoor((ListIterator) params.get(ITERATOR_PARAM));
         log.info("Shaft with id [{}] has [DOOR STATE]: [OPENED]", shaft.getId());
 
         log.info("Shaft with id [{}] updated doorState in DB to: [{}]", shaft.getId(), shaft.getCabin().getDoorState());
@@ -33,12 +36,6 @@ public class OpenDoorCommand implements Command {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }
-
-        try {
-            Thread.sleep(timeSleep);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
 
     }

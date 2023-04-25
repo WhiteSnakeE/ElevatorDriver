@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static com.sytoss.edu.elevator.commands.Command.*;
-import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
+import static com.sytoss.edu.elevator.commands.CommandManager.*;
 
 @Component
 @Getter
@@ -52,21 +52,38 @@ public class ElevatorDriver extends Entity implements ShaftListener {
     public void handleCabinPositionChanged (CabinPositionChangedEvent event) {
         Shaft shaft = event.getShaft();
 
+        HashMap<String, Object> params = new HashMap<>();
+        params.put(SHAFT_PARAM, shaft);
+        params.put(ITERATOR_PARAM, event.getListIterator());
+
         if (shaft.getSequenceOfStops().getStopFloors().contains(shaft.getCabinPosition())) {
-            HashMap<String, Object> params = new HashMap<>();
-            params.put(SHAFT_PARAM, shaft);
             commandManager.getCommand(STOP_ENGINE_COMMAND).execute(params);
             commandManager.getCommand(OPEN_DOOR_COMMAND).execute(params);
+
+        } else {
+            houseThreadPool.getFixedThreadPool().schedule(() -> commandManager.getCommand(VISIT_FLOOR_COMMAND).execute(params), 1000, TimeUnit.MILLISECONDS);
         }
     }
 
     @Override
     public void handleDoorStateChanged (DoorStateChangedEvent event) {
         Shaft shaft = event.getShaft();
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put(SHAFT_PARAM, shaft);
+        params.put(ITERATOR_PARAM, event.getListIterator());
+
         if (shaft.getCabin().getDoorState().equals(DoorState.OPENED)) {
-            HashMap<String, Object> params = new HashMap<>();
-            params.put(SHAFT_PARAM, shaft);
             houseThreadPool.getFixedThreadPool().schedule(() -> commandManager.getCommand(CLOSE_DOOR_COMMAND).execute(params), 2000, TimeUnit.MILLISECONDS);
+        } else {
+
+            if (shaft.getSequenceOfStops().isLast(shaft.getCabinPosition())) {
+                shaft.clearSequence();
+                return;
+            }
+            params.put(DIRECTION_PARAM, Direction.UPWARDS);
+            commandManager.getCommand(START_ENGINE_COMMAND).execute(params);
+            commandManager.getCommand(VISIT_FLOOR_COMMAND).execute(params);
         }
     }
 }
