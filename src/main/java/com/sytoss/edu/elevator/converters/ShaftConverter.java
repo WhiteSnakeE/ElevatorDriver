@@ -18,6 +18,18 @@ public class ShaftConverter {
                 .sequenceOfStops(sequenceToStringInJSON(shaft.getSequenceOfStops())).build();
     }
 
+    public Shaft fromDTO(ShaftDTO shaftDTO) {
+        Shaft shaft = new Shaft();
+        shaft.setId(shaftDTO.getId());
+        shaft.setCabinPosition(shaftDTO.getCabinPosition());
+        shaft.getEngine().setEngineState(shaftDTO.getEngineState());
+        shaft.getCabin().setDoorState(shaftDTO.getDoorState());
+        shaft.getCabin().setOverWeightState(shaftDTO.getOverweightState());
+        shaft.setSequenceOfStops(stringJSONToSequenceOfStops(shaftDTO.getSequenceOfStops()));
+
+        return shaft;
+    }
+
     public String sequenceToStringInJSON(SequenceOfStops sequenceOfStops) {
         if (sequenceOfStops == null) {
             return null;
@@ -32,5 +44,21 @@ public class ShaftConverter {
         }
 
         return json;
+    }
+
+    public SequenceOfStops stringJSONToSequenceOfStops(String json) {
+        if (json == null || json.isEmpty()) {
+            return null;
+        }
+
+        SequenceOfStops sequence = null;
+
+        try {
+            sequence = new ObjectMapper().readValue(json, SequenceOfStops.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        return sequence;
     }
 }

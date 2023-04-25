@@ -20,9 +20,8 @@ import static org.mockito.Mockito.*;
 public class MoveCabinCommandTest {
 
     private final CommandManager commandManager = mock(CommandManager.class);
-    private final House house = mock(House.class);
     private final ShaftRepository shaftRepository = mock(ShaftRepository.class);
-    private final MoveCabinCommand moveCabinCommand = new MoveCabinCommand(commandManager, house, shaftRepository);
+    private final MoveCabinCommand moveCabinCommand = new MoveCabinCommand(commandManager, shaftRepository);
 
     @Test
     public void executeTest() {
@@ -40,12 +39,14 @@ public class MoveCabinCommandTest {
         shaft.setSequenceOfStops(sequence);
         shaft.setCabinPosition(1);
         shaft.setEngine(engine);
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("Shaft", shaft);
+
 
         House houseResult=new HouseBuilder(mock(CommandManager.class)).build(2,16);
 
-        when(house.getFloors()).thenReturn(houseResult.getFloors());
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("Shaft", shaft);
+        params.put("Floors", houseResult.getFloors());
+
         when(commandManager.getCommand(Command.OPEN_DOOR_COMMAND)).thenReturn(mock(OpenDoorCommand.class));
         when(commandManager.getCommand(Command.CLOSE_DOOR_COMMAND)).thenReturn(mock(CloseDoorCommand.class));
         when(commandManager.getCommand(Command.START_ENGINE_COMMAND)).thenReturn(startEngineCommand);

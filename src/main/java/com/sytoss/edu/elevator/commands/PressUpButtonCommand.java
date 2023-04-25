@@ -2,10 +2,6 @@ package com.sytoss.edu.elevator.commands;
 
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.enums.Direction;
-import com.sytoss.edu.elevator.bom.house.House;
-import com.sytoss.edu.elevator.converters.HouseConverter;
-import com.sytoss.edu.elevator.converters.ShaftConverter;
-import com.sytoss.edu.elevator.repositories.HouseRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

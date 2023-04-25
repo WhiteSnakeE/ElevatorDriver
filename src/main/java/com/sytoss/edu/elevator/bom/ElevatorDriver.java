@@ -15,16 +15,16 @@ import java.util.List;
 @Slf4j
 public class ElevatorDriver extends Entity {
 
-    private final List<SequenceOfStops> orderSequenceOfStops = new ArrayList<>();
+    private List<SequenceOfStops> orderSequenceOfStops = new ArrayList<>();
 
-    public void addNewSequenceToOrder (int floorNumber, Direction direction) {
+    public void addNewSequenceToOrder(int floorNumber, Direction direction) {
         SequenceOfStops sequenceOfStops = new SequenceOfStops();
         sequenceOfStops.setDirection(direction);
         sequenceOfStops.setStopFloors(new ArrayList<>(List.of(floorNumber)));
         orderSequenceOfStops.add(sequenceOfStops);
     }
 
-    public void removeSequenceFromOrder () {
+    public void removeSequenceFromOrder() {
         if (orderSequenceOfStops.isEmpty()) {
             throw new IllegalStateException("Order sequence of stops is empty!");
         }

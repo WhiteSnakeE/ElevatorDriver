@@ -24,6 +24,7 @@ public class CallCabinWhenTest extends IntegrationTest {
         String url = "/api/floorButton/" + floorNumber + buttonDirection;
         ResponseEntity<String> response = doPost(url, null, String.class);
         TestContext.getInstance().setResponse(response);
+        getHouseThreadPool().await();
     }
 
     @When("call process findNearestCabin for floor {int} with direction {string}")
@@ -39,6 +40,7 @@ public class CallCabinWhenTest extends IntegrationTest {
     public void startCabinWithIndexMovingSequenceOfStopsTo(Integer shaftIndex) {
         HashMap<String, Object> paramsExec = new HashMap<>();
         paramsExec.put("Shaft", getHouse().getShafts().get(shaftIndex));
+        paramsExec.put("Floors", getHouse().getFloors());
         getCommandManager().getCommand(Command.MOVE_CABIN_COMMAND).execute(paramsExec);
     }
 }

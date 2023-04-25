@@ -63,4 +63,7 @@ public class IntegrationTest extends AbstractControllerTest {
     @Autowired
     @SpyBean
     private StopEngineCommand stopEngineCommand;
+
+    @Autowired
+    private HouseThreadPool houseThreadPool;
 }

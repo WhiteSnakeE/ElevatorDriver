@@ -10,26 +10,40 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Transactional
 public interface ShaftRepository extends JpaRepository<ShaftDTO, Long> {
 
     @Modifying
     @Query("UPDATE ShaftDTO Shaft SET Shaft.doorState = :doorState WHERE Shaft.id = :id")
-    void updateDoorStateById(@Param("id") Long id, @Param("doorState") DoorState doorState);
+    void updateDoorStateById(
+            @Param("id") Long id,
+            @Param("doorState") DoorState doorState);
 
     @Modifying
     @Query("UPDATE ShaftDTO Shaft SET Shaft.engineState = :engineState WHERE Shaft.id = :id")
-    void updateEngineStateById(@Param("id") Long id, @Param("engineState") EngineState engineState);
+    void updateEngineStateById(
+            @Param("id") Long id,
+            @Param("engineState") EngineState engineState);
 
     @Modifying
     @Query("UPDATE ShaftDTO Shaft SET Shaft.sequenceOfStops = :sequenceOfStops WHERE Shaft.id = :id")
-    void updateSequenceById(@Param("id") Long id, @Param("sequenceOfStops") String sequenceOfStops);
+    void updateSequenceById(
+            @Param("id") Long id,
+            @Param("sequenceOfStops") String sequenceOfStops);
 
     @Modifying
     @Query("UPDATE ShaftDTO Shaft SET Shaft.cabinPosition = :cabinPosition WHERE Shaft.id = :id")
-    void updateCabinPositionById(@Param("id") Long id, @Param("cabinPosition") int cabinPosition);
+    void updateCabinPositionById(
+            @Param("id") Long id,
+            @Param("cabinPosition") int cabinPosition);
 
     @Modifying
     @Query("UPDATE ShaftDTO Shaft SET Shaft.overweightState = :overweightState WHERE Shaft.id = :id")
-    void updateOverweightStateById(@Param("id") Long id, @Param("overweightState") OverWeightState overweightState);
+    void updateOverweightStateById(
+            @Param("id") Long id,
+            @Param("overweightState") OverWeightState overweightState);
+
+    List<ShaftDTO> findByHouseDTOId(Long id);
 }

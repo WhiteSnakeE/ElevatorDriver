@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 @Getter
@@ -14,26 +15,34 @@ import java.util.Collections;
 public class Shaft extends Entity {
 
     private int cabinPosition;
+
     private SequenceOfStops sequenceOfStops;
+
     private Engine engine;
+
     private Cabin cabin;
 
-    public boolean isFree () {
+    public boolean isCabinMoving() {
+        if (sequenceOfStops != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isFree() {
         return sequenceOfStops == null;
     }
 
-    public Shaft () {
+    public Shaft() {
         cabin = new Cabin();
         engine = new Engine();
         cabinPosition = 1;
     }
 
-    public synchronized boolean updateSequence (ElevatorDriver elevatorDriver) {
-        boolean isNeedActivate = false;
+    public synchronized void updateSequence(ElevatorDriver elevatorDriver) {
         if (this.sequenceOfStops == null || this.sequenceOfStops.getStopFloors() == null) {
             this.sequenceOfStops = elevatorDriver.getOrderSequenceOfStops().get(0);
             elevatorDriver.removeSequenceFromOrder();
-            isNeedActivate = true;
         } else {
             ArrayList<Integer> stops = new ArrayList<>(this.sequenceOfStops.getStopFloors());
             stops.addAll(elevatorDriver.getOrderSequenceOfStops().get(0).getStopFloors());
@@ -41,15 +50,14 @@ public class Shaft extends Entity {
             this.sequenceOfStops.setStopFloors(stops);
             elevatorDriver.removeSequenceFromOrder();
         }
-        log.info("Shaft with id {} and sequence of stops of found cabin: {}",getId() ,sequenceOfStops.getStopFloors());
-        return isNeedActivate;
+        log.info("Shaft with id {} and sequence of stops of found cabin: {}", getId(), sequenceOfStops.getStopFloors());
     }
 
-    public void clearSequence () {
+    public void clearSequence() {
         this.sequenceOfStops = null;
     }
 
-    public boolean isSameDirection (Direction direction, Integer currentPosition) {
+    public boolean isSameDirection(Direction direction, Integer currentPosition) {
         return cabinPosition <= currentPosition && direction == this.sequenceOfStops.getDirection();
     }
 }

@@ -2,7 +2,6 @@ package com.sytoss.edu.elevator.commands;
 
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.EngineState;
-import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.floors.Floor;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.ListIterator;
 
 @Slf4j
@@ -18,14 +18,14 @@ import java.util.ListIterator;
 public class MoveCabinCommand implements Command {
 
     private final CommandManager commandManager;
-    private final House house;
     private final ShaftRepository shaftRepository;
 
     @Override
     public void execute (HashMap<String, Object> params) {
         Shaft shaft = (Shaft) params.get(CommandManager.SHAFT_PARAM);
         params.put(CommandManager.DIRECTION_PARAM, shaft.getSequenceOfStops().getDirection());
-        ListIterator currentFloor = house.getFloors().listIterator();
+        List<Floor> floorList = (List<Floor>)params.get("Floors");
+        ListIterator currentFloor = floorList.listIterator();
         int startPosition = shaft.getCabinPosition();
 
         while (currentFloor.hasNext()) {
@@ -77,7 +77,6 @@ public class MoveCabinCommand implements Command {
             floor = (Floor) currentFloor.next();
         }
         shaft.clearSequence();
-
         shaftRepository.updateSequenceById(shaft.getId(), null);
         log.info("Shaft with id [{}] end process on floor: [{}]", shaft.getId(), shaft.getCabinPosition());
     }
