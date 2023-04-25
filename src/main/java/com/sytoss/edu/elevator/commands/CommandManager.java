@@ -21,6 +21,7 @@ public class CommandManager {
     public static final String DIRECTION_PARAM = "Direction";
     public static final String FLOOR_NUMBER_PARAM = "numberFloor";
     public static final String FLOORS_PARAM = "Floors";
+    public static final String ITERATOR_PARAM = "Iterator";
     private final HashMap<String, Command> commandMap = new HashMap<>();
 
     private Command createCommand (String nameCommand) {
