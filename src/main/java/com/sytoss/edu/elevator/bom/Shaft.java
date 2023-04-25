@@ -1,13 +1,16 @@
 package com.sytoss.edu.elevator.bom;
 
 import com.sytoss.edu.elevator.bom.enums.Direction;
+import com.sytoss.edu.elevator.events.CabinPositionChangedEvent;
+import com.sytoss.edu.elevator.events.DoorStateChangedEvent;
+import com.sytoss.edu.elevator.services.ShaftListener;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.List;
 
 @Slf4j
 @Getter
@@ -21,6 +24,8 @@ public class Shaft extends Entity {
     private Engine engine;
 
     private Cabin cabin;
+
+    private List<ShaftListener> shaftListeners = new ArrayList<>();
 
     public boolean isCabinMoving() {
         if (sequenceOfStops != null) {
@@ -59,5 +64,34 @@ public class Shaft extends Entity {
 
     public boolean isSameDirection(Direction direction, Integer currentPosition) {
         return cabinPosition <= currentPosition && direction == this.sequenceOfStops.getDirection();
+    }
+
+    public void addShaftListener(ShaftListener shaftListener) {
+        shaftListeners.add(shaftListener);
+    }
+
+    public boolean removeShaftListener(ShaftListener shaftListener) {
+        return shaftListeners.remove(shaftListener);
+    }
+
+    public void setCabinPosition(int currentFloor) {
+        cabinPosition = currentFloor;
+
+        CabinPositionChangedEvent event = new CabinPositionChangedEvent(this);
+        shaftListeners.forEach(shaftListener -> shaftListener.handleCabinPositionChanged(event));
+    }
+
+    public void openDoor() {
+        cabin.openDoor();
+
+        DoorStateChangedEvent event = new DoorStateChangedEvent(this);
+        shaftListeners.forEach(shaftListener -> shaftListener.handleDoorStateChanged(event));
+    }
+
+    public void closeDoor() {
+        cabin.closeDoor();
+
+        DoorStateChangedEvent event = new DoorStateChangedEvent(this);
+        shaftListeners.forEach(shaftListener -> shaftListener.handleDoorStateChanged(event));
     }
 }
