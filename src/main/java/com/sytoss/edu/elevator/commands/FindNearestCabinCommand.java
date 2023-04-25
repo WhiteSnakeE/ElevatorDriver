@@ -36,7 +36,7 @@ public class FindNearestCabinCommand implements Command {
     private final HouseThreadPool houseThreadPool;
 
     @Override
-    public void execute (HashMap<String, Object> params) {
+    public void execute(HashMap<String, Object> params) {
         houseRepository.updateOrderById(house.getId(), houseConverter.orderSequenceToStringInJSON(elevatorDriver.getOrderSequenceOfStops()));
         Shaft nearestCabin = house.findNearestCabin(elevatorDriver.getOrderSequenceOfStops());
 
@@ -44,17 +44,12 @@ public class FindNearestCabinCommand implements Command {
             return;
         }
 
-        nearestCabin.updateSequence(elevatorDriver);
-
-        String sequenceOfStops = shaftConverter.sequenceToStringInJSON(nearestCabin.getSequenceOfStops());
-        shaftRepository.updateSequenceById(nearestCabin.getId(), sequenceOfStops);
-
-        String orderSequenceOfStops = houseConverter.orderSequenceToStringInJSON(elevatorDriver.getOrderSequenceOfStops());
-        houseRepository.updateOrderById(house.getId(), orderSequenceOfStops);
-
-        if (nearestCabin.getIsMoving().get()) {
+        if (nearestCabin.isCabinMoving()) {
+            updateSequences(nearestCabin);
             return;
         }
+
+        updateSequences(nearestCabin);
 
         houseThreadPool.getFixedThreadPool().submit(() -> {
             log.info("startMoveCabin: start threads for shaft with id {}", nearestCabin.getId());
@@ -64,5 +59,15 @@ public class FindNearestCabinCommand implements Command {
             commandManager.getCommand(MOVE_CABIN_COMMAND).execute(paramsActivateCommand);
             log.info("startMoveCabin: finish threads for shaft with id {}", nearestCabin.getId());
         });
+    }
+
+    private void updateSequences(Shaft nearestCabin) {
+        nearestCabin.updateSequence(elevatorDriver);
+
+        String sequenceOfStops = shaftConverter.sequenceToStringInJSON(nearestCabin.getSequenceOfStops());
+        shaftRepository.updateSequenceById(nearestCabin.getId(), sequenceOfStops);
+
+        String orderSequenceOfStops = houseConverter.orderSequenceToStringInJSON(elevatorDriver.getOrderSequenceOfStops());
+        houseRepository.updateOrderById(house.getId(), orderSequenceOfStops);
     }
 }

@@ -49,12 +49,11 @@ public class FindNearestCabinCommandTest {
         elevatorDriver.addNewSequenceToOrder(5, Direction.UPWARDS);
 
         MoveCabinCommand moveCabinCommand = mock(MoveCabinCommand.class);
-        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         Shaft shaft = mock(Shaft.class);
 
         when(house.findNearestCabin(elevatorDriver.getOrderSequenceOfStops())).thenReturn(shaft);
         when(commandManager.getCommand(Command.MOVE_CABIN_COMMAND)).thenReturn(moveCabinCommand);
-        when(shaft.getIsMoving()).thenReturn(atomicBoolean);
+        when(shaft.isCabinMoving()).thenReturn(false);
 
         findNearestCabinCommand.execute(null);
         houseThreadPool.await();
@@ -62,6 +61,7 @@ public class FindNearestCabinCommandTest {
         verify(house).findNearestCabin(elevatorDriver.getOrderSequenceOfStops());
         verify(commandManager.getCommand(Command.MOVE_CABIN_COMMAND)).execute(any());
         verify(shaft).updateSequence(elevatorDriver);
+        verify(shaft).isCabinMoving();
     }
 
     @Test
