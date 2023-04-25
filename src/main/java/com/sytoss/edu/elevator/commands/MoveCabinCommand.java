@@ -23,7 +23,6 @@ public class MoveCabinCommand implements Command {
     @Override
     public void execute (HashMap<String, Object> params) {
         Shaft shaft = (Shaft) params.get(CommandManager.SHAFT_PARAM);
-        shaft.getIsMoving().set(true);
         params.put(CommandManager.DIRECTION_PARAM, shaft.getSequenceOfStops().getDirection());
         List<Floor> floorList = (List<Floor>)params.get("Floors");
         ListIterator currentFloor = floorList.listIterator();
@@ -79,7 +78,6 @@ public class MoveCabinCommand implements Command {
         }
         shaft.clearSequence();
         shaftRepository.updateSequenceById(shaft.getId(), null);
-        shaft.getIsMoving().set(false);
         log.info("Shaft with id [{}] end process on floor: [{}]", shaft.getId(), shaft.getCabinPosition());
     }
 
