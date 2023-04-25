@@ -1,6 +1,9 @@
 package com.sytoss.edu.elevator.bom;
 
 import com.sytoss.edu.elevator.bom.enums.Direction;
+import com.sytoss.edu.elevator.events.CabinPositionChangedEvent;
+import com.sytoss.edu.elevator.events.DoorStateChangedEvent;
+import com.sytoss.edu.elevator.services.ShaftListener;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @Slf4j
-public class ElevatorDriver extends Entity {
+public class ElevatorDriver extends Entity implements ShaftListener {
 
     private List<SequenceOfStops> orderSequenceOfStops = new ArrayList<>();
 
@@ -29,6 +32,16 @@ public class ElevatorDriver extends Entity {
             throw new IllegalStateException("Order sequence of stops is empty!");
         }
         orderSequenceOfStops.remove(0);
+    }
+
+    @Override
+    public void handleCabinPositionChanged (CabinPositionChangedEvent event) {
+        return;
+    }
+
+    @Override
+    public void handleDoorStateChanged (DoorStateChangedEvent event) {
+        return;
     }
 }
 
