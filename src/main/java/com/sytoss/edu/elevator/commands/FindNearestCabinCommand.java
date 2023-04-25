@@ -30,10 +30,6 @@ public class FindNearestCabinCommand implements Command {
 
     private final HouseRepository houseRepository;
 
-    private final HouseConverter houseConverter;
-
-    private final ShaftConverter shaftConverter;
-
     private final HouseThreadPool houseThreadPool;
 
     @Override
