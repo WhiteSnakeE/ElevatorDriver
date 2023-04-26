@@ -17,7 +17,4 @@ public interface HouseRepository extends JpaRepository<HouseDTO, Long> {
     void updateOrderById(
             @Param("id") Long id,
             @Param("orderSequenceOfStops") String orderSequenceOfStops);
-
-    @Override
-    List<HouseDTO> findAll();
 }

@@ -15,22 +15,31 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Shaft extends Entity {
 
     private int cabinPosition;
-    private SequenceOfStops sequenceOfStops;
-    private Engine engine;
-    private Cabin cabin;
-    private AtomicBoolean isMoving = new AtomicBoolean(false);
 
-    public boolean isFree () {
+    private SequenceOfStops sequenceOfStops;
+
+    private Engine engine;
+
+    private Cabin cabin;
+
+    public boolean isCabinMoving() {
+        if (sequenceOfStops != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isFree() {
         return sequenceOfStops == null;
     }
 
-    public Shaft () {
+    public Shaft() {
         cabin = new Cabin();
         engine = new Engine();
         cabinPosition = 1;
     }
 
-    public synchronized void updateSequence (ElevatorDriver elevatorDriver) {
+    public synchronized void updateSequence(ElevatorDriver elevatorDriver) {
         if (this.sequenceOfStops == null || this.sequenceOfStops.getStopFloors() == null) {
             this.sequenceOfStops = elevatorDriver.getOrderSequenceOfStops().get(0);
             elevatorDriver.removeSequenceFromOrder();
@@ -41,14 +50,14 @@ public class Shaft extends Entity {
             this.sequenceOfStops.setStopFloors(stops);
             elevatorDriver.removeSequenceFromOrder();
         }
-        log.info("Shaft with id {} and sequence of stops of found cabin: {}",getId() ,sequenceOfStops.getStopFloors());
+        log.info("Shaft with id {} and sequence of stops of found cabin: {}", getId(), sequenceOfStops.getStopFloors());
     }
 
-    public void clearSequence () {
+    public void clearSequence() {
         this.sequenceOfStops = null;
     }
 
-    public boolean isSameDirection (Direction direction, Integer currentPosition) {
+    public boolean isSameDirection(Direction direction, Integer currentPosition) {
         return cabinPosition <= currentPosition && direction == this.sequenceOfStops.getDirection();
     }
 }

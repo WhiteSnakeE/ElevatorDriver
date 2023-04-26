@@ -17,12 +17,21 @@ public class ShaftTest {
     private final Shaft shaft = new Shaft();
 
     @Test
-    public void isFreeTest () {
+    public void isMovingTest() {
+        SequenceOfStops sequence = mock(SequenceOfStops.class);
+
+        shaft.setSequenceOfStops(sequence);
+
+        Assertions.assertTrue(shaft.isCabinMoving());
+    }
+
+    @Test
+    public void isFreeTest() {
         Assertions.assertTrue(shaft.isFree());
     }
 
     @Test
-    public void updateSequenceAddTest () {
+    public void updateSequenceAddTest() {
         ElevatorDriver elevatorDriver = mock(ElevatorDriver.class);
         SequenceOfStops sequence = new SequenceOfStops();
         sequence.setStopFloors(List.of(5));
@@ -34,7 +43,7 @@ public class ShaftTest {
     }
 
     @Test
-    public void updateSequenceMergeTest () {
+    public void updateSequenceMergeTest() {
         shaft.clearSequence();
         ElevatorDriver elevatorDriver = mock(ElevatorDriver.class);
 
@@ -52,7 +61,7 @@ public class ShaftTest {
     }
 
     @Test
-    public void isSameDirectionTest () {
+    public void isSameDirectionTest() {
         SequenceOfStops sequence = new SequenceOfStops();
         sequence.setDirection(Direction.UPWARDS);
 
