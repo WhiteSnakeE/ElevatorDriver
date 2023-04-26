@@ -77,22 +77,11 @@ public class Shaft extends Entity {
 
     public void setCabinPosition(int currentFloor, ListIterator listIterator) {
         cabinPosition = currentFloor;
+        fireCabinPosition(listIterator);
+    }
 
+    private void fireCabinPosition(ListIterator listIterator) {
         CabinPositionChangedEvent event = new CabinPositionChangedEvent(this, listIterator);
         shaftListeners.forEach(shaftListener -> shaftListener.handleCabinPositionChanged(event));
-    }
-
-    public void openDoor(ListIterator listIterator) {
-        cabin.openDoor();
-
-        DoorStateChangedEvent event = new DoorStateChangedEvent(this, listIterator);
-        shaftListeners.forEach(shaftListener -> shaftListener.handleDoorStateChanged(event));
-    }
-
-    public void closeDoor(ListIterator listIterator) {
-        cabin.closeDoor();
-
-        DoorStateChangedEvent event = new DoorStateChangedEvent(this, listIterator);
-        shaftListeners.forEach(shaftListener -> shaftListener.handleDoorStateChanged(event));
     }
 }

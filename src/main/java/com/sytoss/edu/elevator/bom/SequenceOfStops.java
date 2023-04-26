@@ -16,7 +16,11 @@ public class SequenceOfStops extends Entity {
 
     private Direction direction;
 
-    public boolean isLast (int floor) {
+    public boolean isLast(int floor) {
         return floor == stopFloors.get(stopFloors.size() - 1);
+    }
+
+    public boolean isFirst(int floor) {
+        return stopFloors.get(0) == floor;
     }
 }

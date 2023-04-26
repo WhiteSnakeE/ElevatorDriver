@@ -1,7 +1,6 @@
 package com.sytoss.edu.elevator.commands;
 
 import com.sytoss.edu.elevator.bom.Shaft;
-import com.sytoss.edu.elevator.bom.enums.OverWeightState;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +21,9 @@ public class OpenDoorCommand implements Command {
     @Override
     public void execute (HashMap<String, Object> params) {
         Shaft shaft = (Shaft) params.get(CommandManager.SHAFT_PARAM);
-        shaft.openDoor((ListIterator) params.get(ITERATOR_PARAM));
+        shaft.getCabin().openDoor(shaft, (ListIterator) params.get(ITERATOR_PARAM));
         log.info("Shaft with id [{}] has [DOOR STATE]: [OPENED]", shaft.getId());
 
-        log.info("Shaft with id [{}] updated doorState in DB to: [{}]", shaft.getId(), shaft.getCabin().getDoorState());
         shaftRepository.updateDoorStateById(shaft.getId(), shaft.getCabin().getDoorState());
 
         while (shaft.getCabin().isOverWeight()) {
@@ -37,6 +35,5 @@ public class OpenDoorCommand implements Command {
                 throw new RuntimeException(e);
             }
         }
-
     }
 }

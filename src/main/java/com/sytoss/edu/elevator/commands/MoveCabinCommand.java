@@ -2,7 +2,6 @@ package com.sytoss.edu.elevator.commands;
 
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
-import com.sytoss.edu.elevator.bom.enums.EngineState;
 import com.sytoss.edu.elevator.bom.house.floors.Floor;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import lombok.RequiredArgsConstructor;
@@ -51,14 +50,6 @@ public class MoveCabinCommand implements Command {
         paramsActivateCommand.put(DIRECTION_PARAM, Direction.UPWARDS);
         commandManager.getCommand(START_ENGINE_COMMAND).execute(paramsActivateCommand);
         commandManager.getCommand(VISIT_FLOOR_COMMAND).execute(paramsActivateCommand);
-    }
-
-    private int getLastFloor (Shaft shaft) {
-        return shaft.getSequenceOfStops().getStopFloors().get(shaft.getSequenceOfStops().getStopFloors().size() - 1);
-    }
-
-    private int getFirstFloor (Shaft shaft) {
-        return shaft.getSequenceOfStops().getStopFloors().get(0);
     }
 }
 

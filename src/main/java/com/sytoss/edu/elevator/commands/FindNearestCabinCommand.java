@@ -4,8 +4,6 @@ import com.sytoss.edu.elevator.HouseThreadPool;
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.house.House;
-import com.sytoss.edu.elevator.converters.HouseConverter;
-import com.sytoss.edu.elevator.converters.ShaftConverter;
 import com.sytoss.edu.elevator.repositories.HouseRepository;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import com.sytoss.edu.elevator.utils.JsonUtil;
@@ -47,6 +45,18 @@ public class FindNearestCabinCommand implements Command {
         }
 
         updateSequences(nearestCabin);
+
+        if (nearestCabin.getSequenceOfStops().isFirst(nearestCabin.getCabinPosition())) {
+            houseThreadPool.getFixedThreadPool().submit(() -> {
+                HashMap<String, Object> paramsActivateCommand = new HashMap<>();
+                paramsActivateCommand.put(CommandManager.SHAFT_PARAM, nearestCabin);
+                paramsActivateCommand.put(CommandManager.ITERATOR_PARAM, house.getFloors().listIterator());
+                log.info("[FindNearestCabin] start OpenDoorCommand for shaft with id {}", nearestCabin.getId());
+                commandManager.getCommand(OPEN_DOOR_COMMAND).execute(paramsActivateCommand);
+                log.info("[FindNearestCabin] finish OpenDoorCommand for shaft with id {}", nearestCabin.getId());
+            });
+            return;
+        }
 
         houseThreadPool.getFixedThreadPool().submit(() -> {
             log.info("startMoveCabin: start threads for shaft with id {}", nearestCabin.getId());
