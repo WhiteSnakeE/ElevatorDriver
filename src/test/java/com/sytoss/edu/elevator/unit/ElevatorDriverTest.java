@@ -1,15 +1,21 @@
 package com.sytoss.edu.elevator.unit;
 
+import com.sytoss.edu.elevator.HouseThreadPool;
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.enums.Direction;
+import com.sytoss.edu.elevator.commands.CommandManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.mockito.Mockito.mock;
+
 public class ElevatorDriverTest {
 
-    private final ElevatorDriver elevatorDriver = new ElevatorDriver();
+    private final CommandManager commandManager = mock(CommandManager.class);
+    private final HouseThreadPool houseThreadPool = mock(HouseThreadPool.class);
+    private final ElevatorDriver elevatorDriver = new ElevatorDriver(commandManager, houseThreadPool);
 
     @Test
     public void addNewSequenceToOrderTest () {

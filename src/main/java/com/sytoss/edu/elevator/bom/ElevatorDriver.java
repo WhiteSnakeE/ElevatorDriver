@@ -61,7 +61,7 @@ public class ElevatorDriver extends Entity implements ShaftListener {
             commandManager.getCommand(OPEN_DOOR_COMMAND).execute(params);
 
         } else {
-            houseThreadPool.getFixedThreadPool().schedule(() -> commandManager.getCommand(VISIT_FLOOR_COMMAND).execute(params), 1000, TimeUnit.MILLISECONDS);
+            commandManager.getCommand(VISIT_FLOOR_COMMAND).execute(params);
         }
     }
 
@@ -83,7 +83,7 @@ public class ElevatorDriver extends Entity implements ShaftListener {
             }
             params.put(DIRECTION_PARAM, Direction.UPWARDS);
             commandManager.getCommand(START_ENGINE_COMMAND).execute(params);
-            houseThreadPool.getFixedThreadPool().schedule(() -> commandManager.getCommand(VISIT_FLOOR_COMMAND).execute(params), 1000, TimeUnit.MILLISECONDS);
+            commandManager.getCommand(VISIT_FLOOR_COMMAND).execute(params);
         }
     }
 }

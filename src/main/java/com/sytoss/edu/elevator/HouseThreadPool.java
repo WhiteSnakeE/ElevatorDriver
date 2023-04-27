@@ -18,16 +18,11 @@ public class HouseThreadPool {
     }
 
     public synchronized void await() {
-        log.info("IS TERMINATED {}", fixedThreadPool.isTerminated());
         fixedThreadPool.shutdown();
         try {
-            fixedThreadPool.awaitTermination(60, TimeUnit.SECONDS);
+            boolean finished = fixedThreadPool.awaitTermination(10, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
-        }
-        log.info("IS TERMINATED {}", fixedThreadPool.isTerminated());
-        if (fixedThreadPool.isTerminated()) {
-            fixedThreadPool = Executors.newScheduledThreadPool(4);
         }
     }
 }
