@@ -6,7 +6,7 @@ import java.util.ListIterator;
 
 public class DoorStateChangedEvent extends Event {
 
-    public DoorStateChangedEvent(Shaft shaft, ListIterator listIterator) {
-        super(shaft, listIterator);
+    public DoorStateChangedEvent(Shaft shaft) {
+        super(shaft);
     }
 }

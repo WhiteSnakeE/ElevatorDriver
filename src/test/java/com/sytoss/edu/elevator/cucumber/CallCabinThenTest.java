@@ -40,9 +40,8 @@ public class CallCabinThenTest extends IntegrationTest {
     @Then("commands should have be invoked for shaft with index {int}: {stringList} for floor/floors {intList}")
     public void commandsShouldHaveBeInvokedForShaftWithIndexOpenDoorCheckOverweightCloseDoorForFloor (
             Integer shaftIndex, List<String> commands, List<Integer> stopFloors) {
-        //getHouseThreadPool().await();
-//        for (String command : commands) {
-//            Mockito.verify(getCommandManager().getCommand(command), times(stopFloors.size())).execute(Mockito.any());
-//        }
+        for (String command : commands) {
+            Mockito.verify(getCommandManager().getCommand(command), times(stopFloors.size())).execute(Mockito.any());
+        }
     }
 }

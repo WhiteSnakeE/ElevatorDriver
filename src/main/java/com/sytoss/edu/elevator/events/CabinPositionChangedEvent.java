@@ -6,7 +6,7 @@ import java.util.ListIterator;
 
 public class CabinPositionChangedEvent extends Event {
 
-    public CabinPositionChangedEvent(Shaft shaft, ListIterator listIterator) {
-        super(shaft, listIterator);
+    public CabinPositionChangedEvent(Shaft shaft) {
+        super(shaft);
     }
 }

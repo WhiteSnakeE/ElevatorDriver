@@ -7,6 +7,7 @@ import com.sytoss.edu.elevator.bom.enums.Direction;
 import io.cucumber.java.en.Given;
 
 import java.util.List;
+import java.util.concurrent.Executors;
 
 public class CallCabinGivenTest extends IntegrationTest {
 
@@ -14,7 +15,7 @@ public class CallCabinGivenTest extends IntegrationTest {
     public void shaftWithIdAndEngineHasEngineStateAndShaftHasCurrentPosition (Integer cabinIndex,
             Integer currentPosition) {
         getHouse().getShafts().get(cabinIndex).setSequenceOfStops(null);
-        getHouse().getShafts().get(cabinIndex).setCabinPosition(currentPosition);
+        setCabinPositionTest(getHouse().getShafts().get(cabinIndex), currentPosition);
     }
 
     @Given("shaft with index {int} has sequence of stops with floor {int} and Direction {string} and cabin position {int}")
@@ -24,7 +25,7 @@ public class CallCabinGivenTest extends IntegrationTest {
         sequence.setDirection(Direction.valueOf(direction));
         sequence.setStopFloors(List.of(floorNumber));
 
-        getHouse().getShafts().get(shaftIndex).setCabinPosition(cabinPosition);
+        setCabinPositionTest(getHouse().getShafts().get(shaftIndex), cabinPosition);
         getHouse().getShafts().get(shaftIndex).setSequenceOfStops(sequence);
     }
 
@@ -44,6 +45,12 @@ public class CallCabinGivenTest extends IntegrationTest {
         sequence.setStopFloors(floors);
 
         getHouse().getShafts().get(shaftIndex).setSequenceOfStops(sequence);
-        getHouse().getShafts().get(shaftIndex).setCabinPosition(cabinPosition);
+        setCabinPositionTest(getHouse().getShafts().get(shaftIndex), cabinPosition);
+    }
+
+    private void setCabinPositionTest(Shaft shaft, int currentPosition) {
+        shaft.getShaftListeners().clear();
+        shaft.setCabinPosition(currentPosition);
+        shaft.addShaftListener(getElevatorDriver());
     }
 }

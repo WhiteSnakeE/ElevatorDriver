@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Getter
@@ -50,6 +51,15 @@ public class House extends Entity {
             }
         }
         return nearestCabin;
+    }
+
+    public Floor nextFloor(int currentFloorNumber) {
+        Floor currentFloor = floors.stream()
+                .filter(floor -> floor.getFloorNumber() == currentFloorNumber)
+                .findAny()
+                .orElse(null);
+
+        return floors.get(floors.indexOf(currentFloor) + 1);
     }
 
     private List<Shaft> getFreeShafts() {

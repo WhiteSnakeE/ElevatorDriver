@@ -26,21 +26,17 @@ class CloseDoorCommandTest {
     @Test
     public synchronized void executeTest () {
         Shaft shaft = mock(Shaft.class);
-        House house = new HouseBuilder(mock(CommandManager.class)).build(2, 16);
+        Cabin cabin = mock(Cabin.class);
 
         HashMap<String, Object> params = new HashMap<>();
-
         params.put(SHAFT_PARAM, shaft);
-        params.put(ITERATOR_PARAM, house.getFloors().listIterator());
-
-        Cabin cabin = mock(Cabin.class);
 
         when(shaft.getCabin()).thenReturn(cabin);
         when(cabin.getDoorState()).thenReturn(DoorState.CLOSED);
 
         closeDoorCommand.execute(params);
 
-        verify(cabin).closeDoor(shaft, (ListIterator) params.get(ITERATOR_PARAM));
+        verify(shaft).closeCabinDoor();
         verify(shaftRepository).updateDoorStateById(0L, DoorState.CLOSED);
     }
 }

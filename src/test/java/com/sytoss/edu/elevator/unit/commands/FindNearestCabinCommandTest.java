@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.List;
+import java.util.concurrent.Executors;
 
 import static org.mockito.Mockito.*;
 
@@ -31,7 +32,7 @@ public class FindNearestCabinCommandTest {
 
     private final HouseRepository houseRepository = mock(HouseRepository.class);
 
-    private final HouseThreadPool houseThreadPool = spy(HouseThreadPool.class);
+    private final HouseThreadPool houseThreadPool = mock(HouseThreadPool.class);
 
     private final FindNearestCabinCommand findNearestCabinCommand = new FindNearestCabinCommand(house, elevatorDriver, commandManager, shaftRepository, houseRepository, houseThreadPool);
 
@@ -50,9 +51,10 @@ public class FindNearestCabinCommandTest {
         when(commandManager.getCommand(Command.MOVE_CABIN_COMMAND)).thenReturn(moveCabinCommand);
         when(shaft.isCabinMoving()).thenReturn(false);
         when(shaft.getSequenceOfStops()).thenReturn(sequence);
+        when(houseThreadPool.getFixedThreadPool()).thenReturn(Executors.newScheduledThreadPool(4));
 
         findNearestCabinCommand.execute(null);
-        houseThreadPool.await();
+        await();
 
         verify(house).findNearestCabin(elevatorDriver.getOrderSequenceOfStops());
         verify(commandManager.getCommand(Command.MOVE_CABIN_COMMAND)).execute(any());
@@ -65,5 +67,14 @@ public class FindNearestCabinCommandTest {
         when(commandManager.getCommand(Command.MOVE_CABIN_COMMAND)).thenReturn(mock(MoveCabinCommand.class));
         findNearestCabinCommand.execute(null);
         verify(commandManager.getCommand(Command.MOVE_CABIN_COMMAND), times(0)).execute(Mockito.any());
+    }
+
+    private void await() {
+        int time = 1000;
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

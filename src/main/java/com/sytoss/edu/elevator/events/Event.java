@@ -10,10 +10,7 @@ public abstract class Event {
 
     private final Shaft shaft;
 
-    private final ListIterator listIterator;
-
-    public Event(Shaft shaft, ListIterator listIterator) {
+    public Event(Shaft shaft) {
         this.shaft = shaft;
-        this.listIterator = listIterator;
     }
 }

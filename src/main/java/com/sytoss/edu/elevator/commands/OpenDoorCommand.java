@@ -7,9 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.ListIterator;
-
-import static com.sytoss.edu.elevator.commands.CommandManager.ITERATOR_PARAM;
 
 @Component
 @Slf4j
@@ -22,7 +19,7 @@ public class OpenDoorCommand implements Command {
     public void execute (HashMap<String, Object> params) {
         Shaft shaft = (Shaft) params.get(CommandManager.SHAFT_PARAM);
         log.info("Shaft with id [{}] has [DOOR STATE]: [OPENED]", shaft.getId());
-        shaft.getCabin().openDoor(shaft, (ListIterator) params.get(ITERATOR_PARAM));
+        shaft.openCabinDoor();
 
         shaftRepository.updateDoorStateById(shaft.getId(), shaft.getCabin().getDoorState());
 

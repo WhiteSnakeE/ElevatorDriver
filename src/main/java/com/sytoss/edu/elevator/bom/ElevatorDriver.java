@@ -3,6 +3,7 @@ package com.sytoss.edu.elevator.bom;
 import com.sytoss.edu.elevator.HouseThreadPool;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.enums.DoorState;
+import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.events.CabinPositionChangedEvent;
 import com.sytoss.edu.elevator.events.DoorStateChangedEvent;
@@ -11,6 +12,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.sytoss.edu.elevator.commands.Command.*;
 import static com.sytoss.edu.elevator.commands.CommandManager.*;
+import static com.sytoss.edu.elevator.HouseThreadPool.*;
 
 @Component
 @Getter
@@ -54,14 +57,13 @@ public class ElevatorDriver extends Entity implements ShaftListener {
 
         HashMap<String, Object> params = new HashMap<>();
         params.put(SHAFT_PARAM, shaft);
-        params.put(ITERATOR_PARAM, event.getListIterator());
 
         if (shaft.getSequenceOfStops().getStopFloors().contains(shaft.getCabinPosition())) {
             commandManager.getCommand(STOP_ENGINE_COMMAND).execute(params);
-            commandManager.getCommand(OPEN_DOOR_COMMAND).execute(params);
+            houseThreadPool.getFixedThreadPool().schedule(() -> commandManager.getCommand(OPEN_DOOR_COMMAND).execute(params), OPEN_DOOR_TIME_SLEEP, TimeUnit.MILLISECONDS);
 
         } else {
-            commandManager.getCommand(VISIT_FLOOR_COMMAND).execute(params);
+            houseThreadPool.getFixedThreadPool().schedule(() -> commandManager.getCommand(VISIT_FLOOR_COMMAND).execute(params), VISIT_FLOOR_TIME_SLEEP, TimeUnit.MILLISECONDS);
         }
     }
 
@@ -71,20 +73,17 @@ public class ElevatorDriver extends Entity implements ShaftListener {
 
         HashMap<String, Object> params = new HashMap<>();
         params.put(SHAFT_PARAM, shaft);
-        params.put(ITERATOR_PARAM, event.getListIterator());
 
         if (shaft.getCabin().getDoorState().equals(DoorState.OPENED)) {
-            houseThreadPool.getFixedThreadPool().schedule(() -> commandManager.getCommand(CLOSE_DOOR_COMMAND).execute(params), 2000, TimeUnit.MILLISECONDS);
+            houseThreadPool.getFixedThreadPool().schedule(() -> commandManager.getCommand(CLOSE_DOOR_COMMAND).execute(params), CLOSE_DOOR_TIME_SLEEP, TimeUnit.MILLISECONDS);
         } else {
 
             if (shaft.getSequenceOfStops().isLast(shaft.getCabinPosition())) {
                 shaft.clearSequence();
                 return;
             }
-            params.put(DIRECTION_PARAM, Direction.UPWARDS);
-            commandManager.getCommand(START_ENGINE_COMMAND).execute(params);
-            commandManager.getCommand(VISIT_FLOOR_COMMAND).execute(params);
+
+            houseThreadPool.getFixedThreadPool().schedule(() -> commandManager.getCommand(MOVE_CABIN_COMMAND).execute(params), MOVE_CABIN_TIME_SLEEP, TimeUnit.MILLISECONDS);
         }
     }
 }
-

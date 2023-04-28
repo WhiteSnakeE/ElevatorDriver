@@ -22,7 +22,7 @@ public class CloseDoorCommand implements Command {
     public void execute(HashMap<String, Object> params) {
         Shaft shaft = (Shaft) params.get(CommandManager.SHAFT_PARAM);
         log.info("Shaft with id [{}] has [DOOR STATE]: [CLOSED]", shaft.getId());
-        shaft.getCabin().closeDoor(shaft, (ListIterator) params.get(ITERATOR_PARAM));
+        shaft.closeCabinDoor();
         shaftRepository.updateDoorStateById(shaft.getId(), shaft.getCabin().getDoorState());
     }
 }

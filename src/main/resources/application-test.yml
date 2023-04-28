@@ -2,7 +2,7 @@ spring:
   datasource:
     username: sa
     password: pwd
-    url: jdbc:h2:file:./db/demodb;MODE=Oracle
+    url: jdbc:h2:mem:testdb;
     driverClassName: org.h2.Driver
 
   jpa:
@@ -24,7 +24,10 @@ house:
   floorsCount: 16
 
 houseThreadPool:
-  openDoorTimeSleep: 1000
-  closeDoorTimeSleep: 2000
-  visitFloorTimeSleep: 500
-  moveCabinTimeSleep: 1000
+  openDoorTimeSleep: 0
+  closeDoorTimeSleep: 0
+  visitFloorTimeSleep: 0
+  moveCabinTimeSleep: 0
+
+tests:
+  awaitTime: 400

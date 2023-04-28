@@ -9,7 +9,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 public class SequenceOfStops extends Entity {
 
     private List<Integer> stopFloors;

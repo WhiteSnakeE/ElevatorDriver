@@ -16,13 +16,13 @@ public class CabinTest {
 
     @Test
     public void openDoorTest() {
-        cabin.openDoor(mock(Shaft.class), mock(ListIterator.class));
+        cabin.openDoor();
         Assertions.assertEquals(DoorState.OPENED, cabin.getDoorState());
     }
 
     @Test
     public void closeDoorTest() {
-        cabin.closeDoor(mock(Shaft.class), mock(ListIterator.class));
+        cabin.closeDoor();
         Assertions.assertEquals(DoorState.CLOSED, cabin.getDoorState());
     }
 
