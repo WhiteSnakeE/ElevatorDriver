@@ -3,7 +3,6 @@ package com.sytoss.edu.elevator.bom;
 import com.sytoss.edu.elevator.HouseThreadPool;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.enums.DoorState;
-import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.events.CabinPositionChangedEvent;
 import com.sytoss.edu.elevator.events.DoorStateChangedEvent;
@@ -12,7 +11,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -20,9 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static com.sytoss.edu.elevator.commands.Command.*;
-import static com.sytoss.edu.elevator.commands.CommandManager.*;
 import static com.sytoss.edu.elevator.HouseThreadPool.*;
+import static com.sytoss.edu.elevator.commands.Command.*;
+import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 
 @Component
 @Getter

@@ -1,14 +1,9 @@
 package com.sytoss.edu.elevator.unit.house;
 
 import com.sytoss.edu.elevator.bom.Cabin;
-import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.DoorState;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.ListIterator;
-
-import static org.mockito.Mockito.mock;
 
 public class CabinTest {
 

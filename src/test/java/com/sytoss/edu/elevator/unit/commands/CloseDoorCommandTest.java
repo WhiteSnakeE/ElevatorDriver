@@ -3,18 +3,12 @@ package com.sytoss.edu.elevator.unit.commands;
 import com.sytoss.edu.elevator.bom.Cabin;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.DoorState;
-import com.sytoss.edu.elevator.bom.enums.EngineState;
-import com.sytoss.edu.elevator.bom.house.House;
-import com.sytoss.edu.elevator.bom.house.HouseBuilder;
 import com.sytoss.edu.elevator.commands.CloseDoorCommand;
-import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
-import java.util.ListIterator;
 
-import static com.sytoss.edu.elevator.commands.CommandManager.ITERATOR_PARAM;
 import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 import static org.mockito.Mockito.*;
 

@@ -2,12 +2,8 @@ package com.sytoss.edu.elevator.bom;
 
 import com.sytoss.edu.elevator.bom.enums.DoorState;
 import com.sytoss.edu.elevator.bom.enums.OverWeightState;
-import com.sytoss.edu.elevator.events.DoorStateChangedEvent;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter

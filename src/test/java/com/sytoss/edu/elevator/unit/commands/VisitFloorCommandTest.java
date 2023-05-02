@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
-import static com.sytoss.edu.elevator.commands.CommandManager.*;
+import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 import static org.mockito.Mockito.*;
 
 public class VisitFloorCommandTest {

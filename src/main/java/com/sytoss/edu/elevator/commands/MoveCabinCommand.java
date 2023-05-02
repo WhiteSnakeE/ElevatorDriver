@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+import static com.sytoss.edu.elevator.HouseThreadPool.VISIT_FLOOR_TIME_SLEEP;
 import static com.sytoss.edu.elevator.commands.CommandManager.DIRECTION_PARAM;
 import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
-import static com.sytoss.edu.elevator.HouseThreadPool.*;
 
 @Slf4j
 @Component
