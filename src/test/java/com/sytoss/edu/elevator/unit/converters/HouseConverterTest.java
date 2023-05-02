@@ -32,7 +32,7 @@ public class HouseConverterTest {
     private final HouseConverter houseConverter = new HouseConverter(houseBuilder, shaftConverter);
 
     @Test
-    public void toDTOTest() {
+    public void toDTOTest () {
         House houseTmp = houseBuilder.build(2, 16);
 
         List<SequenceOfStops> order = new ArrayList<>();
@@ -50,7 +50,7 @@ public class HouseConverterTest {
     }
 
     @Test
-    public void fromDTOTest() {
+    public void fromDTOTest () {
         HouseDTO houseDTO = HouseDTO.builder().id(1L).numberOfFloors(16).numberOfShafts(1).orderSequenceOfStops(null).build();
         ShaftDTO shaftDTO = ShaftDTO.builder().id(1L).sequenceOfStops(null).cabinPosition(1).doorState(DoorState.CLOSED).engineState(EngineState.STAYING).overweightState(OverWeightState.NOT_OVERWEIGHT).houseDTO(houseDTO).build();
 
@@ -60,32 +60,5 @@ public class HouseConverterTest {
         Assertions.assertEquals(16, house.getFloors().size());
         Assertions.assertEquals(1, house.getShafts().size());
         verify(shaftConverter).fromDTO(shaftDTO);
-    }
-
-    @Test
-    public void orderSequenceToStringInJSONTest() {
-        List<SequenceOfStops> order = new ArrayList<>();
-        SequenceOfStops sequence = new SequenceOfStops();
-        sequence.setStopFloors(List.of(1, 2, 3));
-        sequence.setDirection(Direction.UPWARDS);
-        sequence.setId(123L);
-        order.add(sequence);
-
-        String json = houseConverter.orderSequenceToStringInJSON(order);
-
-        Assertions.assertEquals("[{\"id\":123,\"stopFloors\":[1,2,3],\"direction\":\"UPWARDS\"}]", json);
-    }
-
-    @Test
-    public void stringJSONToOrderSequenceTest() {
-        String json = "[{\"id\":123,\"stopFloors\":[1,2,3],\"direction\":\"UPWARDS\"}]";
-
-        List<SequenceOfStops> order = houseConverter.stringJSONToOrderSequence(json);
-
-        SequenceOfStops sequence = order.get(0);
-
-        Assertions.assertEquals(123, sequence.getId());
-        Assertions.assertEquals(Direction.UPWARDS, sequence.getDirection());
-        Assertions.assertEquals(List.of(1, 2, 3), sequence.getStopFloors());
     }
 }

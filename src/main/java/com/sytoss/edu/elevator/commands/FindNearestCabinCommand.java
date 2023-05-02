@@ -8,6 +8,7 @@ import com.sytoss.edu.elevator.converters.HouseConverter;
 import com.sytoss.edu.elevator.converters.ShaftConverter;
 import com.sytoss.edu.elevator.repositories.HouseRepository;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
+import com.sytoss.edu.elevator.utils.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -37,7 +38,7 @@ public class FindNearestCabinCommand implements Command {
 
     @Override
     public void execute(HashMap<String, Object> params) {
-        houseRepository.updateOrderById(house.getId(), houseConverter.orderSequenceToStringInJSON(elevatorDriver.getOrderSequenceOfStops()));
+        houseRepository.updateOrderById(house.getId(), JsonUtil.orderSequenceToStringInJSON(elevatorDriver.getOrderSequenceOfStops()));
         Shaft nearestCabin = house.findNearestCabin(elevatorDriver.getOrderSequenceOfStops());
 
         if (nearestCabin == null) {
@@ -64,10 +65,10 @@ public class FindNearestCabinCommand implements Command {
     private void updateSequences(Shaft nearestCabin) {
         nearestCabin.updateSequence(elevatorDriver);
 
-        String sequenceOfStops = shaftConverter.sequenceToStringInJSON(nearestCabin.getSequenceOfStops());
+        String sequenceOfStops = JsonUtil.sequenceToStringInJSON(nearestCabin.getSequenceOfStops());
         shaftRepository.updateSequenceById(nearestCabin.getId(), sequenceOfStops);
 
-        String orderSequenceOfStops = houseConverter.orderSequenceToStringInJSON(elevatorDriver.getOrderSequenceOfStops());
+        String orderSequenceOfStops = JsonUtil.orderSequenceToStringInJSON(elevatorDriver.getOrderSequenceOfStops());
         houseRepository.updateOrderById(house.getId(), orderSequenceOfStops);
     }
 }
