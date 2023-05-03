@@ -46,6 +46,10 @@ public class FindNearestCabinCommand implements Command {
 
         updateSequences(nearestCabin);
 
+        if (nearestCabin.getCabinPosition() > nearestCabin.getSequenceOfStops().getStopFloors().get(0)) {
+            return;
+        }
+
         if (nearestCabin.getSequenceOfStops().isFirst(nearestCabin.getCabinPosition())) {
             houseThreadPool.getFixedThreadPool().submit(() -> {
                 HashMap<String, Object> paramsActivateCommand = new HashMap<>();

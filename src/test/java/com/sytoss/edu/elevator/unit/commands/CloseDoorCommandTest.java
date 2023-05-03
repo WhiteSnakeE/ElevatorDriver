@@ -32,5 +32,6 @@ class CloseDoorCommandTest {
 
         verify(shaft).closeCabinDoor();
         verify(shaftRepository).updateDoorStateById(0L, DoorState.CLOSED);
+        verify(shaftRepository).updateSequenceById(0L, null);
     }
 }
