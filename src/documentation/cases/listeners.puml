@@ -10,22 +10,17 @@ FindNearestCabinCommand -> MoveCabinCommand: execute(params)
 MoveCabinCommand -> StartEngineCommand: execute(params)
 MoveCabinCommand -> VisitFloorCommand: execute(params)
 
-VisitFloorCommand -> Shaft: fireCabinPosition(cabinPosition)
+VisitFloorCommand -> Shaft: setCabinPosition(cabinPosition)
 Shaft -> ElevatorDriver: handleCabinPositionChanged(event)
-ElevatorDriver -> ShaftListener: handleCabinPositionChanged(event)
 activate ElevatorDriver
 ElevatorDriver -> StopEngineCommand: execute(params)
 ElevatorDriver -> OpenDoorCommand: execute(params)
-OpenDoorCommand -> Shaft: fireOpenDoor()
+OpenDoorCommand -> Shaft: openDoor()
 deactivate ElevatorDriver
 Shaft -> ElevatorDriver: handleDoorStateChanged(event)
 ElevatorDriver -> CloseDoorCommand: execute(params)
-CloseDoorCommand -> Shaft: fireOpenDoor()
+CloseDoorCommand -> Shaft: closeDoor()
 Shaft -> ElevatorDriver: handleDoorStateChanged(event)
-ElevatorDriver -> CloseDoorCommand: execute(params)
-activate CloseDoorCommand
-CloseDoorCommand -> StartEngineCommand: execute(params)
-CloseDoorCommand -> VisitFloorCommand: execute(params)
-deactivate CloseDoorCommand
+ElevatorDriver -> Shaft: clearSequence()
 
 @enduml
