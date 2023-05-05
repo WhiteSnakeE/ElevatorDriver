@@ -17,11 +17,12 @@ public class CommandManagerTest {
     private final ObjectProvider<StopEngineCommand> stopDoorCommandObjectProvider = mock(ObjectProvider.class);
     private final ObjectProvider<OpenDoorCommand> openDoorCommandObjectProvider = mock(ObjectProvider.class);
     private final ObjectProvider<CloseDoorCommand> closeDoorCommandObjectProvider = mock(ObjectProvider.class);
+    private final ObjectProvider<VisitFloorCommand> visitFloorCommandObjectProvider = mock(ObjectProvider.class);
 
     private final CommandManager commandManager = new CommandManager(pressUpButtonCommandProvider,
             findNearestCabinCommandProvider, activateShaftCommandProvider,
             moveCabinCommandObjectProvider, stopDoorCommandObjectProvider,
-            openDoorCommandObjectProvider, closeDoorCommandObjectProvider);
+            openDoorCommandObjectProvider, closeDoorCommandObjectProvider, visitFloorCommandObjectProvider);
 
     @Test
     public void getCommandTest () {

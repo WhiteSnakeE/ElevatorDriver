@@ -6,8 +6,6 @@ import com.sytoss.edu.elevator.commands.Command;
 import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.commands.FindNearestCabinCommand;
 import com.sytoss.edu.elevator.commands.PressUpButtonCommand;
-import com.sytoss.edu.elevator.converters.HouseConverter;
-import com.sytoss.edu.elevator.repositories.HouseRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

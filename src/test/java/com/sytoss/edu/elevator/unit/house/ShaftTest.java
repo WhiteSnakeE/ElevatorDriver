@@ -1,5 +1,6 @@
 package com.sytoss.edu.elevator.unit.house;
 
+import com.sytoss.edu.elevator.bom.Cabin;
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
@@ -9,8 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ShaftTest {
 
@@ -72,5 +72,25 @@ public class ShaftTest {
 
         shaft.setCabinPosition(6);
         Assertions.assertFalse(shaft.isSameDirection(Direction.UPWARDS, 5));
+    }
+
+    @Test
+    public void openCabinDoorTest() {
+        Cabin cabin = mock(Cabin.class);
+        shaft.setCabin(cabin);
+
+        shaft.openCabinDoor();
+
+        verify(cabin).openDoor();
+    }
+
+    @Test
+    public void closeCabinDoorTest() {
+        Cabin cabin = mock(Cabin.class);
+        shaft.setCabin(cabin);
+
+        shaft.closeCabinDoor();
+
+        verify(cabin).closeDoor();
     }
 }

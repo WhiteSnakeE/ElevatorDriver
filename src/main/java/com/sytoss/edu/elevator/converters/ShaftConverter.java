@@ -1,8 +1,5 @@
 package com.sytoss.edu.elevator.converters;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.dto.HouseDTO;
 import com.sytoss.edu.elevator.dto.ShaftDTO;

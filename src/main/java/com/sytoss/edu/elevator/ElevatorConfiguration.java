@@ -16,12 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 @Configuration
 @RequiredArgsConstructor
@@ -49,6 +45,8 @@ public class ElevatorConfiguration {
 
         House house = houseConverter.fromDTO(houseDTO, shaftDTOList);
 
+        setListeners(house);
+
         for (Shaft shaft : house.getShafts()) {
             if (shaft.getSequenceOfStops() != null) {
                 houseThreadPool.getFixedThreadPool().submit(() -> {
@@ -63,5 +61,11 @@ public class ElevatorConfiguration {
         }
 
         return house;
+    }
+
+    private void setListeners(House house) {
+        for (Shaft shaft : house.getShafts()) {
+            shaft.addShaftListener(elevatorDriver);
+        }
     }
 }

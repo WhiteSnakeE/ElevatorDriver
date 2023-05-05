@@ -2,7 +2,6 @@ package com.sytoss.edu.elevator.bom;
 
 import com.sytoss.edu.elevator.bom.enums.DoorState;
 import com.sytoss.edu.elevator.bom.enums.OverWeightState;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

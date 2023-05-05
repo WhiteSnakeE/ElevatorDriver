@@ -1,15 +1,10 @@
 package com.sytoss.edu.elevator.bom.house;
 
-import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.Entity;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.house.floors.Floor;
-import com.sytoss.edu.elevator.converters.HouseConverter;
-import com.sytoss.edu.elevator.converters.ShaftConverter;
-import com.sytoss.edu.elevator.repositories.HouseRepository;
-import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -50,6 +45,15 @@ public class House extends Entity {
             }
         }
         return nearestCabin;
+    }
+
+    public Floor nextFloor(int currentFloorNumber) {
+        Floor currentFloor = floors.stream()
+                .filter(floor -> floor.getFloorNumber() == currentFloorNumber)
+                .findAny()
+                .orElse(null);
+
+        return floors.get(floors.indexOf(currentFloor) + 1);
     }
 
     private List<Shaft> getFreeShafts() {

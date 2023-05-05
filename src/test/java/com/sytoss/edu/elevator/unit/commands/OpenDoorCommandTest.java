@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
+import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 import static org.mockito.Mockito.*;
 
 public class OpenDoorCommandTest {
@@ -18,16 +19,18 @@ public class OpenDoorCommandTest {
 
     @Test
     public void executeTest() {
-        Shaft shaft = spy(Shaft.class);
-        shaft.setId(123L);
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("Shaft", shaft);
+        Shaft shaft = mock(Shaft.class);
         Cabin cabin = mock(Cabin.class);
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put(SHAFT_PARAM, shaft);
 
         when(shaft.getCabin()).thenReturn(cabin);
         when(cabin.getDoorState()).thenReturn(DoorState.OPENED);
+
         openDoorCommand.execute(params);
-        verify(cabin).openDoor();
-        verify(shaftRepository).updateDoorStateById(123L, DoorState.OPENED);
+
+        verify(shaft).openCabinDoor();
+        verify(shaftRepository).updateDoorStateById(0L, DoorState.OPENED);
     }
 }
