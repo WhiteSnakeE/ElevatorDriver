@@ -32,7 +32,7 @@ public class HouseThreadPool {
     }
 
     public static void await() {
-        final int AWAIT_TIME = 100;
+        final int AWAIT_TIME = 50;
         try {
             Thread.sleep(AWAIT_TIME);
         } catch (InterruptedException e) {

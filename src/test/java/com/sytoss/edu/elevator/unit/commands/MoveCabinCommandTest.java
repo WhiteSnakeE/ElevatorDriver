@@ -1,6 +1,5 @@
 package com.sytoss.edu.elevator.unit.commands;
 
-import com.sytoss.edu.elevator.HouseThreadPool;
 import com.sytoss.edu.elevator.bom.Engine;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
@@ -12,17 +11,17 @@ import org.mockito.Mockito;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Executors;
 
+import static com.sytoss.edu.elevator.HouseThreadPool.VISIT_FLOOR_TIME_SLEEP;
 import static com.sytoss.edu.elevator.HouseThreadPool.await;
+import static com.sytoss.edu.elevator.commands.Command.VISIT_FLOOR_COMMAND;
 import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 import static org.mockito.Mockito.*;
 
 public class MoveCabinCommandTest {
 
     private final CommandManager commandManager = mock(CommandManager.class);
-    private final HouseThreadPool houseThreadPool = mock(HouseThreadPool.class);
-    private final MoveCabinCommand moveCabinCommand = new MoveCabinCommand(commandManager, houseThreadPool);
+    private final MoveCabinCommand moveCabinCommand = new MoveCabinCommand(commandManager);
 
     @Test
     public void executeTest() {
@@ -46,7 +45,6 @@ public class MoveCabinCommandTest {
 
         when(commandManager.getCommand(Command.START_ENGINE_COMMAND)).thenReturn(startEngineCommand);
         when(commandManager.getCommand(Command.VISIT_FLOOR_COMMAND)).thenReturn(mock(VisitFloorCommand.class));
-        when(houseThreadPool.getFixedThreadPool()).thenReturn(Executors.newScheduledThreadPool(4));
 
         doAnswer(invocation -> {
             HashMap<String, Object> arg = invocation.getArgument(0);
@@ -66,6 +64,6 @@ public class MoveCabinCommandTest {
         await();
 
         verify(commandManager.getCommand(Command.START_ENGINE_COMMAND)).execute(Mockito.any());
-        verify(commandManager.getCommand(Command.VISIT_FLOOR_COMMAND)).execute(Mockito.any());
+        verify(commandManager).scheduleCommand(VISIT_FLOOR_COMMAND, params, VISIT_FLOOR_TIME_SLEEP);
     }
 }

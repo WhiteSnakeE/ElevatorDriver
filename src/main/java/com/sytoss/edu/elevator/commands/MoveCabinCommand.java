@@ -20,7 +20,6 @@ import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 public class MoveCabinCommand implements Command {
 
     private final CommandManager commandManager;
-    private final HouseThreadPool houseThreadPool;
 
     @Override
     public void execute (HashMap<String, Object> params) {
@@ -33,7 +32,7 @@ public class MoveCabinCommand implements Command {
         paramsActivateCommand.put(DIRECTION_PARAM, Direction.UPWARDS);
 
         commandManager.getCommand(START_ENGINE_COMMAND).execute(paramsActivateCommand);
-        houseThreadPool.getFixedThreadPool().schedule(() -> commandManager.getCommand(VISIT_FLOOR_COMMAND).execute(paramsActivateCommand), VISIT_FLOOR_TIME_SLEEP, TimeUnit.MILLISECONDS);
+        commandManager.scheduleCommand(VISIT_FLOOR_COMMAND, paramsActivateCommand, VISIT_FLOOR_TIME_SLEEP);
     }
 }
 

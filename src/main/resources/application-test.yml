@@ -28,6 +28,3 @@ houseThreadPool:
   closeDoorTimeSleep: 0
   visitFloorTimeSleep: 0
   moveCabinTimeSleep: 0
-
-tests:
-  awaitTime: 400

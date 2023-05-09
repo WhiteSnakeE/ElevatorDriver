@@ -38,6 +38,10 @@ public class HouseService {
         House houseTmp = houseBuilder.build(shaftsCount, floorsCount);
         house.setFloors(houseTmp.getFloors());
         house.setShafts(houseTmp.getShafts());
+
+        for (Shaft shaft : house.getShafts()) {
+            shaft.addShaftListener(elevatorDriver);
+        }
     }
 
     public void saveRequest(HouseParams houseParams) {

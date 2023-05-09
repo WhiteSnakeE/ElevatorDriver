@@ -1,15 +1,18 @@
 package com.sytoss.edu.elevator.commands;
 
+import com.sytoss.edu.elevator.HouseThreadPool;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @RequiredArgsConstructor
 public class CommandManager {
 
+    private final HouseThreadPool houseThreadPool;
     private final ObjectProvider<PressUpButtonCommand> pressUpButtonCommandProvider;
     private final ObjectProvider<FindNearestCabinCommand> findNearestCabinCommandProvider;
     private final ObjectProvider<MoveCabinCommand> moveCabinCommandObjectProvider;
@@ -45,4 +48,9 @@ public class CommandManager {
         }
         return commandMap.get(nameCommand);
     }
+
+    public void scheduleCommand(String nameCommand, HashMap<String, Object> params, long waitTime) {
+        houseThreadPool.getFixedThreadPool().schedule(() -> getCommand(nameCommand).execute(params), waitTime, TimeUnit.MILLISECONDS);
+    }
+
 }

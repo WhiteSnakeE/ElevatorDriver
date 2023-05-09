@@ -1,6 +1,5 @@
 package com.sytoss.edu.elevator.unit;
 
-import com.sytoss.edu.elevator.HouseThreadPool;
 import com.sytoss.edu.elevator.bom.Cabin;
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
@@ -13,18 +12,18 @@ import com.sytoss.edu.elevator.events.DoorStateChangedEvent;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.Executors;
 
-import static com.sytoss.edu.elevator.HouseThreadPool.await;
+import static com.sytoss.edu.elevator.HouseThreadPool.*;
 import static com.sytoss.edu.elevator.commands.Command.*;
+import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 import static org.mockito.Mockito.*;
 
 public class ElevatorDriverTest {
 
     private final CommandManager commandManager = mock(CommandManager.class);
-    private final HouseThreadPool houseThreadPool = mock(HouseThreadPool.class);
-    private final ElevatorDriver elevatorDriver = new ElevatorDriver(commandManager, houseThreadPool);
+    private final ElevatorDriver elevatorDriver = new ElevatorDriver(commandManager);
 
     @Test
     public void addNewSequenceToOrderTest () {
@@ -57,18 +56,20 @@ public class ElevatorDriverTest {
         StopEngineCommand stopEngineCommand = mock(StopEngineCommand.class);
         OpenDoorCommand openDoorCommand = mock(OpenDoorCommand.class);
 
+        HashMap<String, Object> params = new HashMap<>();
+        params.put(SHAFT_PARAM, shaft);
+
         when(event.getShaft()).thenReturn(shaft);
         when(shaft.getSequenceOfStops()).thenReturn(sequence);
         when(sequence.getStopFloors()).thenReturn(List.of(2));
         when(shaft.getCabinPosition()).thenReturn(2);
         when(commandManager.getCommand(STOP_ENGINE_COMMAND)).thenReturn(stopEngineCommand);
         when(commandManager.getCommand(OPEN_DOOR_COMMAND)).thenReturn(openDoorCommand);
-        when(houseThreadPool.getFixedThreadPool()).thenReturn(Executors.newScheduledThreadPool(4));
 
         elevatorDriver.handleCabinPositionChanged(event);
         await();
 
-        verify(openDoorCommand).execute(any());
+        verify(commandManager).scheduleCommand(OPEN_DOOR_COMMAND, params, OPEN_DOOR_TIME_SLEEP);
         verify(stopEngineCommand).execute(any());
     }
 
@@ -79,17 +80,19 @@ public class ElevatorDriverTest {
         SequenceOfStops sequence = mock(SequenceOfStops.class);
         VisitFloorCommand visitFloorCommand = mock(VisitFloorCommand.class);
 
+        HashMap<String, Object> params = new HashMap<>();
+        params.put(SHAFT_PARAM, shaft);
+
         when(event.getShaft()).thenReturn(shaft);
         when(shaft.getSequenceOfStops()).thenReturn(sequence);
         when(sequence.getStopFloors()).thenReturn(List.of(2));
         when(shaft.getCabinPosition()).thenReturn(1);
         when(commandManager.getCommand(VISIT_FLOOR_COMMAND)).thenReturn(visitFloorCommand);
-        when(houseThreadPool.getFixedThreadPool()).thenReturn(Executors.newScheduledThreadPool(4));
 
         elevatorDriver.handleCabinPositionChanged(event);
         await();
 
-        verify(visitFloorCommand).execute(any());
+        verify(commandManager).scheduleCommand(VISIT_FLOOR_COMMAND, params, VISIT_FLOOR_TIME_SLEEP);
     }
 
     @Test
@@ -99,16 +102,18 @@ public class ElevatorDriverTest {
         Cabin cabin = mock(Cabin.class);
         CloseDoorCommand closeDoorCommand = mock(CloseDoorCommand.class);
 
+        HashMap<String, Object> params = new HashMap<>();
+        params.put(SHAFT_PARAM, shaft);
+
         when(event.getShaft()).thenReturn(shaft);
         when(shaft.getCabin()).thenReturn(cabin);
         when(cabin.getDoorState()).thenReturn(DoorState.OPENED);
         when(commandManager.getCommand(CLOSE_DOOR_COMMAND)).thenReturn(closeDoorCommand);
-        when(houseThreadPool.getFixedThreadPool()).thenReturn(Executors.newScheduledThreadPool(4));
 
         elevatorDriver.handleDoorStateChanged(event);
         await();
 
-        verify(closeDoorCommand).execute(any());
+        verify(commandManager).scheduleCommand(CLOSE_DOOR_COMMAND, params, CLOSE_DOOR_TIME_SLEEP);
     }
 
     @Test
@@ -119,6 +124,9 @@ public class ElevatorDriverTest {
         SequenceOfStops sequence = mock(SequenceOfStops.class);
         MoveCabinCommand moveCabinCommand = mock(MoveCabinCommand.class);
 
+        HashMap<String, Object> params = new HashMap<>();
+        params.put(SHAFT_PARAM, shaft);
+
         when(event.getShaft()).thenReturn(shaft);
         when(shaft.getCabin()).thenReturn(cabin);
         when(shaft.getSequenceOfStops()).thenReturn(sequence);
@@ -126,12 +134,11 @@ public class ElevatorDriverTest {
         when(sequence.isLast(shaft.getCabinPosition())).thenReturn(false);
         when(cabin.getDoorState()).thenReturn(DoorState.CLOSED);
         when(commandManager.getCommand(MOVE_CABIN_COMMAND)).thenReturn(moveCabinCommand);
-        when(houseThreadPool.getFixedThreadPool()).thenReturn(Executors.newScheduledThreadPool(4));
 
         elevatorDriver.handleDoorStateChanged(event);
         await();
 
-        verify(moveCabinCommand).execute(any());
+        verify(commandManager).scheduleCommand(MOVE_CABIN_COMMAND, params, MOVE_CABIN_TIME_SLEEP);
     }
 
     @Test

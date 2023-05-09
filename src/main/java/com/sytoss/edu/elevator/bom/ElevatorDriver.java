@@ -33,8 +33,6 @@ public class ElevatorDriver extends Entity implements ShaftListener {
 
     private final CommandManager commandManager;
 
-    private final HouseThreadPool houseThreadPool;
-
     public void addNewSequenceToOrder (int floorNumber, Direction direction) {
         SequenceOfStops sequenceOfStops = new SequenceOfStops();
         sequenceOfStops.setDirection(direction);
@@ -58,10 +56,9 @@ public class ElevatorDriver extends Entity implements ShaftListener {
 
         if (shaft.getSequenceOfStops().getStopFloors().contains(shaft.getCabinPosition())) {
             commandManager.getCommand(STOP_ENGINE_COMMAND).execute(params);
-            houseThreadPool.getFixedThreadPool().schedule(() -> commandManager.getCommand(OPEN_DOOR_COMMAND).execute(params), OPEN_DOOR_TIME_SLEEP, TimeUnit.MILLISECONDS);
-
+            commandManager.scheduleCommand(OPEN_DOOR_COMMAND, params, OPEN_DOOR_TIME_SLEEP);
         } else {
-            houseThreadPool.getFixedThreadPool().schedule(() -> commandManager.getCommand(VISIT_FLOOR_COMMAND).execute(params), VISIT_FLOOR_TIME_SLEEP, TimeUnit.MILLISECONDS);
+            commandManager.scheduleCommand(VISIT_FLOOR_COMMAND, params, VISIT_FLOOR_TIME_SLEEP);
         }
     }
 
@@ -73,7 +70,7 @@ public class ElevatorDriver extends Entity implements ShaftListener {
         params.put(SHAFT_PARAM, shaft);
 
         if (shaft.getCabin().getDoorState().equals(DoorState.OPENED)) {
-            houseThreadPool.getFixedThreadPool().schedule(() -> commandManager.getCommand(CLOSE_DOOR_COMMAND).execute(params), CLOSE_DOOR_TIME_SLEEP, TimeUnit.MILLISECONDS);
+            commandManager.scheduleCommand(CLOSE_DOOR_COMMAND, params, CLOSE_DOOR_TIME_SLEEP);
         } else {
 
             if (shaft.getSequenceOfStops().isLast(shaft.getCabinPosition())) {
@@ -81,7 +78,7 @@ public class ElevatorDriver extends Entity implements ShaftListener {
                 return;
             }
 
-            houseThreadPool.getFixedThreadPool().schedule(() -> commandManager.getCommand(MOVE_CABIN_COMMAND).execute(params), MOVE_CABIN_TIME_SLEEP, TimeUnit.MILLISECONDS);
+            commandManager.scheduleCommand(MOVE_CABIN_COMMAND, params, MOVE_CABIN_TIME_SLEEP);
         }
     }
 }
