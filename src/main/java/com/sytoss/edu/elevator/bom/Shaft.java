@@ -28,10 +28,7 @@ public class Shaft extends Entity {
     private List<ShaftListener> shaftListeners = new ArrayList<>();
 
     public boolean isCabinMoving() {
-        if (sequenceOfStops != null) {
-            return true;
-        }
-        return false;
+        return sequenceOfStops != null;
     }
 
     public boolean isFree() {
@@ -45,7 +42,7 @@ public class Shaft extends Entity {
     }
 
     public synchronized void updateSequence(ElevatorDriver elevatorDriver) {
-        if (this.sequenceOfStops == null || this.sequenceOfStops.getStopFloors() == null) {
+        if (isFree() || this.sequenceOfStops.getStopFloors() == null) {
             this.sequenceOfStops = elevatorDriver.getOrderSequenceOfStops().get(0);
             elevatorDriver.removeSequenceFromOrder();
         } else {

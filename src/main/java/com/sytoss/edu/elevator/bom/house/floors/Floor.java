@@ -11,18 +11,7 @@ public abstract class Floor extends Entity {
     @Getter
     private final int floorNumber;
 
-    private final int timeSleep = 0;
-
     public Floor(int floorNumber) {
         this.floorNumber = floorNumber;
-    }
-
-    public void visit(Shaft shaft) {
-        log.info("Shaft with id [{}] is on floor №: [{}]", shaft.getId(), shaft.getCabinPosition());
-        try {
-            Thread.sleep(timeSleep);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
