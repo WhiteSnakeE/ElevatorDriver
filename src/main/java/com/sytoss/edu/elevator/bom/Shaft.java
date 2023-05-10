@@ -42,7 +42,7 @@ public class Shaft extends Entity {
     }
 
     public synchronized void updateSequence(ElevatorDriver elevatorDriver) {
-        if (isFree() || this.sequenceOfStops.getStopFloors() == null) {
+        if (isFree()) {
             this.sequenceOfStops = elevatorDriver.getOrderSequenceOfStops().get(0);
             elevatorDriver.removeSequenceFromOrder();
         } else {
@@ -60,7 +60,7 @@ public class Shaft extends Entity {
     }
 
     public boolean isSameDirection(Direction direction, Integer currentPosition) {
-        return cabinPosition <= currentPosition && direction == this.sequenceOfStops.getDirection();
+        return cabinPosition <= currentPosition && direction.equals(this.sequenceOfStops.getDirection());
     }
 
     public void addShaftListener(ShaftListener shaftListener) {

@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
@@ -34,17 +35,8 @@ public class House extends Entity {
         }
 
         int firstStop = orderSequenceOfStops.get(0).getStopFloors().get(0);
-        int minLength = Integer.MAX_VALUE;
-        Shaft nearestCabin = appropriateShafts.get(0);
 
-        for (Shaft shaft : appropriateShafts) {
-            int currentLength = Math.abs(firstStop - shaft.getCabinPosition());
-            if (currentLength < minLength) {
-                nearestCabin = shaft;
-                minLength = currentLength;
-            }
-        }
-        return nearestCabin;
+        return appropriateShafts.stream().min(Comparator.comparingInt(shaft -> Math.abs(firstStop - shaft.getCabinPosition()))).orElse(null);
     }
 
     public Floor nextFloor(int currentFloorNumber) {

@@ -22,6 +22,6 @@ public class Cabin extends Entity {
     }
 
     public boolean isOverWeight() {
-        return overWeightState == OverWeightState.OVERWEIGHT;
+        return overWeightState.equals(OverWeightState.OVERWEIGHT);
     }
 }
