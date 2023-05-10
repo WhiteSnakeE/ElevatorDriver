@@ -15,10 +15,11 @@ import static org.mockito.Mockito.*;
 public class FloorServiceTest {
 
     private final House house = spy(House.class);
+
     private final FloorService floorService = new FloorService(house);
 
     @Test
-    public void goUpCabinRequestToFirstFloorTest () {
+    public void goUpCabinRequestToFirstFloorTest() {
         house.setId(123L);
         FirstFloor firstFloor = mock(FirstFloor.class);
 
@@ -28,7 +29,7 @@ public class FloorServiceTest {
     }
 
     @Test
-    public void goUpCabinRequestToMiddleFloorTest () {
+    public void goUpCabinRequestToMiddleFloorTest() {
         house.setId(123L);
         FirstFloor firstFloor = mock(FirstFloor.class);
         MiddleFloor middleFloor = mock(MiddleFloor.class);

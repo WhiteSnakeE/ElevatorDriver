@@ -17,9 +17,12 @@ public class HouseController {
 
     private final HouseService houseService;
 
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Success|OK"), @ApiResponse(responseCode = "400", description = "Bad request")})
+    @ApiResponses(
+            value = {@ApiResponse(responseCode = "200", description = "Success|OK"), @ApiResponse(responseCode = "400",
+                    description = "Bad request")})
     @PostMapping("/register")
-    public void saveRequest (@RequestBody HouseParams houseParams) {
+    public void saveRequest(
+            @RequestBody HouseParams houseParams) {
         houseService.saveRequest(houseParams);
     }
 }

@@ -21,7 +21,7 @@ public class ShaftConverterTest {
     private final ShaftConverter shaftConverter = new ShaftConverter();
 
     @Test
-    public void toDTOTest () {
+    public void toDTOTest() {
         HouseDTO houseDTO = spy(HouseDTO.class);
         houseDTO.setId(138277872L);
         houseDTO.setNumberOfShafts(2);
@@ -44,7 +44,7 @@ public class ShaftConverterTest {
     }
 
     @Test
-    public void fromDTOTest () {
+    public void fromDTOTest() {
         ShaftDTO shaftDTO = ShaftDTO.builder().id(1L).sequenceOfStops(null).cabinPosition(1).doorState(DoorState.CLOSED).engineState(EngineState.STAYING).overweightState(OverWeightState.NOT_OVERWEIGHT).build();
 
         Shaft shaft = shaftConverter.fromDTO(shaftDTO);

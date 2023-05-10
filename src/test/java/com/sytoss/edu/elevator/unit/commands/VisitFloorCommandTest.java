@@ -15,7 +15,9 @@ import static org.mockito.Mockito.*;
 public class VisitFloorCommandTest {
 
     private final House house = mock(House.class);
+
     private final ShaftRepository shaftRepository = mock(ShaftRepository.class);
+
     private final VisitFloorCommand visitFloorCommand = new VisitFloorCommand(shaftRepository, house);
 
     @Test

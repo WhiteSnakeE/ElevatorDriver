@@ -9,13 +9,13 @@ public class FirstFloor extends Floor implements FloorWithUpButton {
 
     private final UpFloorButton upFloorButton;
 
-    public FirstFloor (UpFloorButton upFloorButton) {
+    public FirstFloor(UpFloorButton upFloorButton) {
         super(1);
         this.upFloorButton = upFloorButton;
     }
 
     @Override
-    public void pressUpButton () {
+    public void pressUpButton() {
         log.info("FirstFloor: pressUpButton ");
         upFloorButton.press(getFloorNumber());
     }

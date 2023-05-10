@@ -23,15 +23,15 @@ public abstract class AbstractApplicationTest extends AbstractJunitTest {
     private AbstractApplicationContext applicationContext;
 
     @Test
-    public void shouldLoadApplicationContext () {
+    public void shouldLoadApplicationContext() {
         assertNotNull(applicationContext);
     }
 
-    protected long getPort () {
+    protected long getPort() {
         return ((AnnotationConfigServletWebServerApplicationContext) applicationContext).getWebServer().getPort();
     }
 
-    protected URI getEndpoint (String uriPath) {
+    protected URI getEndpoint(String uriPath) {
         try {
             return new URI("http://localhost:" + getPort() + uriPath);
         } catch (URISyntaxException e) {

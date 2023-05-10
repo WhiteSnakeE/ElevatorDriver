@@ -37,7 +37,7 @@ public class FindNearestCabinCommandTest {
     private final FindNearestCabinCommand findNearestCabinCommand = new FindNearestCabinCommand(house, elevatorDriver, commandManager, shaftRepository, houseRepository, houseThreadPool);
 
     @Test
-    public void executeTest () {
+    public void executeTest() {
         elevatorDriver.addNewSequenceToOrder(5, Direction.UPWARDS);
 
         MoveCabinCommand moveCabinCommand = mock(MoveCabinCommand.class);
@@ -63,7 +63,7 @@ public class FindNearestCabinCommandTest {
     }
 
     @Test
-    public void executeShaftIsNullTest () {
+    public void executeShaftIsNullTest() {
         when(commandManager.getCommand(Command.MOVE_CABIN_COMMAND)).thenReturn(mock(MoveCabinCommand.class));
         findNearestCabinCommand.execute(null);
         verify(commandManager.getCommand(Command.MOVE_CABIN_COMMAND), times(0)).execute(Mockito.any());

@@ -15,10 +15,11 @@ import java.util.HashMap;
 public class StartEngineCommand implements Command {
 
     private final ShaftRepository shaftRepository;
-    private int timeSleep = 0;
+
+    private final int timeSleep = 0;
 
     @Override
-    public void execute (HashMap<String, Object> params) {
+    public void execute(HashMap<String, Object> params) {
         Shaft shaft = (Shaft) params.get(CommandManager.SHAFT_PARAM);
         shaft.getEngine().start((Direction) params.get(CommandManager.DIRECTION_PARAM));
         log.info("Engine in shaft with id [{}] has engine state: [{}]", shaft.getId(), shaft.getEngine().getEngineState());

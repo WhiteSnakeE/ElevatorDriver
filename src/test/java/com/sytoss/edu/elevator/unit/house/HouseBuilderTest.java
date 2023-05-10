@@ -15,7 +15,7 @@ public class HouseBuilderTest {
     private final HouseBuilder houseBuilder = new HouseBuilder(commandManager);
 
     @Test
-    public void buildTest () {
+    public void buildTest() {
         House resultHouse = houseBuilder.build(2, 16);
 
         Assertions.assertEquals(2, resultHouse.getShafts().size());

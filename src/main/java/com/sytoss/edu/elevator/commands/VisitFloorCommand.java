@@ -22,7 +22,7 @@ public class VisitFloorCommand implements Command {
     private final House house;
 
     @Override
-    public void execute (HashMap<String, Object> params) {
+    public void execute(HashMap<String, Object> params) {
         Shaft shaft = (Shaft) params.get(SHAFT_PARAM);
         Floor floor = house.nextFloor(shaft.getCabinPosition());
 

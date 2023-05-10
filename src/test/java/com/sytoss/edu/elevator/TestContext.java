@@ -12,14 +12,14 @@ public class TestContext {
 
     private static final ThreadLocal<TestContext> testContext = new ThreadLocal<>();
 
-    public static TestContext getInstance () {
+    public static TestContext getInstance() {
         if (testContext.get() == null) {
             testContext.set(new TestContext());
         }
         return testContext.get();
     }
 
-    public static void dropInstance () {
+    public static void dropInstance() {
         testContext.set(null);
     }
 }

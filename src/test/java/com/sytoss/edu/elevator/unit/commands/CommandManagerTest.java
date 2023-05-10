@@ -12,13 +12,21 @@ import static org.mockito.Mockito.when;
 public class CommandManagerTest {
 
     private final HouseThreadPool houseThreadPool = mock(HouseThreadPool.class);
+
     private final ObjectProvider<PressUpButtonCommand> pressUpButtonCommandProvider = mock(ObjectProvider.class);
-    private final ObjectProvider<FindNearestCabinCommand> findNearestCabinCommandProvider= mock(ObjectProvider.class);
+
+    private final ObjectProvider<FindNearestCabinCommand> findNearestCabinCommandProvider = mock(ObjectProvider.class);
+
     private final ObjectProvider<MoveCabinCommand> activateShaftCommandProvider = mock(ObjectProvider.class);
+
     private final ObjectProvider<StartEngineCommand> moveCabinCommandObjectProvider = mock(ObjectProvider.class);
+
     private final ObjectProvider<StopEngineCommand> stopDoorCommandObjectProvider = mock(ObjectProvider.class);
+
     private final ObjectProvider<OpenDoorCommand> openDoorCommandObjectProvider = mock(ObjectProvider.class);
+
     private final ObjectProvider<CloseDoorCommand> closeDoorCommandObjectProvider = mock(ObjectProvider.class);
+
     private final ObjectProvider<VisitFloorCommand> visitFloorCommandObjectProvider = mock(ObjectProvider.class);
 
     private final CommandManager commandManager = new CommandManager(houseThreadPool, pressUpButtonCommandProvider,
@@ -27,7 +35,7 @@ public class CommandManagerTest {
             openDoorCommandObjectProvider, closeDoorCommandObjectProvider, visitFloorCommandObjectProvider);
 
     @Test
-    public void getCommandTest () {
+    public void getCommandTest() {
         when(commandManager.getCommand("FindNearestCabinCommand")).thenReturn(mock(FindNearestCabinCommand.class));
         Command resultCommand = commandManager.getCommand("FindNearestCabinCommand");
 
@@ -37,7 +45,7 @@ public class CommandManagerTest {
     }
 
     @Test
-    public void getCommandFailedTest () {
+    public void getCommandFailedTest() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> commandManager.getCommand("BadName"));
     }
 }

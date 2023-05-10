@@ -3,8 +3,6 @@ package com.sytoss.edu.elevator;
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.commands.*;
-import com.sytoss.edu.elevator.converters.HouseConverter;
-import com.sytoss.edu.elevator.converters.ShaftConverter;
 import com.sytoss.edu.elevator.services.FloorService;
 import io.cucumber.junit.CucumberOptions;
 import io.cucumber.spring.CucumberContextConfiguration;

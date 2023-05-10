@@ -21,6 +21,7 @@ import static org.mockito.Mockito.*;
 public class MoveCabinCommandTest {
 
     private final CommandManager commandManager = mock(CommandManager.class);
+
     private final MoveCabinCommand moveCabinCommand = new MoveCabinCommand(commandManager);
 
     @Test

@@ -13,22 +13,36 @@ import java.util.concurrent.TimeUnit;
 public class CommandManager {
 
     private final HouseThreadPool houseThreadPool;
+
     private final ObjectProvider<PressUpButtonCommand> pressUpButtonCommandProvider;
+
     private final ObjectProvider<FindNearestCabinCommand> findNearestCabinCommandProvider;
+
     private final ObjectProvider<MoveCabinCommand> moveCabinCommandObjectProvider;
+
     private final ObjectProvider<StartEngineCommand> startEngineCommandObjectProvider;
+
     private final ObjectProvider<StopEngineCommand> stopEngineCommandObjectProvider;
+
     private final ObjectProvider<OpenDoorCommand> openDoorCommandObjectProvider;
+
     private final ObjectProvider<CloseDoorCommand> closeDoorCommandObjectProvider;
+
     private final ObjectProvider<VisitFloorCommand> visitFloorCommandObjectProvider;
+
     public static final String SHAFT_PARAM = "Shaft";
+
     public static final String DIRECTION_PARAM = "Direction";
+
     public static final String FLOOR_NUMBER_PARAM = "numberFloor";
+
     public static final String FLOORS_PARAM = "Floors";
+
     public static final String ITERATOR_PARAM = "Iterator";
+
     private final HashMap<String, Command> commandMap = new HashMap<>();
 
-    private Command createCommand (String nameCommand) {
+    private Command createCommand(String nameCommand) {
         return switch (nameCommand) {
             case Command.PRESS_UP_BUTTON -> pressUpButtonCommandProvider.getObject();
             case Command.FIND_NEAREST_CABIN_COMMAND -> findNearestCabinCommandProvider.getObject();
@@ -42,7 +56,7 @@ public class CommandManager {
         };
     }
 
-    public Command getCommand (String nameCommand) {
+    public Command getCommand(String nameCommand) {
         if (!commandMap.containsKey(nameCommand)) {
             commandMap.put(nameCommand, createCommand(nameCommand));
         }

@@ -10,7 +10,7 @@ import java.util.TimeZone;
 @SpringBootTest
 public class AbstractJunitTest {
 
-    protected Date toDate (String value) {
+    protected Date toDate(String value) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         format.setTimeZone(TimeZone.getTimeZone("GMT"));
         try {
@@ -20,7 +20,7 @@ public class AbstractJunitTest {
         }
     }
 
-    protected String format (Date value) {
+    protected String format(Date value) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         format.setTimeZone(TimeZone.getTimeZone("GMT"));
         return format.format(value);

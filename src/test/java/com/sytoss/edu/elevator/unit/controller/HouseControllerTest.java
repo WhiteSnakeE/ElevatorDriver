@@ -11,6 +11,7 @@ import static org.mockito.Mockito.verify;
 public class HouseControllerTest {
 
     private final HouseService houseService = mock(HouseService.class);
+
     private final HouseController houseController = new HouseController(houseService);
 
     @Test

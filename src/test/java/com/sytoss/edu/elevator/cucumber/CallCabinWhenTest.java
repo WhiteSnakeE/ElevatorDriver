@@ -42,7 +42,7 @@ public class CallCabinWhenTest extends IntegrationTest {
     }
 
     private void await(int num) {
-        int time = num * OPEN_DOOR_TIME_SLEEP + CLOSE_DOOR_TIME_SLEEP + VISIT_FLOOR_TIME_SLEEP + MOVE_CABIN_TIME_SLEEP + 20*num;
+        int time = num * OPEN_DOOR_TIME_SLEEP + CLOSE_DOOR_TIME_SLEEP + VISIT_FLOOR_TIME_SLEEP + MOVE_CABIN_TIME_SLEEP + 20 * num;
         try {
             Thread.sleep(time);
         } catch (InterruptedException e) {

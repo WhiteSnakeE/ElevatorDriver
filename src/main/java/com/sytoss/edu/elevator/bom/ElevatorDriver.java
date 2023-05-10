@@ -1,6 +1,5 @@
 package com.sytoss.edu.elevator.bom;
 
-import com.sytoss.edu.elevator.HouseThreadPool;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.enums.DoorState;
 import com.sytoss.edu.elevator.commands.CommandManager;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static com.sytoss.edu.elevator.HouseThreadPool.*;
 import static com.sytoss.edu.elevator.commands.Command.*;
@@ -33,14 +31,14 @@ public class ElevatorDriver extends Entity implements ShaftListener {
 
     private final CommandManager commandManager;
 
-    public void addNewSequenceToOrder (int floorNumber, Direction direction) {
+    public void addNewSequenceToOrder(int floorNumber, Direction direction) {
         SequenceOfStops sequenceOfStops = new SequenceOfStops();
         sequenceOfStops.setDirection(direction);
         sequenceOfStops.setStopFloors(new ArrayList<>(List.of(floorNumber)));
         orderSequenceOfStops.add(sequenceOfStops);
     }
 
-    public void removeSequenceFromOrder () {
+    public void removeSequenceFromOrder() {
         if (orderSequenceOfStops.isEmpty()) {
             throw new IllegalStateException("Order sequence of stops is empty!");
         }
@@ -48,7 +46,7 @@ public class ElevatorDriver extends Entity implements ShaftListener {
     }
 
     @Override
-    public void handleCabinPositionChanged (CabinPositionChangedEvent event) {
+    public void handleCabinPositionChanged(CabinPositionChangedEvent event) {
         Shaft shaft = event.getShaft();
 
         HashMap<String, Object> params = new HashMap<>();
@@ -63,7 +61,7 @@ public class ElevatorDriver extends Entity implements ShaftListener {
     }
 
     @Override
-    public void handleDoorStateChanged (DoorStateChangedEvent event) {
+    public void handleDoorStateChanged(DoorStateChangedEvent event) {
         Shaft shaft = event.getShaft();
 
         HashMap<String, Object> params = new HashMap<>();

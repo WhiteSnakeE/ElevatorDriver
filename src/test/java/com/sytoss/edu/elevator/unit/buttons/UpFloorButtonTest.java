@@ -24,7 +24,7 @@ public class UpFloorButtonTest {
     private House house;
 
     @Test
-    public void pressTest () {
+    public void pressTest() {
         UpFloorButton upFloorButton = new UpFloorButton(command);
         upFloorButton.press(5);
 

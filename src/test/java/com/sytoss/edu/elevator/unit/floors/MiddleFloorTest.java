@@ -12,7 +12,7 @@ public class MiddleFloorTest {
     private final UpFloorButton upFloorButton = mock(UpFloorButton.class);
 
     @Test
-    public void pressUpButton () {
+    public void pressUpButton() {
         MiddleFloor middleFloor = new MiddleFloor(2, upFloorButton);
         middleFloor.pressUpButton();
 

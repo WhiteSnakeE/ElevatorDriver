@@ -15,6 +15,7 @@ import static org.mockito.Mockito.*;
 public class OpenDoorCommandTest {
 
     private final ShaftRepository shaftRepository = mock(ShaftRepository.class);
+
     private final OpenDoorCommand openDoorCommand = new OpenDoorCommand(shaftRepository);
 
     @Test

@@ -20,11 +20,11 @@ public class HouseConverter {
 
     private final ShaftConverter shaftConverter;
 
-    public HouseDTO toDTO (House house, List<SequenceOfStops> orderSequenceOfStops) {
+    public HouseDTO toDTO(House house, List<SequenceOfStops> orderSequenceOfStops) {
         return HouseDTO.builder().numberOfFloors(house.getFloors().size()).numberOfShafts(house.getShafts().size()).orderSequenceOfStops(JsonUtil.orderSequenceToStringInJSON(orderSequenceOfStops)).build();
     }
 
-    public House fromDTO (HouseDTO houseDTO, List<ShaftDTO> shaftDTOList) {
+    public House fromDTO(HouseDTO houseDTO, List<ShaftDTO> shaftDTOList) {
         House house = houseBuilder.build(houseDTO.getNumberOfShafts(), houseDTO.getNumberOfFloors());
         house.setId(houseDTO.getId());
         house.getShafts().clear();

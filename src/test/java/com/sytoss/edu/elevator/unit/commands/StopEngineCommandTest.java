@@ -14,6 +14,7 @@ import static org.mockito.Mockito.*;
 public class StopEngineCommandTest {
 
     private final ShaftRepository shaftRepository = mock(ShaftRepository.class);
+
     private final StopEngineCommand stopEngineCommand = new StopEngineCommand(shaftRepository);
 
     @Test

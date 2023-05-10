@@ -14,18 +14,18 @@ import java.util.stream.Collectors;
 public class CucumberHooks extends IntegrationTest {
 
     @After
-    public void tearDown () {
+    public void tearDown() {
         TestContext.dropInstance();
         log.info("tearDown completed...");
     }
 
     @ParameterType(".*")
-    public List<Integer> intList (String value) {
+    public List<Integer> intList(String value) {
         return Arrays.stream(value.split(",")).map(s -> Integer.valueOf(s.trim())).collect(Collectors.toList());
     }
 
     @ParameterType(".*")
-    public List<String> stringList (String value) {
+    public List<String> stringList(String value) {
         return Arrays.stream(value.split(",")).map(String::trim).collect(Collectors.toList());
     }
 }

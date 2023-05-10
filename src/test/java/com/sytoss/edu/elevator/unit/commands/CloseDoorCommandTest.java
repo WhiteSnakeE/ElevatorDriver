@@ -15,10 +15,11 @@ import static org.mockito.Mockito.*;
 class CloseDoorCommandTest {
 
     private final ShaftRepository shaftRepository = mock(ShaftRepository.class);
+
     private final CloseDoorCommand closeDoorCommand = new CloseDoorCommand(shaftRepository);
 
     @Test
-    public synchronized void executeTest () {
+    public synchronized void executeTest() {
         Shaft shaft = mock(Shaft.class);
         Cabin cabin = mock(Cabin.class);
 

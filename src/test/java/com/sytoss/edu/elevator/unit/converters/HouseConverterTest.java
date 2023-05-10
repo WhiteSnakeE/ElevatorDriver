@@ -32,7 +32,7 @@ public class HouseConverterTest {
     private final HouseConverter houseConverter = new HouseConverter(houseBuilder, shaftConverter);
 
     @Test
-    public void toDTOTest () {
+    public void toDTOTest() {
         House houseTmp = houseBuilder.build(2, 16);
 
         List<SequenceOfStops> order = new ArrayList<>();
@@ -50,7 +50,7 @@ public class HouseConverterTest {
     }
 
     @Test
-    public void fromDTOTest () {
+    public void fromDTOTest() {
         HouseDTO houseDTO = HouseDTO.builder().id(1L).numberOfFloors(16).numberOfShafts(1).orderSequenceOfStops(null).build();
         ShaftDTO shaftDTO = ShaftDTO.builder().id(1L).sequenceOfStops(null).cabinPosition(1).doorState(DoorState.CLOSED).engineState(EngineState.STAYING).overweightState(OverWeightState.NOT_OVERWEIGHT).houseDTO(houseDTO).build();
 

@@ -8,11 +8,11 @@ import java.util.HashMap;
 
 public abstract class FloorButton extends CommandButton {
 
-    public FloorButton (Command command) {
+    public FloorButton(Command command) {
         super(command);
     }
 
-    public void press (int floorNumber, Direction direction) {
+    public void press(int floorNumber, Direction direction) {
         HashMap<String, Object> params = new HashMap<>();
         params.put(CommandManager.FLOOR_NUMBER_PARAM, floorNumber);
         params.put(CommandManager.DIRECTION_PARAM, direction);

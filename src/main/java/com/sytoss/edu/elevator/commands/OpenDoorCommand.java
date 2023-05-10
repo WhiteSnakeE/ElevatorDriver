@@ -16,7 +16,7 @@ public class OpenDoorCommand implements Command {
     private final ShaftRepository shaftRepository;
 
     @Override
-    public void execute (HashMap<String, Object> params) {
+    public void execute(HashMap<String, Object> params) {
         Shaft shaft = (Shaft) params.get(CommandManager.SHAFT_PARAM);
         log.info("Shaft with id [{}] has [DOOR STATE]: [OPENED]", shaft.getId());
         shaft.openCabinDoor();

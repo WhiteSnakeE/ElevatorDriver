@@ -14,7 +14,7 @@ public class FloorControllerTest {
     private final FloorController floorController = new FloorController(floorService);
 
     @Test
-    public void goUpCabinRequestTest () {
+    public void goUpCabinRequestTest() {
         floorController.goUpCabinRequest(5);
 
         verify(floorService).goUpCabinRequest(5);

@@ -9,13 +9,13 @@ public class MiddleFloor extends Floor implements FloorWithUpButton {
 
     private final UpFloorButton upFloorButton;
 
-    public MiddleFloor (int floorNumber, UpFloorButton upFloorButton) {
+    public MiddleFloor(int floorNumber, UpFloorButton upFloorButton) {
         super(floorNumber);
         this.upFloorButton = upFloorButton;
     }
 
     @Override
-    public void pressUpButton () {
+    public void pressUpButton() {
         log.info("MiddleFloor: pressUpButton ");
         upFloorButton.press(getFloorNumber());
     }

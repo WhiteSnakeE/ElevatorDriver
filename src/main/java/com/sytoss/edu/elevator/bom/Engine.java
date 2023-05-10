@@ -13,7 +13,7 @@ public class Engine extends Entity {
 
     private EngineState engineState = EngineState.STAYING;
 
-    public void start (Direction direction) {
+    public void start(Direction direction) {
         switch (direction) {
             case UPWARDS -> engineState = EngineState.GOING_UP;
             case DOWNWARDS -> engineState = EngineState.GOING_DOWN;
@@ -21,7 +21,7 @@ public class Engine extends Entity {
         }
     }
 
-    public void stop () {
+    public void stop() {
         this.engineState = EngineState.STAYING;
     }
 }

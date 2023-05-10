@@ -14,10 +14,11 @@ import java.util.HashMap;
 public class StopEngineCommand implements Command {
 
     private final ShaftRepository shaftRepository;
-    private int timeSleep = 0;
+
+    private final int timeSleep = 0;
 
     @Override
-    public void execute (HashMap<String, Object> params) {
+    public void execute(HashMap<String, Object> params) {
         Shaft shaft = (Shaft) params.get(CommandManager.SHAFT_PARAM);
         shaft.getEngine().stop();
         log.info("Shaft with id [{}] has [ENGINE STATE]: [STAYING!!]", shaft.getId());

@@ -23,10 +23,11 @@ import static org.mockito.Mockito.*;
 public class ElevatorDriverTest {
 
     private final CommandManager commandManager = mock(CommandManager.class);
+
     private final ElevatorDriver elevatorDriver = new ElevatorDriver(commandManager);
 
     @Test
-    public void addNewSequenceToOrderTest () {
+    public void addNewSequenceToOrderTest() {
         elevatorDriver.addNewSequenceToOrder(5, Direction.UPWARDS);
         Assertions.assertNotEquals(0, elevatorDriver.getOrderSequenceOfStops().size());
         Assertions.assertEquals(List.of(5), elevatorDriver.getOrderSequenceOfStops().get(0).getStopFloors());
@@ -34,7 +35,7 @@ public class ElevatorDriverTest {
     }
 
     @Test
-    public void removeSequenceFromOrderTest () {
+    public void removeSequenceFromOrderTest() {
         elevatorDriver.getOrderSequenceOfStops().clear();
         elevatorDriver.addNewSequenceToOrder(5, Direction.UPWARDS);
         elevatorDriver.removeSequenceFromOrder();
@@ -43,7 +44,7 @@ public class ElevatorDriverTest {
     }
 
     @Test
-    public void removeSequenceFromOrderFailedTest () {
+    public void removeSequenceFromOrderFailedTest() {
         elevatorDriver.getOrderSequenceOfStops().clear();
         Assertions.assertThrows(IllegalStateException.class, elevatorDriver::removeSequenceFromOrder);
     }

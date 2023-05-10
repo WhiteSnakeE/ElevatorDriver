@@ -9,7 +9,7 @@ import java.util.List;
 
 public final class JsonUtil {
 
-    public static String orderSequenceToStringInJSON (List<SequenceOfStops> orderSequenceOfStops) {
+    public static String orderSequenceToStringInJSON(List<SequenceOfStops> orderSequenceOfStops) {
         if (orderSequenceOfStops == null || orderSequenceOfStops.isEmpty()) {
             return null;
         }
@@ -25,7 +25,7 @@ public final class JsonUtil {
         return json;
     }
 
-    public static List<SequenceOfStops> stringJSONToOrderSequence (String json) {
+    public static List<SequenceOfStops> stringJSONToOrderSequence(String json) {
         if (json == null || json.isEmpty()) {
             return new ArrayList<>();
         }
@@ -41,7 +41,7 @@ public final class JsonUtil {
         return sequence;
     }
 
-    public static String sequenceToStringInJSON (SequenceOfStops sequenceOfStops) {
+    public static String sequenceToStringInJSON(SequenceOfStops sequenceOfStops) {
         if (sequenceOfStops == null) {
             return null;
         }
@@ -57,7 +57,7 @@ public final class JsonUtil {
         return json;
     }
 
-    public static SequenceOfStops stringJSONToSequenceOfStops (String json) {
+    public static SequenceOfStops stringJSONToSequenceOfStops(String json) {
         if (json == null || json.isEmpty()) {
             return null;
         }

@@ -1,7 +1,6 @@
 package com.sytoss.edu.elevator.bom.house.floors;
 
 import com.sytoss.edu.elevator.bom.Entity;
-import com.sytoss.edu.elevator.bom.Shaft;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
