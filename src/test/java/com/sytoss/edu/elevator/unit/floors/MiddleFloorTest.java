@@ -3,17 +3,13 @@ package com.sytoss.edu.elevator.unit.floors;
 import com.sytoss.edu.elevator.bom.house.buttons.UpFloorButton;
 import com.sytoss.edu.elevator.bom.house.floors.MiddleFloor;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-@ExtendWith({MockitoExtension.class})
 public class MiddleFloorTest {
 
-    @Mock
-    private UpFloorButton upFloorButton;
+    private final UpFloorButton upFloorButton = mock(UpFloorButton.class);
 
     @Test
     public void pressUpButton () {

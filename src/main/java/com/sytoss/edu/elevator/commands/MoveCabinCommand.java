@@ -1,15 +1,18 @@
 package com.sytoss.edu.elevator.commands;
 
+import com.sytoss.edu.elevator.HouseThreadPool;
 import com.sytoss.edu.elevator.bom.Shaft;
-import com.sytoss.edu.elevator.bom.enums.EngineState;
-import com.sytoss.edu.elevator.bom.house.House;
-import com.sytoss.edu.elevator.bom.house.floors.Floor;
+import com.sytoss.edu.elevator.bom.enums.Direction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.ListIterator;
+import java.util.concurrent.TimeUnit;
+
+import static com.sytoss.edu.elevator.HouseThreadPool.VISIT_FLOOR_TIME_SLEEP;
+import static com.sytoss.edu.elevator.commands.CommandManager.DIRECTION_PARAM;
+import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 
 @Slf4j
 @Component
@@ -17,72 +20,19 @@ import java.util.ListIterator;
 public class MoveCabinCommand implements Command {
 
     private final CommandManager commandManager;
-    private final House house;
 
     @Override
     public void execute (HashMap<String, Object> params) {
-        Shaft shaft = (Shaft) params.get("Shaft");
-        params.put("Direction", shaft.getSequenceOfStops().getDirection());
-        ListIterator currentFloor = house.getFloors().listIterator();
-        int startPosition = shaft.getCabinPosition();
+        Shaft shaft = (Shaft) params.get(SHAFT_PARAM);
+        params.put(CommandManager.DIRECTION_PARAM, shaft.getSequenceOfStops().getDirection());
 
-        while (currentFloor.hasNext()) {
-            Floor floor = (Floor) currentFloor.next();
-            if (floor.getFloorNumber() == startPosition) {
-                break;
-            }
-        }
+        HashMap<String, Object> paramsActivateCommand = new HashMap<>();
 
-        if (currentFloor.hasPrevious()) {
-            currentFloor.previous();
-        } else {
-            return;
-        }
+        paramsActivateCommand.put(SHAFT_PARAM, shaft);
+        paramsActivateCommand.put(DIRECTION_PARAM, Direction.UPWARDS);
 
-
-        log.info("Shaft with id [{}] start process: [{}]", shaft.getId(), shaft.getCabinPosition());
-        Floor floor = (Floor) currentFloor.next();
-        if ((startPosition == getFirstFloor(shaft))) {
-            commandManager.getCommand(OPEN_DOOR_COMMAND).execute(params);
-            commandManager.getCommand(CLOSE_DOOR_COMMAND).execute(params);
-            floor = (Floor) currentFloor.next();
-        }
-
-
-        while (currentFloor.hasNext() && floor.getFloorNumber() <= getLastFloor(shaft)) {
-            if (shaft.getEngine().getEngineState().equals(EngineState.STAYING)) {
-                commandManager.getCommand(START_ENGINE_COMMAND).execute(params);
-            }
-
-            shaft.setCabinPosition(floor.getFloorNumber());
-            if (startPosition != floor.getFloorNumber()) {
-                floor.visit(shaft);
-            }
-
-
-            if (shaft.getSequenceOfStops().getStopFloors().contains(shaft.getCabinPosition())) {
-                commandManager.getCommand(STOP_ENGINE_COMMAND).execute(params);
-                commandManager.getCommand(OPEN_DOOR_COMMAND).execute(params);
-                commandManager.getCommand(CLOSE_DOOR_COMMAND).execute(params);
-
-                if (getLastFloor(shaft) != shaft.getCabinPosition()) {
-                    commandManager.getCommand(START_ENGINE_COMMAND).execute(params);
-                }
-            }
-            floor = (Floor) currentFloor.next();
-        }
-        shaft.clearSequence();
-        log.info("Shaft with id [{}] end process on floor: [{}]", shaft.getId(), shaft.getCabinPosition());
-
-    }
-
-
-    private int getLastFloor (Shaft shaft) {
-        return shaft.getSequenceOfStops().getStopFloors().get(shaft.getSequenceOfStops().getStopFloors().size() - 1);
-    }
-
-    private int getFirstFloor (Shaft shaft) {
-        return shaft.getSequenceOfStops().getStopFloors().get(0);
+        commandManager.getCommand(START_ENGINE_COMMAND).execute(paramsActivateCommand);
+        commandManager.scheduleCommand(VISIT_FLOOR_COMMAND, paramsActivateCommand, VISIT_FLOOR_TIME_SLEEP);
     }
 }
 

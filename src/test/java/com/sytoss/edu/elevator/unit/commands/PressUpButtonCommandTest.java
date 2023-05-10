@@ -19,11 +19,14 @@ public class PressUpButtonCommandTest {
 
     private final CommandManager commandManager = mock(CommandManager.class);
 
-    private final PressUpButtonCommand pressUpButtonCommand = new PressUpButtonCommand(elevatorDriver, commandManager);
+    private final PressUpButtonCommand pressUpButtonCommand = new PressUpButtonCommand(
+            elevatorDriver, commandManager
+    );
 
     @Test
-    public void executeTest () {
+    public void executeTest() {
         HashMap<String, Object> params = new HashMap<>();
+
         params.put("numberFloor", 5);
         params.put("Direction", Direction.UPWARDS);
 

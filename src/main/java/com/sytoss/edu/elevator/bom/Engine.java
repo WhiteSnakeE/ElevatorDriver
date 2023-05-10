@@ -7,16 +7,16 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Getter
 @Setter
 public class Engine extends Entity {
 
-    @Getter
     private EngineState engineState = EngineState.STAYING;
 
     public void start (Direction direction) {
-        switch (direction){
-            case UPWARDS ->engineState=EngineState.GOING_UP;
-            case DOWNWARDS ->engineState=EngineState.GOING_DOWN;
+        switch (direction) {
+            case UPWARDS -> engineState = EngineState.GOING_UP;
+            case DOWNWARDS -> engineState = EngineState.GOING_DOWN;
             default -> stop();
         }
     }

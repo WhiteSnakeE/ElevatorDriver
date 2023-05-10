@@ -5,8 +5,6 @@ import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.enums.EngineState;
-import com.sytoss.edu.elevator.bom.house.House;
-import com.sytoss.edu.elevator.bom.house.HouseBuilder;
 import com.sytoss.edu.elevator.commands.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -14,16 +12,23 @@ import org.mockito.Mockito;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.sytoss.edu.elevator.HouseThreadPool.VISIT_FLOOR_TIME_SLEEP;
+import static com.sytoss.edu.elevator.HouseThreadPool.await;
+import static com.sytoss.edu.elevator.commands.Command.VISIT_FLOOR_COMMAND;
+import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 import static org.mockito.Mockito.*;
 
 public class MoveCabinCommandTest {
 
     private final CommandManager commandManager = mock(CommandManager.class);
-    private final House house = mock(House.class);
-    private final MoveCabinCommand moveCabinCommand = new MoveCabinCommand(commandManager,house);
+    private final MoveCabinCommand moveCabinCommand = new MoveCabinCommand(commandManager);
 
     @Test
     public void executeTest() {
+        StartEngineCommand startEngineCommand = mock(StartEngineCommand.class);
+        StopEngineCommand stopEngineCommand = mock(StopEngineCommand.class);
+
+
         Shaft shaft = spy(Shaft.class);
         Engine engine = new Engine();
         engine.setEngineState(EngineState.STAYING);
@@ -34,23 +39,31 @@ public class MoveCabinCommandTest {
         shaft.setSequenceOfStops(sequence);
         shaft.setCabinPosition(1);
         shaft.setEngine(engine);
+
         HashMap<String, Object> params = new HashMap<>();
-        params.put("Shaft", shaft);
+        params.put(SHAFT_PARAM, shaft);
 
-        House houseResult=new HouseBuilder(mock(CommandManager.class)).build(2,16);
+        when(commandManager.getCommand(Command.START_ENGINE_COMMAND)).thenReturn(startEngineCommand);
+        when(commandManager.getCommand(Command.VISIT_FLOOR_COMMAND)).thenReturn(mock(VisitFloorCommand.class));
 
-        when(house.getFloors()).thenReturn(houseResult.getFloors());
-        when(commandManager.getCommand(Command.OPEN_DOOR_COMMAND)).thenReturn(mock(OpenDoorCommand.class));
-        when(commandManager.getCommand(Command.CLOSE_DOOR_COMMAND)).thenReturn(mock(CloseDoorCommand.class));
-        when(commandManager.getCommand(Command.START_ENGINE_COMMAND)).thenReturn(spy(StartEngineCommand.class));
-        when(commandManager.getCommand(Command.STOP_ENGINE_COMMAND)).thenReturn(spy(StopEngineCommand.class));
+        doAnswer(invocation -> {
+            HashMap<String, Object> arg = invocation.getArgument(0);
+            Shaft shaftArg = (Shaft) arg.get(SHAFT_PARAM);
+            shaftArg.getEngine().setEngineState(EngineState.GOING_UP);
+            return null;
+        }).when(startEngineCommand).execute(params);
+
+        doAnswer(invocation -> {
+            HashMap<String, Object> arg = invocation.getArgument(0);
+            Shaft shaftArg = (Shaft) arg.get(SHAFT_PARAM);
+            shaftArg.getEngine().setEngineState(EngineState.STAYING);
+            return null;
+        }).when(stopEngineCommand).execute(params);
 
         moveCabinCommand.execute(params);
+        await();
 
-        verify(commandManager.getCommand(Command.OPEN_DOOR_COMMAND), times(2)).execute(Mockito.any());
-        verify(commandManager.getCommand(Command.CLOSE_DOOR_COMMAND), times(2)).execute(Mockito.any());
-        verify(commandManager.getCommand(Command.START_ENGINE_COMMAND), times(2)).execute(Mockito.any());
-        verify(commandManager.getCommand(Command.STOP_ENGINE_COMMAND), times(2)).execute(Mockito.any());
-        verify(shaft).clearSequence();
+        verify(commandManager.getCommand(Command.START_ENGINE_COMMAND)).execute(Mockito.any());
+        verify(commandManager).scheduleCommand(VISIT_FLOOR_COMMAND, params, VISIT_FLOOR_TIME_SLEEP);
     }
 }

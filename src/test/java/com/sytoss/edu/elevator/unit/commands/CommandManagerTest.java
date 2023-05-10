@@ -1,5 +1,6 @@
 package com.sytoss.edu.elevator.unit.commands;
 
+import com.sytoss.edu.elevator.HouseThreadPool;
 import com.sytoss.edu.elevator.commands.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import static org.mockito.Mockito.when;
 
 public class CommandManagerTest {
 
+    private final HouseThreadPool houseThreadPool = mock(HouseThreadPool.class);
     private final ObjectProvider<PressUpButtonCommand> pressUpButtonCommandProvider = mock(ObjectProvider.class);
     private final ObjectProvider<FindNearestCabinCommand> findNearestCabinCommandProvider= mock(ObjectProvider.class);
     private final ObjectProvider<MoveCabinCommand> activateShaftCommandProvider = mock(ObjectProvider.class);
@@ -17,11 +19,12 @@ public class CommandManagerTest {
     private final ObjectProvider<StopEngineCommand> stopDoorCommandObjectProvider = mock(ObjectProvider.class);
     private final ObjectProvider<OpenDoorCommand> openDoorCommandObjectProvider = mock(ObjectProvider.class);
     private final ObjectProvider<CloseDoorCommand> closeDoorCommandObjectProvider = mock(ObjectProvider.class);
+    private final ObjectProvider<VisitFloorCommand> visitFloorCommandObjectProvider = mock(ObjectProvider.class);
 
-    private final CommandManager commandManager = new CommandManager(pressUpButtonCommandProvider,
+    private final CommandManager commandManager = new CommandManager(houseThreadPool, pressUpButtonCommandProvider,
             findNearestCabinCommandProvider, activateShaftCommandProvider,
             moveCabinCommandObjectProvider, stopDoorCommandObjectProvider,
-            openDoorCommandObjectProvider, closeDoorCommandObjectProvider);
+            openDoorCommandObjectProvider, closeDoorCommandObjectProvider, visitFloorCommandObjectProvider);
 
     @Test
     public void getCommandTest () {
