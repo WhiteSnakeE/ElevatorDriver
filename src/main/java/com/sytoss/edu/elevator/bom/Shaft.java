@@ -28,7 +28,7 @@ public class Shaft extends Entity {
     private List<ShaftListener> shaftListeners = new ArrayList<>();
 
     public boolean isCabinMoving() {
-        return sequenceOfStops != null;
+        return !isFree();
     }
 
     public boolean isFree() {
