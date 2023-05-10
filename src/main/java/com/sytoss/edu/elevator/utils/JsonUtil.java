@@ -3,14 +3,18 @@ package com.sytoss.edu.elevator.utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
+import org.assertj.core.util.Strings;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.util.CollectionUtils.isEmpty;
+
+
 public final class JsonUtil {
 
     public static String orderSequenceToStringInJSON(List<SequenceOfStops> orderSequenceOfStops) {
-        if (orderSequenceOfStops == null || orderSequenceOfStops.isEmpty()) {
+        if (isEmpty(orderSequenceOfStops)) {
             return null;
         }
 
@@ -26,7 +30,7 @@ public final class JsonUtil {
     }
 
     public static List<SequenceOfStops> stringJSONToOrderSequence(String json) {
-        if (json == null || json.isEmpty()) {
+        if (Strings.isNullOrEmpty(json)) {
             return new ArrayList<>();
         }
 
@@ -58,7 +62,7 @@ public final class JsonUtil {
     }
 
     public static SequenceOfStops stringJSONToSequenceOfStops(String json) {
-        if (json == null || json.isEmpty()) {
+        if (Strings.isNullOrEmpty(json)) {
             return null;
         }
 
