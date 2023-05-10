@@ -20,3 +20,12 @@ Feature: move cabin
     And  shaft with index 0 has sequence of stops with floor 12 and Direction "UPWARDS" and cabin position 9
     When start cabin with index 1 moving sequence of stops to
     Then commands should have be invoked for shaft with index 1: StartEngineCommand, StopEngineCommand, OpenDoorCommand, CloseDoorCommand for floors 3, 5, 7
+
+
+  Scenario: calling a cabin from certain house for both free cabins with direction "UPWARDS"
+    Given house with id 177 is created in database
+    And shaft with index 0 has free cabin and cabin position 3
+    And shaft with index 1 has free cabin and cabin position 4
+    When passenger in house with id 177 on floor 5 presses UpFloorButton
+    Then commands should have be invoked for shaft with index 1: MoveCabinCommand, VisitFloorCommand, StopCabinCommand, OpenDoorCommand, CloseDoorCommand for floor 5
+    And shaft with index 1 of house with id 177 has cabin position 5

@@ -30,23 +30,22 @@ public class HouseService {
 
     private final ShaftConverter shaftConverter;
 
-    private final House house;
 
-    private final ElevatorDriver elevatorDriver;
 
-    private void changeHouseConfiguration(int shaftsCount, int floorsCount) {
-        House houseTmp = houseBuilder.build(shaftsCount, floorsCount);
-        house.setFloors(houseTmp.getFloors());
-        house.setShafts(houseTmp.getShafts());
+    private House changeHouseConfiguration(int shaftsCount, int floorsCount) {
+        House house = houseBuilder.build(shaftsCount, floorsCount);
+//        house.setFloors(houseTmp.getFloors());
+//        house.setShafts(houseTmp.getShafts());
 
         for (Shaft shaft : house.getShafts()) {
-            shaft.addShaftListener(elevatorDriver);
+            shaft.addShaftListener(house.getElevatorDriver());
         }
+        return house;
     }
 
     public void saveRequest(HouseParams houseParams) {
-        changeHouseConfiguration(houseParams.getNumberOfShafts(), houseParams.getNumberOfFloors());
-        HouseDTO houseDTO = houseConverter.toDTO(house, elevatorDriver.getOrderSequenceOfStops());
+        House house =  changeHouseConfiguration(houseParams.getNumberOfShafts(), houseParams.getNumberOfFloors());
+        HouseDTO houseDTO = houseConverter.toDTO(house, house.getElevatorDriver().getOrderSequenceOfStops());
         houseRepository.save(houseDTO);
         house.setId(houseDTO.getId());
 

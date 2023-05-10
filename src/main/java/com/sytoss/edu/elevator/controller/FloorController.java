@@ -19,9 +19,10 @@ public class FloorController {
     @ApiResponses(
             value = {@ApiResponse(responseCode = "200", description = "Success|OK"), @ApiResponse(responseCode = "400",
                     description = "Bad request")})
-    @PostMapping("/floorButton/{floorNumber}/up")
+    @PostMapping("/house/{houseNumber}/floorButton/{floorNumber}/up")
     public void goUpCabinRequest(
+            @PathVariable(value = "houseNumber") int houseNumber,
             @PathVariable(value = "floorNumber") int floorNumber) {
-        floorService.goUpCabinRequest(floorNumber);
+        floorService.goUpCabinRequest(houseNumber, floorNumber);
     }
 }

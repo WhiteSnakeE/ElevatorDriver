@@ -18,10 +18,6 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 public class FindNearestCabinCommand implements Command {
 
-    private final House house;
-
-    private final ElevatorDriver elevatorDriver;
-
     private final CommandManager commandManager;
 
     private final ShaftRepository shaftRepository;
@@ -31,20 +27,21 @@ public class FindNearestCabinCommand implements Command {
     private final HouseThreadPool houseThreadPool;
 
     @Override
-    public void execute(HashMap<String, Object> params) {
-        houseRepository.updateOrderById(house.getId(), JsonUtil.orderSequenceToStringInJSON(elevatorDriver.getOrderSequenceOfStops()));
-        Shaft nearestCabin = house.findNearestCabin(elevatorDriver.getOrderSequenceOfStops());
+    public void execute (HashMap<String, Object> params) {
+        House house = (House) params.get(CommandManager.HOUSE_PARAM);
+        houseRepository.updateOrderById(house.getId(), JsonUtil.orderSequenceToStringInJSON(house.getElevatorDriver().getOrderSequenceOfStops()));
+        Shaft nearestCabin = house.findNearestCabin(house.getElevatorDriver().getOrderSequenceOfStops());
 
         if (nearestCabin == null) {
             return;
         }
 
         if (nearestCabin.isCabinMoving()) {
-            updateSequences(nearestCabin);
+            updateSequences(house, nearestCabin);
             return;
         }
 
-        updateSequences(nearestCabin);
+        updateSequences(house, nearestCabin);
 
         if (nearestCabin.getCabinPosition() > nearestCabin.getSequenceOfStops().getStopFloors().get(0)) {
             return;
@@ -67,18 +64,19 @@ public class FindNearestCabinCommand implements Command {
             HashMap<String, Object> paramsActivateCommand = new HashMap<>();
             paramsActivateCommand.put(CommandManager.SHAFT_PARAM, nearestCabin);
             paramsActivateCommand.put(CommandManager.FLOORS_PARAM, house.getFloors());
+            paramsActivateCommand.put(CommandManager.HOUSE_PARAM, house);
             commandManager.getCommand(MOVE_CABIN_COMMAND).execute(paramsActivateCommand);
             log.info("startMoveCabin: finish threads for shaft with id {}", nearestCabin.getId());
         });
     }
 
-    private void updateSequences(Shaft nearestCabin) {
-        nearestCabin.updateSequence(elevatorDriver);
+    private void updateSequences (House house, Shaft nearestCabin) {
+        nearestCabin.updateSequence(house.getElevatorDriver());
 
         String sequenceOfStops = JsonUtil.sequenceToStringInJSON(nearestCabin.getSequenceOfStops());
         shaftRepository.updateSequenceById(nearestCabin.getId(), sequenceOfStops);
 
-        String orderSequenceOfStops = JsonUtil.orderSequenceToStringInJSON(elevatorDriver.getOrderSequenceOfStops());
+        String orderSequenceOfStops = JsonUtil.orderSequenceToStringInJSON(house.getElevatorDriver().getOrderSequenceOfStops());
         houseRepository.updateOrderById(house.getId(), orderSequenceOfStops);
     }
 }

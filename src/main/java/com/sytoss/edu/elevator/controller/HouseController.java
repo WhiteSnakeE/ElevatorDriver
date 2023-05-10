@@ -25,4 +25,6 @@ public class HouseController {
             @RequestBody HouseParams houseParams) {
         houseService.saveRequest(houseParams);
     }
+
+
 }

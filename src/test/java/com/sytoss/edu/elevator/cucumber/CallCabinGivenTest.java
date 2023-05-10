@@ -52,4 +52,9 @@ public class CallCabinGivenTest extends IntegrationTest {
         shaft.setCabinPosition(currentPosition);
         shaft.addShaftListener(getElevatorDriver());
     }
+
+    @Given("house with id {int} is created in database")
+    public void houseWithIdIsCreatedInDatabase (int houseId) {
+
+    }
 }

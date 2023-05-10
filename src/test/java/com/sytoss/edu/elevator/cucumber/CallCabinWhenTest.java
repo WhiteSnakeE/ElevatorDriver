@@ -49,4 +49,8 @@ public class CallCabinWhenTest extends IntegrationTest {
             throw new RuntimeException(e);
         }
     }
+
+    @When("passenger in house with id {int} on floor {int} presses UpFloorButton")
+    public void passengerInHouseWithIdOnFloorPressesUpFloorButton (int houseId, int floor) {
+    }
 }

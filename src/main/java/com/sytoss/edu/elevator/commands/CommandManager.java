@@ -39,6 +39,7 @@ public class CommandManager {
     public static final String FLOORS_PARAM = "Floors";
 
     public static final String ITERATOR_PARAM = "Iterator";
+    public static final String HOUSE_PARAM = "House";
 
     private final HashMap<String, Command> commandMap = new HashMap<>();
 

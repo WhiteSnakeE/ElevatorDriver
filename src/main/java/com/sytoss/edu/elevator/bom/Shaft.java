@@ -1,6 +1,7 @@
 package com.sytoss.edu.elevator.bom;
 
 import com.sytoss.edu.elevator.bom.enums.Direction;
+import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.events.CabinPositionChangedEvent;
 import com.sytoss.edu.elevator.events.DoorStateChangedEvent;
 import com.sytoss.edu.elevator.services.ShaftListener;
@@ -28,7 +29,7 @@ public class Shaft extends Entity {
     private List<ShaftListener> shaftListeners = new ArrayList<>();
 
     public boolean isCabinMoving() {
-        return sequenceOfStops != null;
+        return !isFree();
     }
 
     public boolean isFree() {
@@ -71,9 +72,9 @@ public class Shaft extends Entity {
         return shaftListeners.remove(shaftListener);
     }
 
-    public void setCabinPosition(int currentFloor) {
+    public void setCabinPosition( House house,int currentFloor) {
         cabinPosition = currentFloor;
-        fireCabinPosition();
+        fireCabinPosition(house);
     }
 
     public void openCabinDoor() {
@@ -91,8 +92,8 @@ public class Shaft extends Entity {
         shaftListeners.forEach(shaftListener -> shaftListener.handleDoorStateChanged(event));
     }
 
-    private void fireCabinPosition() {
-        CabinPositionChangedEvent event = new CabinPositionChangedEvent(this);
+    private void fireCabinPosition(House house) {
+        CabinPositionChangedEvent event = new CabinPositionChangedEvent(this,house);
         shaftListeners.forEach(shaftListener -> shaftListener.handleCabinPositionChanged(event));
     }
 }

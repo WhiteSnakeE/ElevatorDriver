@@ -2,6 +2,7 @@ package com.sytoss.edu.elevator.cucumber;
 
 import com.sytoss.edu.elevator.IntegrationTest;
 import com.sytoss.edu.elevator.bom.enums.Direction;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
@@ -43,5 +44,9 @@ public class CallCabinThenTest extends IntegrationTest {
         for (String command : commands) {
             Mockito.verify(getCommandManager().getCommand(command), times(stopFloors.size())).execute(Mockito.any());
         }
+    }
+
+    @And("shaft with index {int} of house with id {int} has cabin position {int}")
+    public void shaftWithIndexOfHouseWithIdHasCabinPosition (int shaftIndex, int houseId, int cabinPosition) {
     }
 }

@@ -2,6 +2,7 @@ package com.sytoss.edu.elevator.bom;
 
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.enums.DoorState;
+import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.events.CabinPositionChangedEvent;
 import com.sytoss.edu.elevator.events.DoorStateChangedEvent;
@@ -18,9 +19,9 @@ import java.util.List;
 
 import static com.sytoss.edu.elevator.HouseThreadPool.*;
 import static com.sytoss.edu.elevator.commands.Command.*;
+import static com.sytoss.edu.elevator.commands.CommandManager.HOUSE_PARAM;
 import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 
-@Component
 @Getter
 @Setter
 @Slf4j
@@ -31,11 +32,13 @@ public class ElevatorDriver extends Entity implements ShaftListener {
 
     private final CommandManager commandManager;
 
+
     public void addNewSequenceToOrder(int floorNumber, Direction direction) {
         SequenceOfStops sequenceOfStops = new SequenceOfStops();
         sequenceOfStops.setDirection(direction);
         sequenceOfStops.setStopFloors(new ArrayList<>(List.of(floorNumber)));
         orderSequenceOfStops.add(sequenceOfStops);
+
     }
 
     public void removeSequenceFromOrder() {
@@ -48,9 +51,10 @@ public class ElevatorDriver extends Entity implements ShaftListener {
     @Override
     public void handleCabinPositionChanged(CabinPositionChangedEvent event) {
         Shaft shaft = event.getShaft();
-
+        House house = event.getHouse();
         HashMap<String, Object> params = new HashMap<>();
         params.put(SHAFT_PARAM, shaft);
+        params.put(HOUSE_PARAM,house);
 
         if (shaft.getSequenceOfStops().getStopFloors().contains(shaft.getCabinPosition())) {
             commandManager.getCommand(STOP_ENGINE_COMMAND).execute(params);

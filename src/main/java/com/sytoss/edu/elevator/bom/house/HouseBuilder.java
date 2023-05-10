@@ -1,5 +1,6 @@
 package com.sytoss.edu.elevator.bom.house;
 
+import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.house.buttons.UpFloorButton;
 import com.sytoss.edu.elevator.bom.house.floors.FirstFloor;
@@ -17,16 +18,19 @@ public class HouseBuilder {
 
     private final CommandManager commandManager;
 
-    public House build(int shaftCount, int floorCount) {
-        House result = new House();
+
+    public House build (int shaftCount, int floorCount) {
+        ElevatorDriver elevatorDriver = new ElevatorDriver(commandManager);
+        House result = new House(elevatorDriver);
         for (int i = 0; i < shaftCount; i++) {
             result.getShafts().add(new Shaft());
         }
+        FirstFloor firstFloor = new FirstFloor(result, new UpFloorButton(commandManager.getCommand(Command.PRESS_UP_BUTTON)));
 
-        result.getFloors().add(new FirstFloor(new UpFloorButton(commandManager.getCommand(Command.PRESS_UP_BUTTON))));
+        result.getFloors().add(firstFloor);
         for (int i = 1; i < floorCount; i++) {
             int floorNumber = i + 1;
-            result.getFloors().add(new MiddleFloor(floorNumber, new UpFloorButton(commandManager.getCommand(Command.PRESS_UP_BUTTON))));
+            result.getFloors().add(new MiddleFloor(floorNumber, result, new UpFloorButton(commandManager.getCommand(Command.PRESS_UP_BUTTON))));
         }
         return result;
     }

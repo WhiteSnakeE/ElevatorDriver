@@ -19,15 +19,14 @@ public class VisitFloorCommand implements Command {
 
     private final ShaftRepository shaftRepository;
 
-    private final House house;
-
     @Override
     public void execute(HashMap<String, Object> params) {
+        House house = (House) params.get(CommandManager.HOUSE_PARAM);
         Shaft shaft = (Shaft) params.get(SHAFT_PARAM);
         Floor floor = house.nextFloor(shaft.getCabinPosition());
 
         log.info("Shaft with id [{}] is on floor: [{}]", shaft.getId(), floor.getFloorNumber());
         shaftRepository.updateCabinPositionById(shaft.getId(), floor.getFloorNumber());
-        shaft.setCabinPosition(floor.getFloorNumber());
+        shaft.setCabinPosition(house, floor.getFloorNumber());
     }
 }
