@@ -3,6 +3,7 @@ package com.sytoss.edu.elevator.repositories;
 import com.sytoss.edu.elevator.bom.enums.DoorState;
 import com.sytoss.edu.elevator.bom.enums.EngineState;
 import com.sytoss.edu.elevator.bom.enums.OverWeightState;
+import com.sytoss.edu.elevator.dto.HouseDTO;
 import com.sytoss.edu.elevator.dto.ShaftDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -44,6 +45,13 @@ public interface ShaftRepository extends JpaRepository<ShaftDTO, Long> {
     void updateOverweightStateById(
             @Param("id") Long id,
             @Param("overweightState") OverWeightState overweightState);
+
+    @Modifying
+    @Query("UPDATE ShaftDTO Shaft set Shaft.cabinPosition =:cabinPosition where Shaft.id =:id and Shaft.houseDTO =:houseDTO ")
+    void updateShaftByShaftIdAndHouseId(
+            @Param("id") Long shaftId,
+            @Param("houseDTO")HouseDTO houseDTO,
+            @Param("cabinPosition") int cabinPosition);
 
     List<ShaftDTO> findByHouseDTOId(Long id);
 }

@@ -44,6 +44,8 @@ public class FindNearestCabinCommand implements Command {
         updateSequences(house, nearestCabin);
 
         if (nearestCabin.getCabinPosition() > nearestCabin.getSequenceOfStops().getStopFloors().get(0)) {
+            nearestCabin.clearSequence();
+            shaftRepository.updateSequenceById(nearestCabin.getId(),JsonUtil.sequenceToStringInJSON(nearestCabin.getSequenceOfStops()));
             return;
         }
 

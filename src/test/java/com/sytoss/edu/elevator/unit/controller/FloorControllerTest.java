@@ -1,5 +1,6 @@
 package com.sytoss.edu.elevator.unit.controller;
 
+import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.controller.FloorController;
 import com.sytoss.edu.elevator.services.FloorService;
 import org.junit.jupiter.api.Test;
@@ -15,8 +16,8 @@ public class FloorControllerTest {
 
     @Test
     public void goUpCabinRequestTest() {
-        floorController.goUpCabinRequest(5);
+        floorController.goUpCabinRequest(1,5);
 
-        verify(floorService).goUpCabinRequest(5);
+        verify(floorService).goUpCabinRequest(1,5);
     }
 }

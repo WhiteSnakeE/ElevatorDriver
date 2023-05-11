@@ -5,6 +5,7 @@ import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.enums.EngineState;
+import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.commands.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -15,6 +16,7 @@ import java.util.List;
 import static com.sytoss.edu.elevator.HouseThreadPool.VISIT_FLOOR_TIME_SLEEP;
 import static com.sytoss.edu.elevator.HouseThreadPool.await;
 import static com.sytoss.edu.elevator.commands.Command.VISIT_FLOOR_COMMAND;
+import static com.sytoss.edu.elevator.commands.CommandManager.HOUSE_PARAM;
 import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 import static org.mockito.Mockito.*;
 
@@ -29,7 +31,7 @@ public class MoveCabinCommandTest {
         StartEngineCommand startEngineCommand = mock(StartEngineCommand.class);
         StopEngineCommand stopEngineCommand = mock(StopEngineCommand.class);
 
-
+        House house = mock(House.class);
         Shaft shaft = spy(Shaft.class);
         Engine engine = new Engine();
         engine.setEngineState(EngineState.STAYING);
@@ -43,6 +45,7 @@ public class MoveCabinCommandTest {
 
         HashMap<String, Object> params = new HashMap<>();
         params.put(SHAFT_PARAM, shaft);
+        params.put(HOUSE_PARAM, house);
 
         when(commandManager.getCommand(Command.START_ENGINE_COMMAND)).thenReturn(startEngineCommand);
         when(commandManager.getCommand(Command.VISIT_FLOOR_COMMAND)).thenReturn(mock(VisitFloorCommand.class));

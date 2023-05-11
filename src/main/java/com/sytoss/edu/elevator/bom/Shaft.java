@@ -93,7 +93,7 @@ public class Shaft extends Entity {
     }
 
     private void fireCabinPosition(House house) {
-        CabinPositionChangedEvent event = new CabinPositionChangedEvent(this,house);
+        CabinPositionChangedEvent event = new CabinPositionChangedEvent(this, house);
         shaftListeners.forEach(shaftListener -> shaftListener.handleCabinPositionChanged(event));
     }
 }

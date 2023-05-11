@@ -1,9 +1,12 @@
 package com.sytoss.edu.elevator.services;
 
+import com.sytoss.edu.elevator.HouseThreadPool;
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.HouseBuilder;
+import com.sytoss.edu.elevator.commands.Command;
+import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.converters.HouseConverter;
 import com.sytoss.edu.elevator.converters.ShaftConverter;
 import com.sytoss.edu.elevator.dto.HouseDTO;
@@ -14,6 +17,10 @@ import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,13 +37,12 @@ public class HouseService {
 
     private final ShaftConverter shaftConverter;
 
+    private final CommandManager commandManager;
 
+    private final HouseThreadPool houseThreadPool;
 
     private House changeHouseConfiguration(int shaftsCount, int floorsCount) {
         House house = houseBuilder.build(shaftsCount, floorsCount);
-//        house.setFloors(houseTmp.getFloors());
-//        house.setShafts(houseTmp.getShafts());
-
         for (Shaft shaft : house.getShafts()) {
             shaft.addShaftListener(house.getElevatorDriver());
         }
@@ -53,6 +59,36 @@ public class HouseService {
             ShaftDTO shaftDTO = shaftConverter.toDTO(shaft, houseDTO);
             shaftRepository.save(shaftDTO);
             shaft.setId(shaftDTO.getId());
+        }
+    }
+    public House getHouse(int houseId) {
+        HouseDTO houseDTO = getHouseDTO(houseId);
+        List<ShaftDTO> shaftDTOList = shaftRepository.findByHouseDTOId(houseDTO.getId());
+        House house = houseConverter.fromDTO(houseDTO, shaftDTOList);
+        setListeners(house);
+        for (Shaft shaft : house.getShafts()) {
+            if (shaft.getSequenceOfStops() != null) {
+                houseThreadPool.getFixedThreadPool().submit(() -> {
+                    log.info("startMoveCabin: start threads for shaft with id {}", shaft.getId());
+                    HashMap<String, Object> paramsActivateCommand = new HashMap<>();
+                    paramsActivateCommand.put(CommandManager.SHAFT_PARAM, shaft);
+                    paramsActivateCommand.put(CommandManager.FLOORS_PARAM, house.getFloors());
+                    commandManager.getCommand(Command.MOVE_CABIN_COMMAND).execute(paramsActivateCommand);
+                    log.info("startMoveCabin: finish threads for shaft with id {}", shaft.getId());
+                });
+            }
+        }
+        return house;
+    }
+
+    public HouseDTO getHouseDTO(int houseId){
+        Optional<HouseDTO> houseDTOOptional = houseRepository.findById(Long.valueOf(houseId));
+        return houseDTOOptional.get();
+    }
+
+    private void setListeners(House house) {
+        for (Shaft shaft : house.getShafts()) {
+            shaft.addShaftListener(house.getElevatorDriver());
         }
     }
 }

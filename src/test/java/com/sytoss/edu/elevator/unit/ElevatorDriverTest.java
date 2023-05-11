@@ -6,6 +6,7 @@ import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.enums.DoorState;
+import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.commands.*;
 import com.sytoss.edu.elevator.events.CabinPositionChangedEvent;
 import com.sytoss.edu.elevator.events.DoorStateChangedEvent;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import static com.sytoss.edu.elevator.HouseThreadPool.*;
 import static com.sytoss.edu.elevator.commands.Command.*;
+import static com.sytoss.edu.elevator.commands.CommandManager.HOUSE_PARAM;
 import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 import static org.mockito.Mockito.*;
 
@@ -53,14 +55,17 @@ public class ElevatorDriverTest {
     public void handleCabinPositionChangedIsStopTest() {
         CabinPositionChangedEvent event = mock(CabinPositionChangedEvent.class);
         Shaft shaft = mock(Shaft.class);
+        House house = mock(House.class);
         SequenceOfStops sequence = mock(SequenceOfStops.class);
         StopEngineCommand stopEngineCommand = mock(StopEngineCommand.class);
         OpenDoorCommand openDoorCommand = mock(OpenDoorCommand.class);
 
         HashMap<String, Object> params = new HashMap<>();
         params.put(SHAFT_PARAM, shaft);
+        params.put(HOUSE_PARAM, house);
 
         when(event.getShaft()).thenReturn(shaft);
+        when(event.getHouse()).thenReturn(house);
         when(shaft.getSequenceOfStops()).thenReturn(sequence);
         when(sequence.getStopFloors()).thenReturn(List.of(2));
         when(shaft.getCabinPosition()).thenReturn(2);
@@ -80,11 +85,12 @@ public class ElevatorDriverTest {
         Shaft shaft = mock(Shaft.class);
         SequenceOfStops sequence = mock(SequenceOfStops.class);
         VisitFloorCommand visitFloorCommand = mock(VisitFloorCommand.class);
-
+        House house = mock(House.class);
         HashMap<String, Object> params = new HashMap<>();
         params.put(SHAFT_PARAM, shaft);
-
+        params.put(HOUSE_PARAM, house);
         when(event.getShaft()).thenReturn(shaft);
+        when(event.getHouse()).thenReturn(house);
         when(shaft.getSequenceOfStops()).thenReturn(sequence);
         when(sequence.getStopFloors()).thenReturn(List.of(2));
         when(shaft.getCabinPosition()).thenReturn(1);

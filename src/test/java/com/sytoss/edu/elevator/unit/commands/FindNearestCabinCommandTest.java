@@ -15,6 +15,7 @@ import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Executors;
 
@@ -34,7 +35,7 @@ public class FindNearestCabinCommandTest {
 
     private final HouseThreadPool houseThreadPool = mock(HouseThreadPool.class);
 
-    private final FindNearestCabinCommand findNearestCabinCommand = new FindNearestCabinCommand(house, elevatorDriver, commandManager, shaftRepository, houseRepository, houseThreadPool);
+    private final FindNearestCabinCommand findNearestCabinCommand = new FindNearestCabinCommand(commandManager, shaftRepository, houseRepository, houseThreadPool);
 
     @Test
     public void executeTest() {
@@ -47,13 +48,16 @@ public class FindNearestCabinCommandTest {
         sequence.setDirection(Direction.UPWARDS);
         sequence.setStopFloors(List.of(2, 3, 4));
 
+        when(house.getElevatorDriver()).thenReturn(elevatorDriver);
         when(house.findNearestCabin(elevatorDriver.getOrderSequenceOfStops())).thenReturn(shaft);
         when(commandManager.getCommand(Command.MOVE_CABIN_COMMAND)).thenReturn(moveCabinCommand);
         when(shaft.isCabinMoving()).thenReturn(false);
         when(shaft.getSequenceOfStops()).thenReturn(sequence);
         when(houseThreadPool.getFixedThreadPool()).thenReturn(Executors.newScheduledThreadPool(4));
 
-        findNearestCabinCommand.execute(null);
+        HashMap<String, Object> params = new HashMap<>();
+        params.put(CommandManager.HOUSE_PARAM, house);
+        findNearestCabinCommand.execute(params);
         await();
 
         verify(house).findNearestCabin(elevatorDriver.getOrderSequenceOfStops());
@@ -64,8 +68,14 @@ public class FindNearestCabinCommandTest {
 
     @Test
     public void executeShaftIsNullTest() {
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put(CommandManager.HOUSE_PARAM, house);
+
+        when(house.getElevatorDriver()).thenReturn(elevatorDriver);
         when(commandManager.getCommand(Command.MOVE_CABIN_COMMAND)).thenReturn(mock(MoveCabinCommand.class));
-        findNearestCabinCommand.execute(null);
+        findNearestCabinCommand.execute(params);
+
         verify(commandManager.getCommand(Command.MOVE_CABIN_COMMAND), times(0)).execute(Mockito.any());
     }
 

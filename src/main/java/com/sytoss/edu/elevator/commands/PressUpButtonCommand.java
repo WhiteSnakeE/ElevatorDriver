@@ -16,8 +16,6 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 public class PressUpButtonCommand implements Command {
 
-
-
     private final CommandManager commandManager;
 
     private final HouseRepository houseRepository;

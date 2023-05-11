@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
+import static com.sytoss.edu.elevator.commands.CommandManager.HOUSE_PARAM;
 import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 import static org.mockito.Mockito.*;
 
@@ -18,7 +19,7 @@ public class VisitFloorCommandTest {
 
     private final ShaftRepository shaftRepository = mock(ShaftRepository.class);
 
-    private final VisitFloorCommand visitFloorCommand = new VisitFloorCommand(shaftRepository, house);
+    private final VisitFloorCommand visitFloorCommand = new VisitFloorCommand(shaftRepository);
 
     @Test
     public void executeTest() {
@@ -27,6 +28,7 @@ public class VisitFloorCommandTest {
 
         HashMap<String, Object> params = new HashMap<>();
         params.put(SHAFT_PARAM, shaft);
+        params.put(HOUSE_PARAM, house);
 
         when(house.nextFloor(shaft.getCabinPosition())).thenReturn(floor);
         when(floor.getFloorNumber()).thenReturn(3);
@@ -34,6 +36,6 @@ public class VisitFloorCommandTest {
         visitFloorCommand.execute(params);
 
         verify(shaftRepository).updateCabinPositionById(0L, floor.getFloorNumber());
-        verify(shaft).setCabinPosition(floor.getFloorNumber());
+        verify(shaft).setCabinPosition(house, floor.getFloorNumber());
     }
 }

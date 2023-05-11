@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changeset-test/create-house-test.yml
+  - include:
+      file: db/changelog/changeset-test/create-shaft-test.yml

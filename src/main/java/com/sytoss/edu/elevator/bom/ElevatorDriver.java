@@ -54,7 +54,7 @@ public class ElevatorDriver extends Entity implements ShaftListener {
         House house = event.getHouse();
         HashMap<String, Object> params = new HashMap<>();
         params.put(SHAFT_PARAM, shaft);
-        params.put(HOUSE_PARAM,house);
+        params.put(HOUSE_PARAM, house);
 
         if (shaft.getSequenceOfStops().getStopFloors().contains(shaft.getCabinPosition())) {
             commandManager.getCommand(STOP_ENGINE_COMMAND).execute(params);

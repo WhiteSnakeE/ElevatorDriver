@@ -3,7 +3,12 @@ package com.sytoss.edu.elevator;
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.commands.*;
+import com.sytoss.edu.elevator.converters.HouseConverter;
+import com.sytoss.edu.elevator.converters.ShaftConverter;
+import com.sytoss.edu.elevator.repositories.HouseRepository;
+import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import com.sytoss.edu.elevator.services.FloorService;
+import com.sytoss.edu.elevator.services.HouseService;
 import io.cucumber.junit.CucumberOptions;
 import io.cucumber.spring.CucumberContextConfiguration;
 import lombok.Getter;
@@ -26,15 +31,27 @@ import static io.cucumber.core.options.Constants.PLUGIN_PROPERTY_NAME;
 @Getter
 public class IntegrationTest extends AbstractControllerTest {
 
-    @Autowired
-    @SpyBean
-    private House house;
-
-    @Autowired
-    private ElevatorDriver elevatorDriver;
+    //    @Autowired
+    //    @SpyBean
+    //    private House house;
+    //
+    //    @Autowired
+    //    private ElevatorDriver elevatorDriver;
 
     @Autowired
     private FloorService floorService;
+
+    @Autowired
+    private HouseRepository houseRepository;
+
+    @Autowired
+    private ShaftRepository shaftRepository;
+
+    @Autowired
+    private HouseConverter houseConverter;
+
+    @Autowired
+    private ShaftConverter shaftConverter;
 
     @Autowired
     private FindNearestCabinCommand findNearestCabinCommand;
@@ -63,5 +80,16 @@ public class IntegrationTest extends AbstractControllerTest {
     private StopEngineCommand stopEngineCommand;
 
     @Autowired
+    @SpyBean
+    private MoveCabinCommand moveCabinCommand;
+
+    @Autowired
+    @SpyBean
+    private VisitFloorCommand visitFloorCommand;
+
+    @Autowired
     private HouseThreadPool houseThreadPool;
+
+    @Autowired
+    private HouseService houseService;
 }
