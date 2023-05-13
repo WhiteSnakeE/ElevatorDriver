@@ -21,11 +21,15 @@ Feature: move cabin
 #    When start cabin with index 1 moving sequence of stops to
 #    Then commands should have be invoked for shaft with index 1: StartEngineCommand, StopEngineCommand, OpenDoorCommand, CloseDoorCommand for floors 3, 5, 7
 
-
-  Scenario: calling a cabin from certain house for both free cabins with direction "UPWARDS"
-    Given house with id 1 is created in database
-    And house with id 1 has shaft with id 1 and this shaft has free cabin and cabin position 3
-    And house with id 1 has shaft with id 2 and this shaft has free cabin and cabin position 4
-    When passenger in house with id 1 on floor 5 presses UpFloorButton
-    Then commands should have be invoked for house with id 1 and shaft with id 2: MoveCabinCommand,VisitFloorCommand, StopEngineCommand, OpenDoorCommand, CloseDoorCommand for floor 5
-    And shaft with id 2 of house with id 1 has cabin position 5
+  Scenario: calling a cabins from different houses with all free shafts in first house and one busy shaft in second house and direction "UPWARDS"
+    Given house 0 with numberOfFloors 16 and numberOfShafts 2
+    And house 1 with numberOfFloors 5 and numberOfShafts 2
+    And shaft 0 in house 0 has free cabin and cabin position 3
+    And shaft 1 in house 0 has free cabin and cabin position 4
+    And shaft 0 in house 1 has sequence of stops with floors 8, 9 and Direction "UPWARDS" and cabin position 4
+    And shaft 1 in house 1 has free cabin and cabin position 1
+    When passenger in house 0 presses UpFloorButton on floor 5
+    Then commands should have be invoked for shaft 0 in house 1: MoveCabinCommand, VisitFloorCommand, StopEngineCommand, OpenDoorCommand, CloseDoorCommand for floors 8, 9
+    And commands should have be invoked for shaft 1 in house 0: MoveCabinCommand, VisitFloorCommand, StopEngineCommand, OpenDoorCommand, CloseDoorCommand for floor 5
+    And shaft 1 in house 0 has cabin position 5
+    And shaft 0 in house 1 has cabin position 9
