@@ -6,6 +6,8 @@ import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.repositories.HouseRepository;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
+import com.sytoss.edu.elevator.services.HouseService;
+import com.sytoss.edu.elevator.services.ShaftService;
 import com.sytoss.edu.elevator.utils.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,16 +22,16 @@ public class FindNearestCabinCommand implements Command {
 
     private final CommandManager commandManager;
 
-    private final ShaftRepository shaftRepository;
-
-    private final HouseRepository houseRepository;
-
     private final HouseThreadPool houseThreadPool;
+
+    private final ShaftService shaftService;
+
+    private final HouseService houseService;
 
     @Override
     public void execute (HashMap<String, Object> params) {
         House house = (House) params.get(CommandManager.HOUSE_PARAM);
-        houseRepository.updateOrderById(house.getId(), JsonUtil.orderSequenceToStringInJSON(house.getElevatorDriver().getOrderSequenceOfStops()));
+        houseService.updateOrderById(house.getId(), house.getElevatorDriver().getOrderSequenceOfStops());
         Shaft nearestCabin = house.findNearestCabin(house.getElevatorDriver().getOrderSequenceOfStops());
 
         if (nearestCabin == null) {
@@ -45,7 +47,7 @@ public class FindNearestCabinCommand implements Command {
 
         if (nearestCabin.getCabinPosition() > nearestCabin.getSequenceOfStops().getStopFloors().get(0)) {
             nearestCabin.clearSequence();
-            shaftRepository.updateSequenceById(nearestCabin.getId(),JsonUtil.sequenceToStringInJSON(nearestCabin.getSequenceOfStops()));
+            shaftService.updateSequenceById(nearestCabin.getId(), nearestCabin.getSequenceOfStops());
             return;
         }
 
@@ -75,10 +77,7 @@ public class FindNearestCabinCommand implements Command {
     private void updateSequences (House house, Shaft nearestCabin) {
         nearestCabin.updateSequence(house.getElevatorDriver());
 
-        String sequenceOfStops = JsonUtil.sequenceToStringInJSON(nearestCabin.getSequenceOfStops());
-        shaftRepository.updateSequenceById(nearestCabin.getId(), sequenceOfStops);
-
-        String orderSequenceOfStops = JsonUtil.orderSequenceToStringInJSON(house.getElevatorDriver().getOrderSequenceOfStops());
-        houseRepository.updateOrderById(house.getId(), orderSequenceOfStops);
+        shaftService.updateSequenceById(nearestCabin.getId(), nearestCabin.getSequenceOfStops());
+        houseService.updateOrderById(house.getId(), house.getElevatorDriver().getOrderSequenceOfStops());
     }
 }

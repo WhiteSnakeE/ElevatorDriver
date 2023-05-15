@@ -6,6 +6,7 @@ import com.sytoss.edu.elevator.bom.house.floors.Floor;
 import com.sytoss.edu.elevator.commands.VisitFloorCommand;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import com.sytoss.edu.elevator.services.HouseService;
+import com.sytoss.edu.elevator.services.ShaftService;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -18,11 +19,11 @@ public class VisitFloorCommandTest {
 
     private final House house = mock(House.class);
 
-    private final ShaftRepository shaftRepository = mock(ShaftRepository.class);
+    private final ShaftService shaftService = mock(ShaftService.class);
 
     private final HouseService houseService = mock(HouseService.class);
 
-    private final VisitFloorCommand visitFloorCommand = new VisitFloorCommand(shaftRepository, houseService);
+    private final VisitFloorCommand visitFloorCommand = new VisitFloorCommand(shaftService, houseService);
 
     @Test
     public void executeTest() {
@@ -39,7 +40,7 @@ public class VisitFloorCommandTest {
 
         visitFloorCommand.execute(params);
 
-        verify(shaftRepository).updateCabinPositionById(2L, floor.getFloorNumber());
+        verify(shaftService).updateCabinPositionById(2L, floor.getFloorNumber());
         verify(shaft).setCabinPosition(floor.getFloorNumber());
     }
 }

@@ -2,6 +2,7 @@ package com.sytoss.edu.elevator.services;
 
 import com.sytoss.edu.elevator.HouseThreadPool;
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
+import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.HouseBuilder;
@@ -14,6 +15,7 @@ import com.sytoss.edu.elevator.dto.ShaftDTO;
 import com.sytoss.edu.elevator.params.HouseParams;
 import com.sytoss.edu.elevator.repositories.HouseRepository;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
+import com.sytoss.edu.elevator.utils.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -106,5 +108,9 @@ public class HouseService {
         for (Shaft shaft : house.getShafts()) {
             shaft.addShaftListener(house.getElevatorDriver());
         }
+    }
+
+    public void updateOrderById(Long houseId, List<SequenceOfStops> order) {
+        houseRepository.updateOrderById(houseId, JsonUtil.orderSequenceToStringInJSON(order));
     }
 }

@@ -12,6 +12,8 @@ import com.sytoss.edu.elevator.commands.FindNearestCabinCommand;
 import com.sytoss.edu.elevator.commands.MoveCabinCommand;
 import com.sytoss.edu.elevator.repositories.HouseRepository;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
+import com.sytoss.edu.elevator.services.HouseService;
+import com.sytoss.edu.elevator.services.ShaftService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -29,13 +31,13 @@ public class FindNearestCabinCommandTest {
 
     private final ElevatorDriver elevatorDriver = mock(ElevatorDriver.class);
 
-    private final ShaftRepository shaftRepository = mock(ShaftRepository.class);
+    private final ShaftService shaftService = mock(ShaftService.class);
 
-    private final HouseRepository houseRepository = mock(HouseRepository.class);
+    private final HouseService houseService = mock(HouseService.class);
 
     private final HouseThreadPool houseThreadPool = mock(HouseThreadPool.class);
 
-    private final FindNearestCabinCommand findNearestCabinCommand = new FindNearestCabinCommand(commandManager, shaftRepository, houseRepository, houseThreadPool);
+    private final FindNearestCabinCommand findNearestCabinCommand = new FindNearestCabinCommand(commandManager, houseThreadPool, shaftService, houseService);
 
     @Test
     public void executeTest() {
