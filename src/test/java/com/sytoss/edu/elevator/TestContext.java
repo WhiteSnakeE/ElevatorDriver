@@ -10,6 +10,8 @@ public class TestContext {
 
     private ResponseEntity<String> response;
 
+    private Long HouseId;
+
     private static final ThreadLocal<TestContext> testContext = new ThreadLocal<>();
 
     public static TestContext getInstance() {
