@@ -5,11 +5,8 @@ import com.sytoss.edu.elevator.bom.house.House;
 import lombok.Getter;
 
 public class CabinPositionChangedEvent extends Event {
-    @Getter
-    private final House house;
 
-    public CabinPositionChangedEvent(Shaft shaft, House house) {
+    public CabinPositionChangedEvent(Shaft shaft) {
         super(shaft);
-        this.house = house;
     }
 }

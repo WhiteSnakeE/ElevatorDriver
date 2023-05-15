@@ -54,4 +54,10 @@ public interface ShaftRepository extends JpaRepository<ShaftDTO, Long> {
             @Param("cabinPosition") int cabinPosition);
 
     List<ShaftDTO> findByHouseDTOId(Long id);
+
+    interface ShaftHouseId {
+        HouseDTO getHouseDTO();
+    }
+
+    ShaftHouseId getAllById(Long id);
 }

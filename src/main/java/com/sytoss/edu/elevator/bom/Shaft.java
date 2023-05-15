@@ -72,9 +72,9 @@ public class Shaft extends Entity {
         return shaftListeners.remove(shaftListener);
     }
 
-    public void setCabinPosition( House house,int currentFloor) {
+    public void setCabinPosition(int currentFloor) {
         cabinPosition = currentFloor;
-        fireCabinPosition(house);
+        fireCabinPosition();
     }
 
     public void openCabinDoor() {
@@ -92,8 +92,8 @@ public class Shaft extends Entity {
         shaftListeners.forEach(shaftListener -> shaftListener.handleDoorStateChanged(event));
     }
 
-    private void fireCabinPosition(House house) {
-        CabinPositionChangedEvent event = new CabinPositionChangedEvent(this, house);
+    private void fireCabinPosition() {
+        CabinPositionChangedEvent event = new CabinPositionChangedEvent(this);
         shaftListeners.forEach(shaftListener -> shaftListener.handleCabinPositionChanged(event));
     }
 }

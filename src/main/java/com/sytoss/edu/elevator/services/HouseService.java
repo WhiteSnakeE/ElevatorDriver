@@ -50,7 +50,7 @@ public class HouseService {
     }
 
     public void saveRequest(HouseParams houseParams) {
-        House house =  changeHouseConfiguration(houseParams.getNumberOfShafts(), houseParams.getNumberOfFloors());
+        House house = changeHouseConfiguration(houseParams.getNumberOfShafts(), houseParams.getNumberOfFloors());
         HouseDTO houseDTO = houseConverter.toDTO(house, house.getElevatorDriver().getOrderSequenceOfStops());
         houseRepository.save(houseDTO);
         house.setId(houseDTO.getId());
@@ -61,7 +61,8 @@ public class HouseService {
             shaft.setId(shaftDTO.getId());
         }
     }
-    public House getHouse(int houseId) {
+
+    public House getHouse(long houseId) {
         HouseDTO houseDTO = getHouseDTO(houseId);
         List<ShaftDTO> shaftDTOList = shaftRepository.findByHouseDTOId(houseDTO.getId());
         House house = houseConverter.fromDTO(houseDTO, shaftDTOList);
@@ -81,7 +82,22 @@ public class HouseService {
         return house;
     }
 
-    public HouseDTO getHouseDTO(int houseId){
+    public House getHouseById(long houseId) {
+        HouseDTO houseDTO = getHouseDTO(houseId);
+        List<ShaftDTO> shaftDTOList = shaftRepository.findByHouseDTOId(houseDTO.getId());
+        House house = houseConverter.fromDTO(houseDTO, shaftDTOList);
+        setListeners(house);
+        house.setElevatorDriver(new ElevatorDriver(commandManager));
+
+        return house;
+    }
+
+    public House getHouseByShaftId(long shaftId) {
+        long houseId = shaftRepository.getAllById(shaftId).getHouseDTO().getId();
+        return getHouseById(houseId);
+    }
+
+    public HouseDTO getHouseDTO(long houseId) {
         Optional<HouseDTO> houseDTOOptional = houseRepository.findById(Long.valueOf(houseId));
         return houseDTOOptional.get();
     }
