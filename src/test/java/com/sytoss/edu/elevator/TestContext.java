@@ -4,13 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.ResponseEntity;
 
+import java.util.HashMap;
+
 @Getter
 @Setter
 public class TestContext {
 
     private ResponseEntity<String> response;
 
-    private Long HouseId;
+    private HashMap<Integer, Long> housesId = new HashMap<>();
 
     private static final ThreadLocal<TestContext> testContext = new ThreadLocal<>();
 

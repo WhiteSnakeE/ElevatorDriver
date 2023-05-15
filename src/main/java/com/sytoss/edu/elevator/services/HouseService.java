@@ -82,7 +82,7 @@ public class HouseService {
         return house;
     }
 
-    public House getHouseById(long houseId) {
+    private House getHouseById(long houseId) {
         HouseDTO houseDTO = getHouseDTO(houseId);
         List<ShaftDTO> shaftDTOList = shaftRepository.findByHouseDTOId(houseDTO.getId());
         House house = houseConverter.fromDTO(houseDTO, shaftDTOList);

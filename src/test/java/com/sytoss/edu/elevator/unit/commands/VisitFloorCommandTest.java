@@ -5,6 +5,7 @@ import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.floors.Floor;
 import com.sytoss.edu.elevator.commands.VisitFloorCommand;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
+import com.sytoss.edu.elevator.services.HouseService;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -19,7 +20,9 @@ public class VisitFloorCommandTest {
 
     private final ShaftRepository shaftRepository = mock(ShaftRepository.class);
 
-    private final VisitFloorCommand visitFloorCommand = new VisitFloorCommand(shaftRepository);
+    private final HouseService houseService = mock(HouseService.class);
+
+    private final VisitFloorCommand visitFloorCommand = new VisitFloorCommand(shaftRepository, houseService);
 
     @Test
     public void executeTest() {
@@ -28,14 +31,15 @@ public class VisitFloorCommandTest {
 
         HashMap<String, Object> params = new HashMap<>();
         params.put(SHAFT_PARAM, shaft);
-        params.put(HOUSE_PARAM, house);
 
+        when(shaft.getId()).thenReturn(2L);
+        when(houseService.getHouseByShaftId(shaft.getId())).thenReturn(house);
         when(house.nextFloor(shaft.getCabinPosition())).thenReturn(floor);
         when(floor.getFloorNumber()).thenReturn(3);
 
         visitFloorCommand.execute(params);
 
-        verify(shaftRepository).updateCabinPositionById(0L, floor.getFloorNumber());
-        verify(shaft).setCabinPosition(house, floor.getFloorNumber());
+        verify(shaftRepository).updateCabinPositionById(2L, floor.getFloorNumber());
+        verify(shaft).setCabinPosition(floor.getFloorNumber());
     }
 }

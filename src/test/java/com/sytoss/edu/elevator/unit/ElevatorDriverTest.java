@@ -55,17 +55,14 @@ public class ElevatorDriverTest {
     public void handleCabinPositionChangedIsStopTest() {
         CabinPositionChangedEvent event = mock(CabinPositionChangedEvent.class);
         Shaft shaft = mock(Shaft.class);
-        House house = mock(House.class);
         SequenceOfStops sequence = mock(SequenceOfStops.class);
         StopEngineCommand stopEngineCommand = mock(StopEngineCommand.class);
         OpenDoorCommand openDoorCommand = mock(OpenDoorCommand.class);
 
         HashMap<String, Object> params = new HashMap<>();
         params.put(SHAFT_PARAM, shaft);
-        params.put(HOUSE_PARAM, house);
 
         when(event.getShaft()).thenReturn(shaft);
-        when(event.getHouse()).thenReturn(house);
         when(shaft.getSequenceOfStops()).thenReturn(sequence);
         when(sequence.getStopFloors()).thenReturn(List.of(2));
         when(shaft.getCabinPosition()).thenReturn(2);
@@ -85,12 +82,9 @@ public class ElevatorDriverTest {
         Shaft shaft = mock(Shaft.class);
         SequenceOfStops sequence = mock(SequenceOfStops.class);
         VisitFloorCommand visitFloorCommand = mock(VisitFloorCommand.class);
-        House house = mock(House.class);
         HashMap<String, Object> params = new HashMap<>();
         params.put(SHAFT_PARAM, shaft);
-        params.put(HOUSE_PARAM, house);
         when(event.getShaft()).thenReturn(shaft);
-        when(event.getHouse()).thenReturn(house);
         when(shaft.getSequenceOfStops()).thenReturn(sequence);
         when(sequence.getStopFloors()).thenReturn(List.of(2));
         when(shaft.getCabinPosition()).thenReturn(1);
