@@ -31,7 +31,7 @@ public class PressUpButtonCommand implements Command {
                 JsonUtil.orderSequenceToStringInJSON(house.getElevatorDriver().getOrderSequenceOfStops()));
         HashMap<String,Object> newParams = new HashMap<>();
 
-        newParams.put(CommandManager.HOUSE_PARAM,house);
+        newParams.put(CommandManager.HOUSE_PARAM, house);
 
         commandManager.getCommand(Command.FIND_NEAREST_CABIN_COMMAND).execute(newParams);
     }

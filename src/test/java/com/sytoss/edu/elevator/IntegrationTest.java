@@ -5,6 +5,7 @@ import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.commands.*;
 import com.sytoss.edu.elevator.converters.HouseConverter;
 import com.sytoss.edu.elevator.converters.ShaftConverter;
+import com.sytoss.edu.elevator.dto.ShaftDTO;
 import com.sytoss.edu.elevator.repositories.HouseRepository;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import com.sytoss.edu.elevator.services.FloorService;
@@ -16,9 +17,15 @@ import org.junit.platform.suite.api.ConfigurationParameter;
 import org.junit.platform.suite.api.IncludeEngines;
 import org.junit.platform.suite.api.SelectClasspathResource;
 import org.junit.platform.suite.api.Suite;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
+import java.util.Comparator;
+import java.util.List;
+
+import static com.sytoss.edu.elevator.HouseThreadPool.*;
+import static com.sytoss.edu.elevator.HouseThreadPool.MOVE_CABIN_TIME_SLEEP;
 import static io.cucumber.core.options.Constants.PLUGIN_PROPERTY_NAME;
 
 
@@ -92,4 +99,27 @@ public class IntegrationTest extends AbstractControllerTest {
 
     @Autowired
     private HouseService houseService;
+
+    public List<ShaftDTO> getSortedShaftsByHouseId(Integer houseIndex){
+        List<ShaftDTO> shaftDTOList = getShaftRepository().findByHouseDTOId(TestContext.getInstance().getHousesId().get(houseIndex));
+        shaftDTOList.sort(Comparator.comparingLong(ShaftDTO::getId));
+        return shaftDTOList;
+    }
+
+    public void await(int num) {
+        int time = num * OPEN_DOOR_TIME_SLEEP + CLOSE_DOOR_TIME_SLEEP + VISIT_FLOOR_TIME_SLEEP + MOVE_CABIN_TIME_SLEEP + 20 * num;
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void resetMockito() {
+        Mockito.reset(getMoveCabinCommand());
+        Mockito.reset(getVisitFloorCommand());
+        Mockito.reset(getStopEngineCommand());
+        Mockito.reset(getOpenDoorCommand());
+        Mockito.reset(getCloseDoorCommand());
+    }
 }
