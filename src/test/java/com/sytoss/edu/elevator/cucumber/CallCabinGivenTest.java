@@ -25,31 +25,40 @@ import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 @Slf4j
 public class CallCabinGivenTest extends IntegrationTest {
 
-//    @Given("shaft with index {int} has free cabin and cabin position {int}")
-//    public void shaftWithIdAndEngineHasEngineStateAndShaftHasCurrentPosition(Integer cabinIndex,
-//                                                                             Integer currentPosition) {
-//        getHouse().getShafts().get(cabinIndex).setSequenceOfStops(null);
-//        setCabinPositionTest(getHouse().getShafts().get(cabinIndex), currentPosition);
-//    }
-//
-//    @Given("shaft with index {int} has sequence of stops with floor {int} and Direction {string} and cabin position {int}")
-//    public void shaftWithIndexAndSequenceOfStopsAndDirectionAndCabinPosition(Integer shaftIndex, Integer floorNumber,
-//                                                                             String direction, Integer cabinPosition) {
-//        SequenceOfStops sequence = new SequenceOfStops();
-//        sequence.setDirection(Direction.valueOf(direction));
-//        sequence.setStopFloors(List.of(floorNumber));
-//
-//        setCabinPositionTest(getHouse().getShafts().get(shaftIndex), cabinPosition);
-//        getHouse().getShafts().get(shaftIndex).setSequenceOfStops(sequence);
-//    }
-//
-//    @Given("All shaft are free and no sequence of stops in queue")
-//    public void allShaftFreeAndNoSequence() {
-//        for (Shaft shaft : getHouse().getShafts()) {
-//            shaft.setSequenceOfStops(null);
-//        }
-//        getElevatorDriver().getOrderSequenceOfStops().clear();
-//    }
+    @Given("shaft with index {int} has free cabin and cabin position {int}")
+    public void shaftWithIdAndEngineHasEngineStateAndShaftHasCurrentPosition(Integer shaftIndex,
+                                                                             Integer cabinPosition) {
+        List<ShaftDTO> shaftDTOList = getSortedShaftsByHouseIndex(0);
+
+        shaftDTOList.get(shaftIndex).setSequenceOfStops(null);
+        shaftDTOList.get(shaftIndex).setCabinPosition(cabinPosition);
+
+        getShaftRepository().save(shaftDTOList.get(shaftIndex));
+    }
+
+    @Given("shaft with index {int} has sequence of stops with floor/floors {intList} and Direction {string} and cabin position {int}")
+    public void shaftWithIndexAndSequenceOfStopsAndDirectionAndCabinPosition(Integer shaftIndex,List<Integer> floorsNumbers,
+                                                                             String direction, Integer cabinPosition) {
+        SequenceOfStops sequence = new SequenceOfStops();
+        sequence.setDirection(Direction.valueOf(direction));
+        sequence.setStopFloors(floorsNumbers);
+
+        List<ShaftDTO> shaftDTOList = getSortedShaftsByHouseIndex(0);
+
+        shaftDTOList.get(shaftIndex).setSequenceOfStops(JsonUtil.sequenceToStringInJSON(sequence));
+        shaftDTOList.get(shaftIndex).setCabinPosition(cabinPosition);
+
+        getShaftRepository().save(shaftDTOList.get(shaftIndex));
+
+    }
+
+    @Given("All shaft are free and no sequence of stops in queue")
+    public void allShaftFreeAndNoSequence() {
+        List<ShaftDTO> shaftDTOList = getSortedShaftsByHouseIndex(0);
+        shaftDTOList.forEach(shaftDTO -> shaftDTO.setSequenceOfStops(null));
+
+        getShaftRepository().saveAll(shaftDTOList);
+    }
 //
 //    @Given("shaft with index {int} has sequence of stops with floors {intList} and Direction {string} and cabin position {int}")
 //    public void shaftWithIndexHasSequenceOfStopsWithFloorAndDirectionAndCabinPosition(Integer shaftIndex,
@@ -62,11 +71,6 @@ public class CallCabinGivenTest extends IntegrationTest {
 //        setCabinPositionTest(getHouse().getShafts().get(shaftIndex), cabinPosition);
 //    }
 //
-//    private void setCabinPositionTest(Shaft shaft, int currentPosition) {
-//        shaft.getShaftListeners().clear();
-//        shaft.setCabinPosition(currentPosition);
-//        shaft.addShaftListener(getElevatorDriver());
-//    }
 
     @Given("house {int} with numberOfFloors {int} and numberOfShafts {int}")
     public void houseWithNumberOfFloorsAndNumberOfShafts(int houseIndex, int numberOfFloors, int numberOfShafts) {
@@ -115,5 +119,25 @@ public class CallCabinGivenTest extends IntegrationTest {
         params.put(HOUSE_PARAM, getHouseConverter().fromDTO(houseDTOOptional.get(), shaftDTOList));
         getCommandManager().getCommand(MOVE_CABIN_COMMAND).execute(params);
         await(floors.get(floors.size() - 1));
+    }
+
+    @Given("house {int} with numberOfFloors {int} and numberOfShafts {int} exists in database")
+    public void houseExistsInDatabase(int houseIndex, int numberOfFloors, int numberOfShafts) {
+        HouseDTO houseDTO = HouseDTO.builder().numberOfFloors(numberOfFloors).numberOfShafts(numberOfShafts).build();
+
+        List<ShaftDTO> shaftDTOList = new ArrayList<>();
+        for (int i = 0; i < numberOfShafts; i++) {
+            shaftDTOList.add(ShaftDTO.builder()
+                    .houseDTO(houseDTO)
+                    .overweightState(NOT_OVERWEIGHT)
+                    .engineState(STAYING)
+                    .doorState(CLOSED)
+                    .cabinPosition(1).build());
+        }
+        houseDTO.setShafts(shaftDTOList);
+
+        HouseDTO createdHouseDTO = getHouseRepository().save(houseDTO);
+        TestContext.getInstance().getHousesId().put(houseIndex, createdHouseDTO.getId());
+        getShaftRepository().saveAll(shaftDTOList);
     }
 }

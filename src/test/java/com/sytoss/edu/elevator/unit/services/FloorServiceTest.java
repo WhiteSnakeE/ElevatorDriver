@@ -30,10 +30,11 @@ public class FloorServiceTest {
     @Test
     public void goUpCabinRequestToFirstFloorTest() {
         FirstFloor firstFloor = mock(FirstFloor.class);
-        when(houseService.getHouse(1)).thenReturn(house);
+        when(houseService.getHouseById(1)).thenReturn(house);
         when(houseService.getHouseDTO(1)).thenReturn(houseDTO);
         when(house.getElevatorDriver()).thenReturn(elevatorDriver);
         when(house.getFloors()).thenReturn(List.of(firstFloor));
+        when(houseDTO.getOrderSequenceOfStops()).thenReturn("");
         floorService.goUpCabinRequest(1,1);
         verify(firstFloor).pressUpButton(house);
     }
@@ -48,7 +49,7 @@ public class FloorServiceTest {
         for (int i = 2; i <= 4; ++i) {
             list.add(middleFloor);
         }
-        when(houseService.getHouse(1)).thenReturn(house);
+        when(houseService.getHouseById(1)).thenReturn(house);
         when(houseService.getHouseDTO(1)).thenReturn(houseDTO);
         when(house.getElevatorDriver()).thenReturn(elevatorDriver);
         when(house.getFloors()).thenReturn(list);

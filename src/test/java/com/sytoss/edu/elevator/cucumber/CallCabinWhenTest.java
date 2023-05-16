@@ -27,14 +27,13 @@ public class CallCabinWhenTest extends IntegrationTest {
 
     @When("passenger on floor {int} presses UpFloorButton with direction {string}")
     public void passengerOnFloorPressesUpFloorButtonWithDirection(Integer floorNumber, String direction) {
-        String buttonDirection = (direction.equals("UPWARDS") ? "/up" : "/down");
-        String url = "/api/floorButton/" + floorNumber + buttonDirection;
+        String url = "/api/house/" + TestContext.getInstance().getHousesId().get(0) + "/floorButton/" + floorNumber + "/up";
         ResponseEntity<String> response = doPost(url, null, String.class);
         TestContext.getInstance().setResponse(response);
         await(floorNumber);
     }
 
-//    @When("call process findNearestCabin for floor {int} with direction {string}")
+    //    @When("call process findNearestCabin for floor {int} with direction {string}")
 //    public void callProcessFindNearestCabinForFloor(int floor, String direction) {
 //        getElevatorDriver().addNewSequenceToOrder(floor, Direction.valueOf(direction));
 //        Shaft shaft = getHouse().findNearestCabin(getElevatorDriver().getOrderSequenceOfStops());
@@ -43,14 +42,23 @@ public class CallCabinWhenTest extends IntegrationTest {
 //        }
 //    }
 //
-//    @When("start cabin with index {int} moving sequence of stops to")
-//    public void startCabinWithIndexMovingSequenceOfStopsTo(Integer shaftIndex) {
-//        HashMap<String, Object> paramsExec = new HashMap<>();
-//        paramsExec.put("Shaft", getHouse().getShafts().get(shaftIndex));
-//        paramsExec.put("Floors", getHouse().getFloors());
-//        getCommandManager().getCommand(Command.MOVE_CABIN_COMMAND).execute(paramsExec);
-//        await(getHouse().getShafts().get(shaftIndex).getSequenceOfStops().getStopFloors().get(getHouse().getShafts().get(shaftIndex).getSequenceOfStops().getStopFloors().size() - 1));
-//    }
+    @When("start cabin with index {int} moving sequence of stops to")
+    public void startCabinWithIndexMovingSequenceOfStopsTo(Integer shaftIndex) {
+        List<ShaftDTO> shaftDTOList = getSortedShaftsByHouseIndex(0);
+        Optional<HouseDTO> houseDTOOptional = getHouseRepository().findById(TestContext.getInstance().getHousesId().get(0));
+        House house = getHouseConverter().fromDTO(houseDTOOptional.get(),shaftDTOList);
+        house.setElevatorDriver(new ElevatorDriver(getCommandManager()));
+        Shaft shaft = getShaftConverter().fromDTO(shaftDTOList.get(shaftIndex));
+        shaft.addShaftListener(house.getElevatorDriver());
+
+        HashMap<String, Object> paramsExec = new HashMap<>();
+        paramsExec.put("Shaft", shaft);
+
+        paramsExec.put("Floors", house.getFloors());
+        getCommandManager().getCommand(Command.MOVE_CABIN_COMMAND).execute(paramsExec);
+
+        await(house.getShafts().get(shaftIndex).getSequenceOfStops().getStopFloors().get(house.getShafts().get(shaftIndex).getSequenceOfStops().getStopFloors().size() - 1));
+    }
 
     @When("passenger in house {int} presses UpFloorButton on floor {int}")
     public void passengerInHousePressesUpFloorButtonOnFloor(int houseIndex, int floorNumber) {

@@ -115,11 +115,9 @@ public class IntegrationTest extends AbstractControllerTest {
         }
     }
 
-    public void resetMockito() {
-        Mockito.reset(getMoveCabinCommand());
-        Mockito.reset(getVisitFloorCommand());
-        Mockito.reset(getStopEngineCommand());
-        Mockito.reset(getOpenDoorCommand());
-        Mockito.reset(getCloseDoorCommand());
+    public List<ShaftDTO> getSortedShaftsByHouseIndex(Integer houseIndex){
+        List<ShaftDTO> shaftDTOList = getShaftRepository().findByHouseDTOId(TestContext.getInstance().getHousesId().get(houseIndex));
+        shaftDTOList.sort(Comparator.comparingLong(ShaftDTO::getId));
+        return shaftDTOList;
     }
 }
