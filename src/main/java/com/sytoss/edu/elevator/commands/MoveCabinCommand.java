@@ -32,6 +32,7 @@ public class MoveCabinCommand implements Command {
         paramsActivateCommand.put(HOUSE_PARAM,house);
 
         commandManager.getCommand(START_ENGINE_COMMAND).execute(paramsActivateCommand);
+
         commandManager.scheduleCommand(VISIT_FLOOR_COMMAND, paramsActivateCommand, VISIT_FLOOR_TIME_SLEEP);
     }
 }

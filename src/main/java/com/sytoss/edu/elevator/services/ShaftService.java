@@ -3,6 +3,7 @@ package com.sytoss.edu.elevator.services;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.enums.DoorState;
 import com.sytoss.edu.elevator.bom.enums.EngineState;
+import com.sytoss.edu.elevator.dto.ShaftDTO;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import com.sytoss.edu.elevator.utils.JsonUtil;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,14 @@ public class ShaftService {
 
     public void updateCabinPositionById(Long shaftId, int cabinPosition){
         shaftRepository.updateCabinPositionById(shaftId, cabinPosition);
+    }
+
+    public ShaftDTO getById(Long id){
+        return shaftRepository.getShaftDTOById(id);
+    }
+
+    public SequenceOfStops getSequenceOfStopsByShaftId(Long id){
+        ShaftDTO shaftDTO = shaftRepository.getShaftDTOById(id);
+        return JsonUtil.stringJSONToSequenceOfStops(shaftDTO.getSequenceOfStops());
     }
 }

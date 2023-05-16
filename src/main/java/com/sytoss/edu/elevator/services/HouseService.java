@@ -84,13 +84,12 @@ public class HouseService {
         return house;
     }
 
-    private House getHouseById(long houseId) {
+    public House getHouseById(long houseId) {
         HouseDTO houseDTO = getHouseDTO(houseId);
         List<ShaftDTO> shaftDTOList = shaftRepository.findByHouseDTOId(houseDTO.getId());
         House house = houseConverter.fromDTO(houseDTO, shaftDTOList);
-        setListeners(house);
         house.setElevatorDriver(new ElevatorDriver(commandManager));
-
+        setListeners(house);
         return house;
     }
 

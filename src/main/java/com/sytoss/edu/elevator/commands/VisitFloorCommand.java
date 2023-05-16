@@ -3,9 +3,12 @@ package com.sytoss.edu.elevator.commands;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.floors.Floor;
+import com.sytoss.edu.elevator.converters.ShaftConverter;
+import com.sytoss.edu.elevator.dto.ShaftDTO;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import com.sytoss.edu.elevator.services.HouseService;
 import com.sytoss.edu.elevator.services.ShaftService;
+import com.sytoss.edu.elevator.utils.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -23,12 +26,14 @@ public class VisitFloorCommand implements Command {
 
     private final HouseService houseService;
 
+    private final ShaftConverter shaftConverter;
+
     @Override
     public void execute(HashMap<String, Object> params) {
         Shaft shaft = (Shaft) params.get(SHAFT_PARAM);
+        shaft.setSequenceOfStops(shaftService.getSequenceOfStopsByShaftId(shaft.getId()));
         House house = houseService.getHouseByShaftId(shaft.getId());
         Floor floor = house.nextFloor(shaft.getCabinPosition());
-
         log.info("Shaft with id [{}] is on floor: [{}]", shaft.getId(), floor.getFloorNumber());
         shaftService.updateCabinPositionById(shaft.getId(), floor.getFloorNumber());
         shaft.setCabinPosition(floor.getFloorNumber());
