@@ -26,7 +26,6 @@ public class VisitFloorCommand implements Command {
 
     private final HouseService houseService;
 
-    private final ShaftConverter shaftConverter;
 
     @Override
     public void execute(HashMap<String, Object> params) {
