@@ -19,7 +19,7 @@ public class HouseBuilder {
     private final CommandManager commandManager;
 
 
-    public House build (int shaftCount, int floorCount) {
+    public House build(int shaftCount, int floorCount) {
         ElevatorDriver elevatorDriver = new ElevatorDriver(commandManager);
         House result = new House(elevatorDriver);
         for (int i = 0; i < shaftCount; i++) {

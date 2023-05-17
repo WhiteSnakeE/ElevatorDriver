@@ -1,7 +1,6 @@
 package com.sytoss.edu.elevator.bom;
 
 import com.sytoss.edu.elevator.bom.enums.Direction;
-import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.events.CabinPositionChangedEvent;
 import com.sytoss.edu.elevator.events.DoorStateChangedEvent;
 import com.sytoss.edu.elevator.services.ShaftListener;

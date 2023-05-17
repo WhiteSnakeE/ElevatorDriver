@@ -1,14 +1,10 @@
 package com.sytoss.edu.elevator.commands;
 
 import com.sytoss.edu.elevator.HouseThreadPool;
-import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.house.House;
-import com.sytoss.edu.elevator.repositories.HouseRepository;
-import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import com.sytoss.edu.elevator.services.HouseService;
 import com.sytoss.edu.elevator.services.ShaftService;
-import com.sytoss.edu.elevator.utils.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -29,7 +25,7 @@ public class FindNearestCabinCommand implements Command {
     private final HouseService houseService;
 
     @Override
-    public void execute (HashMap<String, Object> params) {
+    public void execute(HashMap<String, Object> params) {
         House house = (House) params.get(CommandManager.HOUSE_PARAM);
         houseService.updateOrderById(house.getId(), house.getElevatorDriver().getOrderSequenceOfStops());
         Shaft nearestCabin = house.findNearestCabin(house.getElevatorDriver().getOrderSequenceOfStops());
@@ -76,7 +72,7 @@ public class FindNearestCabinCommand implements Command {
         });
     }
 
-    private void updateSequences (House house, Shaft nearestCabin) {
+    private void updateSequences(House house, Shaft nearestCabin) {
         nearestCabin.updateSequence(house.getElevatorDriver());
         log.info("updateSequences {}", nearestCabin.getSequenceOfStops());
         shaftService.updateSequenceById(nearestCabin.getId(), nearestCabin.getSequenceOfStops());

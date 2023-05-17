@@ -16,7 +16,7 @@ public class FloorService {
 
     private final HouseService houseService;
 
-    public void goUpCabinRequest(int houseNumber,int floorNumber) {
+    public void goUpCabinRequest(int houseNumber, int floorNumber) {
         House house = houseService.getHouseById(houseNumber);
         HouseDTO houseDTO = houseService.getHouseDTO(houseNumber);
         house.getElevatorDriver()

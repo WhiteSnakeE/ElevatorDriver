@@ -2,7 +2,6 @@ package com.sytoss.edu.elevator.commands;
 
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
-import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import com.sytoss.edu.elevator.services.ShaftService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

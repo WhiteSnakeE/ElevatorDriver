@@ -14,7 +14,7 @@ public abstract class Floor extends Entity {
     @Getter
     private final House house;
 
-    public Floor(House house,int floorNumber) {
+    public Floor(House house, int floorNumber) {
         this.floorNumber = floorNumber;
         this.house = house;
 

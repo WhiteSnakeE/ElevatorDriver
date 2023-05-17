@@ -13,11 +13,11 @@ public abstract class FloorButton extends CommandButton {
         super(command);
     }
 
-    public void press(House house,int floorNumber, Direction direction) {
+    public void press(House house, int floorNumber, Direction direction) {
         HashMap<String, Object> params = new HashMap<>();
         params.put(CommandManager.FLOOR_NUMBER_PARAM, floorNumber);
         params.put(CommandManager.DIRECTION_PARAM, direction);
-        params.put(CommandManager.HOUSE_PARAM,house);
+        params.put(CommandManager.HOUSE_PARAM, house);
         execute(params);
     }
 }

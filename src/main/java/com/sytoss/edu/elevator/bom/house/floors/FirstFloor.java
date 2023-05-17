@@ -10,8 +10,8 @@ public class FirstFloor extends Floor implements FloorWithUpButton {
 
     private final UpFloorButton upFloorButton;
 
-    public FirstFloor(House house,UpFloorButton upFloorButton) {
-        super(house,1);
+    public FirstFloor(House house, UpFloorButton upFloorButton) {
+        super(house, 1);
         this.upFloorButton = upFloorButton;
     }
 

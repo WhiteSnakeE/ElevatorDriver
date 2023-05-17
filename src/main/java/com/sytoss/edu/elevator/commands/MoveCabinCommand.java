@@ -29,7 +29,7 @@ public class MoveCabinCommand implements Command {
 
         paramsActivateCommand.put(SHAFT_PARAM, shaft);
         paramsActivateCommand.put(DIRECTION_PARAM, Direction.UPWARDS);
-        paramsActivateCommand.put(HOUSE_PARAM,house);
+        paramsActivateCommand.put(HOUSE_PARAM, house);
 
         commandManager.getCommand(START_ENGINE_COMMAND).execute(paramsActivateCommand);
 

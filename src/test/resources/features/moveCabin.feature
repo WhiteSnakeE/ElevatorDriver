@@ -1,4 +1,5 @@
 Feature: move cabin
+
   Background:
     Given house 0 with numberOfFloors 16 and numberOfShafts 2 exists in database
 

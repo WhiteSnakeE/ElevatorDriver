@@ -19,7 +19,6 @@ public interface ShaftRepository extends JpaRepository<ShaftDTO, Long> {
     ShaftDTO getShaftDTOById(Long id);
 
 
-
     @Modifying
     @Query("UPDATE ShaftDTO Shaft SET Shaft.doorState = :doorState WHERE Shaft.id = :id")
     void updateDoorStateById(
@@ -54,12 +53,13 @@ public interface ShaftRepository extends JpaRepository<ShaftDTO, Long> {
     @Query("UPDATE ShaftDTO Shaft set Shaft.cabinPosition =:cabinPosition where Shaft.id =:id and Shaft.houseDTO =:houseDTO ")
     void updateShaftByShaftIdAndHouseId(
             @Param("id") Long shaftId,
-            @Param("houseDTO")HouseDTO houseDTO,
+            @Param("houseDTO") HouseDTO houseDTO,
             @Param("cabinPosition") int cabinPosition);
 
     List<ShaftDTO> findByHouseDTOId(Long id);
 
     interface ShaftHouseId {
+
         HouseDTO getHouseDTO();
     }
 

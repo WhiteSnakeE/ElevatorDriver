@@ -27,15 +27,15 @@ public class ShaftService {
         shaftRepository.updateEngineStateById(shaftId, engineState);
     }
 
-    public void updateCabinPositionById(Long shaftId, int cabinPosition){
+    public void updateCabinPositionById(Long shaftId, int cabinPosition) {
         shaftRepository.updateCabinPositionById(shaftId, cabinPosition);
     }
 
-    public ShaftDTO getById(Long id){
+    public ShaftDTO getById(Long id) {
         return shaftRepository.getShaftDTOById(id);
     }
 
-    public SequenceOfStops getSequenceOfStopsByShaftId(Long id){
+    public SequenceOfStops getSequenceOfStopsByShaftId(Long id) {
         ShaftDTO shaftDTO = shaftRepository.getShaftDTOById(id);
         return JsonUtil.stringJSONToSequenceOfStops(shaftDTO.getSequenceOfStops());
     }
