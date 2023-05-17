@@ -18,7 +18,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.times;
 
 @Slf4j
@@ -62,14 +64,17 @@ public class CallCabinThenTest extends IntegrationTest {
     @Then("commands should have be invoked for shaft {int} in house {int}: {stringList} for floor/floors {intList}")
     public void commandsShouldHaveBeInvokedForShaftInHouseMoveCabinCommandVisitFloorCommandStopCabinCommandOpenDoorCommandCloseDoorCommandForFloor(int shaftIndex, int houseIndex, List<String> commands, List<Integer> floors) {
         for (String command : commands) {
-            Mockito.verify(getCommandManager().getCommand(command), times(floors.size())).execute(any());
+            Mockito.verify(getCommandManager().getCommand(command), times(floors.size())).execute(argThat((arg) -> {
+                Shaft shaft = (Shaft) (arg.get(SHAFT_PARAM));
+                log.info(shaft.getId().toString());
+                return shaft.getId().equals(getShaftId(shaftIndex, houseIndex));
+            }));
         }
     }
 
     @And("shaft {int} in house {int} has cabin position {int}")
     public void shaftInHouseHasCabinPosition(int shaftIndex, int houseIndex, int cabinPosition) {
-        List<ShaftDTO> shaftDTOList = getShaftRepository().findByHouseDTOId(TestContext.getInstance().getHousesId().get(houseIndex));
-        shaftDTOList.sort(Comparator.comparingLong(ShaftDTO::getId));
+        List<ShaftDTO> shaftDTOList = getSortedShaftsByHouseId(houseIndex);
         Assertions.assertEquals(cabinPosition, shaftDTOList.get(shaftIndex).getCabinPosition());
     }
 

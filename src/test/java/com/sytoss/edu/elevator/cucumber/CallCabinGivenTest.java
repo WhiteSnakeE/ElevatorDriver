@@ -3,7 +3,11 @@ package com.sytoss.edu.elevator.cucumber;
 import com.sytoss.edu.elevator.IntegrationTest;
 import com.sytoss.edu.elevator.TestContext;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
+import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
+import com.sytoss.edu.elevator.bom.house.House;
+import com.sytoss.edu.elevator.commands.Command;
+import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.dto.HouseDTO;
 import com.sytoss.edu.elevator.dto.ShaftDTO;
 import com.sytoss.edu.elevator.utils.JsonUtil;
@@ -78,7 +82,9 @@ public class CallCabinGivenTest extends IntegrationTest {
 
         HouseDTO createdHouseDTO = getHouseRepository().save(houseDTO);
         TestContext.getInstance().getHousesId().put(houseIndex, createdHouseDTO.getId());
-        getShaftRepository().saveAll(shaftDTOList);
+
+        List<ShaftDTO> createdShaftDTOs = getShaftRepository().saveAll(houseDTO.getShafts());
+        TestContext.getInstance().getShaftIds().put(houseIndex, createdShaftDTOs.stream().map(ShaftDTO::getId).toList());
     }
 
     @And("shaft {int} in house {int} has free cabin and cabin position {int}")
@@ -101,13 +107,6 @@ public class CallCabinGivenTest extends IntegrationTest {
         shaftDTOList.get(shaftIndex).setSequenceOfStops(JsonUtil.sequenceToStringInJSON(sequence));
         shaftDTOList.get(shaftIndex).setCabinPosition(cabinPosition);
         getShaftRepository().save(shaftDTOList.get(shaftIndex));
-
-        Optional<HouseDTO> houseDTOOptional = getHouseRepository().findById(TestContext.getInstance().getHousesId().get(houseIndex));
-        HashMap<String, Object> params = new HashMap<>();
-        params.put(SHAFT_PARAM, getShaftConverter().fromDTO(shaftDTOList.get(shaftIndex)));
-        params.put(HOUSE_PARAM, getHouseConverter().fromDTO(houseDTOOptional.get(), shaftDTOList));
-        getCommandManager().getCommand(MOVE_CABIN_COMMAND).execute(params);
-        await(floors.get(floors.size() - 1));
     }
 
     @Given("house {int} with numberOfFloors {int} and numberOfShafts {int} exists in database")
@@ -127,6 +126,23 @@ public class CallCabinGivenTest extends IntegrationTest {
 
         HouseDTO createdHouseDTO = getHouseRepository().save(houseDTO);
         TestContext.getInstance().getHousesId().put(houseIndex, createdHouseDTO.getId());
-        getShaftRepository().saveAll(shaftDTOList);
+
+        List<ShaftDTO> createdShaftDTOs = getShaftRepository().saveAll(houseDTO.getShafts());
+        TestContext.getInstance().getShaftIds().put(houseIndex, createdShaftDTOs.stream().map(ShaftDTO::getId).toList());
+    }
+
+    @And("all shafts in house {int} is moving")
+    public void shaftInHouseIsMoving(int houseIndex) {
+        House house = getHouseService().getHouseById(TestContext.getInstance().getHousesId().get(houseIndex));
+        for (Shaft shaft : house.getShafts()) {
+            if (shaft.getSequenceOfStops() != null) {
+                getHouseThreadPool().getFixedThreadPool().submit(() -> {
+                    HashMap<String, Object> paramsActivateCommand = new HashMap<>();
+                    paramsActivateCommand.put(CommandManager.SHAFT_PARAM, shaft);
+                    paramsActivateCommand.put(CommandManager.FLOORS_PARAM, house.getFloors());
+                    getCommandManager().getCommand(Command.MOVE_CABIN_COMMAND).execute(paramsActivateCommand);
+                });
+            }
+        }
     }
 }

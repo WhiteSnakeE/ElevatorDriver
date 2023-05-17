@@ -11,6 +11,7 @@ import com.sytoss.edu.elevator.services.HouseService;
 import io.cucumber.junit.CucumberOptions;
 import io.cucumber.spring.CucumberContextConfiguration;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.platform.suite.api.ConfigurationParameter;
 import org.junit.platform.suite.api.IncludeEngines;
 import org.junit.platform.suite.api.SelectClasspathResource;
@@ -32,14 +33,8 @@ import static io.cucumber.core.options.Constants.PLUGIN_PROPERTY_NAME;
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty")
 @CucumberOptions(features = "src/test/resources/features", glue = "com.sytoss.edu.elevator", tags = "not @SingleRun")
 @Getter
+@Slf4j
 public class IntegrationTest extends AbstractControllerTest {
-
-    //    @Autowired
-    //    @SpyBean
-    //    private House house;
-    //
-    //    @Autowired
-    //    private ElevatorDriver elevatorDriver;
 
     @Autowired
     private FloorService floorService;
@@ -115,5 +110,9 @@ public class IntegrationTest extends AbstractControllerTest {
         List<ShaftDTO> shaftDTOList = getShaftRepository().findByHouseDTOId(TestContext.getInstance().getHousesId().get(houseIndex));
         shaftDTOList.sort(Comparator.comparingLong(ShaftDTO::getId));
         return shaftDTOList;
+    }
+
+    public Long getShaftId(int shaftIndex, int houseIndex){
+        return TestContext.getInstance().getShaftIds().get(houseIndex).get(shaftIndex);
     }
 }
