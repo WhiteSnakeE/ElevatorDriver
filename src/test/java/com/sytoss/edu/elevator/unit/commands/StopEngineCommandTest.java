@@ -4,7 +4,6 @@ import com.sytoss.edu.elevator.bom.Engine;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.EngineState;
 import com.sytoss.edu.elevator.commands.StopEngineCommand;
-import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import com.sytoss.edu.elevator.services.ShaftService;
 import org.junit.jupiter.api.Test;
 

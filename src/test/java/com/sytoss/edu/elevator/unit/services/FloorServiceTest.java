@@ -22,9 +22,10 @@ public class FloorServiceTest {
     private final HouseDTO houseDTO = mock(HouseDTO.class);
 
     private final ElevatorDriver elevatorDriver = mock(ElevatorDriver.class);
-    private final HouseService houseService = mock(HouseService.class);
-    private final FloorService floorService = new FloorService(houseService);
 
+    private final HouseService houseService = mock(HouseService.class);
+
+    private final FloorService floorService = new FloorService(houseService);
 
 
     @Test
@@ -35,7 +36,7 @@ public class FloorServiceTest {
         when(house.getElevatorDriver()).thenReturn(elevatorDriver);
         when(house.getFloors()).thenReturn(List.of(firstFloor));
         when(houseDTO.getOrderSequenceOfStops()).thenReturn("");
-        floorService.goUpCabinRequest(1,1);
+        floorService.goUpCabinRequest(1, 1);
         verify(firstFloor).pressUpButton(house);
     }
 
@@ -53,7 +54,7 @@ public class FloorServiceTest {
         when(houseService.getHouseDTO(1)).thenReturn(houseDTO);
         when(house.getElevatorDriver()).thenReturn(elevatorDriver);
         when(house.getFloors()).thenReturn(list);
-        floorService.goUpCabinRequest(1,2);
+        floorService.goUpCabinRequest(1, 2);
         verify(middleFloor).pressUpButton(house);
     }
 }

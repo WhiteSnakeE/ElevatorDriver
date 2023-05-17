@@ -1,7 +1,5 @@
 package com.sytoss.edu.elevator;
 
-import com.sytoss.edu.elevator.bom.ElevatorDriver;
-import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.commands.*;
 import com.sytoss.edu.elevator.converters.HouseConverter;
 import com.sytoss.edu.elevator.converters.ShaftConverter;
@@ -17,7 +15,6 @@ import org.junit.platform.suite.api.ConfigurationParameter;
 import org.junit.platform.suite.api.IncludeEngines;
 import org.junit.platform.suite.api.SelectClasspathResource;
 import org.junit.platform.suite.api.Suite;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 
@@ -25,7 +22,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import static com.sytoss.edu.elevator.HouseThreadPool.*;
-import static com.sytoss.edu.elevator.HouseThreadPool.MOVE_CABIN_TIME_SLEEP;
 import static io.cucumber.core.options.Constants.PLUGIN_PROPERTY_NAME;
 
 
@@ -100,7 +96,7 @@ public class IntegrationTest extends AbstractControllerTest {
     @Autowired
     private HouseService houseService;
 
-    public List<ShaftDTO> getSortedShaftsByHouseId(Integer houseIndex){
+    public List<ShaftDTO> getSortedShaftsByHouseId(Integer houseIndex) {
         List<ShaftDTO> shaftDTOList = getShaftRepository().findByHouseDTOId(TestContext.getInstance().getHousesId().get(houseIndex));
         shaftDTOList.sort(Comparator.comparingLong(ShaftDTO::getId));
         return shaftDTOList;
@@ -115,7 +111,7 @@ public class IntegrationTest extends AbstractControllerTest {
         }
     }
 
-    public List<ShaftDTO> getSortedShaftsByHouseIndex(Integer houseIndex){
+    public List<ShaftDTO> getSortedShaftsByHouseIndex(Integer houseIndex) {
         List<ShaftDTO> shaftDTOList = getShaftRepository().findByHouseDTOId(TestContext.getInstance().getHousesId().get(houseIndex));
         shaftDTOList.sort(Comparator.comparingLong(ShaftDTO::getId));
         return shaftDTOList;

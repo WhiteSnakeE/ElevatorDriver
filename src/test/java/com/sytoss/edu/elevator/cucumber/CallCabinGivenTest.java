@@ -6,14 +6,15 @@ import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.dto.HouseDTO;
 import com.sytoss.edu.elevator.dto.ShaftDTO;
-import com.sytoss.edu.elevator.params.HouseParams;
 import com.sytoss.edu.elevator.utils.JsonUtil;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
-import java.util.stream.IntStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 import static com.sytoss.edu.elevator.bom.enums.DoorState.CLOSED;
 import static com.sytoss.edu.elevator.bom.enums.EngineState.STAYING;
@@ -37,7 +38,7 @@ public class CallCabinGivenTest extends IntegrationTest {
     }
 
     @Given("shaft with index {int} has sequence of stops with floor/floors {intList} and Direction {string} and cabin position {int}")
-    public void shaftWithIndexAndSequenceOfStopsAndDirectionAndCabinPosition(Integer shaftIndex,List<Integer> floorsNumbers,
+    public void shaftWithIndexAndSequenceOfStopsAndDirectionAndCabinPosition(Integer shaftIndex, List<Integer> floorsNumbers,
                                                                              String direction, Integer cabinPosition) {
         SequenceOfStops sequence = new SequenceOfStops();
         sequence.setDirection(Direction.valueOf(direction));
@@ -59,18 +60,6 @@ public class CallCabinGivenTest extends IntegrationTest {
 
         getShaftRepository().saveAll(shaftDTOList);
     }
-//
-//    @Given("shaft with index {int} has sequence of stops with floors {intList} and Direction {string} and cabin position {int}")
-//    public void shaftWithIndexHasSequenceOfStopsWithFloorAndDirectionAndCabinPosition(Integer shaftIndex,
-//                                                                                      List<Integer> floors, String direction, Integer cabinPosition) {
-//        SequenceOfStops sequence = new SequenceOfStops();
-//        sequence.setDirection(Direction.valueOf(direction));
-//        sequence.setStopFloors(floors);
-//
-//        getHouse().getShafts().get(shaftIndex).setSequenceOfStops(sequence);
-//        setCabinPositionTest(getHouse().getShafts().get(shaftIndex), cabinPosition);
-//    }
-//
 
     @Given("house {int} with numberOfFloors {int} and numberOfShafts {int}")
     public void houseWithNumberOfFloorsAndNumberOfShafts(int houseIndex, int numberOfFloors, int numberOfShafts) {

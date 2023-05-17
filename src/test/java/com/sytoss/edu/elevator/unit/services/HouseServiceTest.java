@@ -1,8 +1,6 @@
 package com.sytoss.edu.elevator.unit.services;
 
 import com.sytoss.edu.elevator.HouseThreadPool;
-import com.sytoss.edu.elevator.bom.ElevatorDriver;
-import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.HouseBuilder;
 import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.converters.HouseConverter;
@@ -36,7 +34,7 @@ public class HouseServiceTest {
     private final HouseService houseService = new HouseService(houseRepository, shaftRepository, houseBuilder, houseConverter, shaftConverter, commandManager, houseThreadPool);
 
     @Test
-    public void saveRequestTest () {
+    public void saveRequestTest() {
         ShaftDTO shaftDTO = mock(ShaftDTO.class);
         HouseDTO houseDTO = mock(HouseDTO.class);
 

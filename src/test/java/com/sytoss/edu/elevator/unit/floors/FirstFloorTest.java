@@ -13,7 +13,7 @@ public class FirstFloorTest {
     private final UpFloorButton upFloorButton = mock(UpFloorButton.class);
 
     @Test
-    public void pressUpButton () {
+    public void pressUpButton() {
         House house = mock(House.class);
         FirstFloor firstFloor = new FirstFloor(house, upFloorButton);
         firstFloor.pressUpButton(house);

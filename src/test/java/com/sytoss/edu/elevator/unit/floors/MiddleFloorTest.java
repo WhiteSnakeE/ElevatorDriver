@@ -16,7 +16,7 @@ public class MiddleFloorTest {
 
     @Test
     public void pressUpButton() {
-        MiddleFloor middleFloor = new MiddleFloor(2,house, upFloorButton);
+        MiddleFloor middleFloor = new MiddleFloor(2, house, upFloorButton);
         middleFloor.pressUpButton(house);
         verify(upFloorButton).press(house, middleFloor.getFloorNumber());
     }

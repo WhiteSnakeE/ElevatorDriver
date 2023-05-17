@@ -10,8 +10,6 @@ import com.sytoss.edu.elevator.commands.Command;
 import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.commands.FindNearestCabinCommand;
 import com.sytoss.edu.elevator.commands.MoveCabinCommand;
-import com.sytoss.edu.elevator.repositories.HouseRepository;
-import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import com.sytoss.edu.elevator.services.HouseService;
 import com.sytoss.edu.elevator.services.ShaftService;
 import org.junit.jupiter.api.Test;

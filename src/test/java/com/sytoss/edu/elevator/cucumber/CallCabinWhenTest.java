@@ -9,18 +9,14 @@ import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.commands.Command;
 import com.sytoss.edu.elevator.dto.HouseDTO;
 import com.sytoss.edu.elevator.dto.ShaftDTO;
+import com.sytoss.edu.elevator.utils.JsonUtil;
 import io.cucumber.java.en.When;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-
-import static com.sytoss.edu.elevator.HouseThreadPool.*;
-import static com.sytoss.edu.elevator.commands.CommandManager.HOUSE_PARAM;
-import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 
 @Slf4j
 public class CallCabinWhenTest extends IntegrationTest {
@@ -33,20 +29,27 @@ public class CallCabinWhenTest extends IntegrationTest {
         await(floorNumber);
     }
 
-    //    @When("call process findNearestCabin for floor {int} with direction {string}")
-//    public void callProcessFindNearestCabinForFloor(int floor, String direction) {
-//        getElevatorDriver().addNewSequenceToOrder(floor, Direction.valueOf(direction));
-//        Shaft shaft = getHouse().findNearestCabin(getElevatorDriver().getOrderSequenceOfStops());
-//        if (shaft != null) {
-//            shaft.updateSequence(getElevatorDriver());
-//        }
-//    }
-//
+    @When("call process findNearestCabin for floor {int} with direction {string}")
+    public void callProcessFindNearestCabinForFloor(int floor, String direction) {
+        List<ShaftDTO> shaftDTOList = getSortedShaftsByHouseIndex(0);
+        Optional<HouseDTO> houseDTOOptional = getHouseRepository().findById(TestContext.getInstance().getHousesId().get(0));
+        House house = getHouseConverter().fromDTO(houseDTOOptional.get(), shaftDTOList);
+        house.setElevatorDriver(new ElevatorDriver(getCommandManager()));
+        house.getElevatorDriver().addNewSequenceToOrder(floor, Direction.valueOf(direction));
+        Shaft shaft = house.findNearestCabin(house.getElevatorDriver().getOrderSequenceOfStops());
+        if (shaft != null) {
+            shaft.addShaftListener(house.getElevatorDriver());
+            shaft.updateSequence(house.getElevatorDriver());
+            getShaftRepository().updateSequenceById(shaft.getId(), JsonUtil.sequenceToStringInJSON(shaft.getSequenceOfStops()));
+        }
+        getHouseRepository().updateOrderById(house.getId(), JsonUtil.orderSequenceToStringInJSON(house.getElevatorDriver().getOrderSequenceOfStops()));
+    }
+
     @When("start cabin with index {int} moving sequence of stops to")
     public void startCabinWithIndexMovingSequenceOfStopsTo(Integer shaftIndex) {
         List<ShaftDTO> shaftDTOList = getSortedShaftsByHouseIndex(0);
         Optional<HouseDTO> houseDTOOptional = getHouseRepository().findById(TestContext.getInstance().getHousesId().get(0));
-        House house = getHouseConverter().fromDTO(houseDTOOptional.get(),shaftDTOList);
+        House house = getHouseConverter().fromDTO(houseDTOOptional.get(), shaftDTOList);
         house.setElevatorDriver(new ElevatorDriver(getCommandManager()));
         Shaft shaft = getShaftConverter().fromDTO(shaftDTOList.get(shaftIndex));
         shaft.addShaftListener(house.getElevatorDriver());

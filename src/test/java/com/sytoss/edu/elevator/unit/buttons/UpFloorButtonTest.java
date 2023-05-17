@@ -1,6 +1,5 @@
 package com.sytoss.edu.elevator.unit.buttons;
 
-import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.buttons.UpFloorButton;
@@ -9,7 +8,6 @@ import com.sytoss.edu.elevator.commands.CommandManager;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashMap;
@@ -28,12 +26,12 @@ public class UpFloorButtonTest {
     public void pressTest() {
         House house = mock(House.class);
         UpFloorButton upFloorButton = new UpFloorButton(command);
-        upFloorButton.press(house,5);
+        upFloorButton.press(house, 5);
 
         HashMap<String, Object> params = new HashMap<>();
 
         params.put("numberFloor", 5);
-        params.put(CommandManager.HOUSE_PARAM,house);
+        params.put(CommandManager.HOUSE_PARAM, house);
         params.put("Direction", Direction.UPWARDS);
 
 

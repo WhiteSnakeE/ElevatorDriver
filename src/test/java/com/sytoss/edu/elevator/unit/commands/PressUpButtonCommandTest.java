@@ -1,16 +1,13 @@
 package com.sytoss.edu.elevator.unit.commands;
 
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
-import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.commands.Command;
 import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.commands.FindNearestCabinCommand;
 import com.sytoss.edu.elevator.commands.PressUpButtonCommand;
-import com.sytoss.edu.elevator.repositories.HouseRepository;
 import com.sytoss.edu.elevator.services.HouseService;
-import com.sytoss.edu.elevator.services.ShaftService;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
