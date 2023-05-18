@@ -33,12 +33,7 @@ public class CallCabinGivenTest extends IntegrationTest {
     @Given("shaft with index {int} has free cabin and cabin position {int}")
     public void shaftWithIdAndEngineHasEngineStateAndShaftHasCurrentPosition(Integer shaftIndex,
                                                                              Integer cabinPosition) {
-        List<ShaftDTO> shaftDTOList = getSortedShaftsByHouseIndex(0);
-
-        shaftDTOList.get(shaftIndex).setSequenceOfStops(null);
-        shaftDTOList.get(shaftIndex).setCabinPosition(cabinPosition);
-
-        getShaftRepository().save(shaftDTOList.get(shaftIndex));
+        shaftInHouseHasFreeCabinAndCabinPosition(shaftIndex, 0, cabinPosition);
     }
 
     @Given("shaft with index {int} has sequence of stops with floor/floors {intList} and Direction {string} and cabin position {int}")

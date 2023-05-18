@@ -1,5 +1,6 @@
 package com.sytoss.edu.elevator.services;
 
+import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.buttons.FloorWithUpButton;
 import com.sytoss.edu.elevator.bom.house.floors.Floor;
@@ -8,6 +9,8 @@ import com.sytoss.edu.elevator.utils.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -20,11 +23,15 @@ public class FloorService {
         House house = houseService.getHouseById(houseNumber);
         HouseDTO houseDTO = houseService.getHouseDTO(houseNumber);
         house.getElevatorDriver()
-                .setOrderSequenceOfStops(JsonUtil.stringJSONToOrderSequence(houseDTO.getOrderSequenceOfStops()));
+                .setOrderSequenceOfStops(stringJsonToOrder(houseDTO.getOrderSequenceOfStops()));
         Floor floor = house.getFloors().get(floorNumber - 1);
 
         if (floor instanceof FloorWithUpButton) {
             ((FloorWithUpButton) floor).pressUpButton();
         }
+    }
+
+    private List<SequenceOfStops> stringJsonToOrder(String order){
+        return JsonUtil.stringJSONToOrderSequence(order);
     }
 }
