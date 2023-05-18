@@ -31,7 +31,7 @@ public class FloorService {
         }
     }
 
-    private List<SequenceOfStops> stringJsonToOrder(String order){
+    private List<SequenceOfStops> stringJsonToOrder(String order) {
         return JsonUtil.stringJSONToOrderSequence(order);
     }
 }

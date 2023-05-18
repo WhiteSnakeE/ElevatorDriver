@@ -27,18 +27,18 @@ public class Shaft extends Entity {
 
     private List<ShaftListener> shaftListeners = new ArrayList<>();
 
+    public Shaft() {
+        cabin = new Cabin();
+        engine = new Engine();
+        cabinPosition = 1;
+    }
+
     public boolean isCabinMoving() {
         return !isFree();
     }
 
     public boolean isFree() {
         return sequenceOfStops == null;
-    }
-
-    public Shaft() {
-        cabin = new Cabin();
-        engine = new Engine();
-        cabinPosition = 1;
     }
 
     public synchronized void updateSequence(ElevatorDriver elevatorDriver) {
