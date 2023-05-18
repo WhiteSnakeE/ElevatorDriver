@@ -1,5 +1,7 @@
 package com.sytoss.edu.elevator.unit.services;
 
+import com.sytoss.edu.elevator.bom.SequenceOfStops;
+import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.HouseBuilder;
 import com.sytoss.edu.elevator.commands.CommandManager;
@@ -11,6 +13,7 @@ import com.sytoss.edu.elevator.params.HouseParams;
 import com.sytoss.edu.elevator.repositories.HouseRepository;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import com.sytoss.edu.elevator.services.HouseService;
+import com.sytoss.edu.elevator.utils.JsonUtil;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -57,7 +60,7 @@ public class HouseServiceTest {
     }
 
     @Test
-    public void getHouseByShaftId() {
+    public void getHouseByShaftIdTest() {
         Long shaftId = 5L;
         HouseDTO houseDTO = mock(HouseDTO.class);
         House house = mock(House.class);
@@ -76,32 +79,43 @@ public class HouseServiceTest {
         when(houseConverter.fromDTO(houseDTO, shaftDTOList)).thenReturn(house);
         houseService.getHouseByShaftId(shaftId);
 
-        verify(houseConverter.fromDTO(houseDTO, shaftDTOList));
+        verify(houseConverter).fromDTO(houseDTO, shaftDTOList);
     }
 
     @Test
-    public void getHouseDTO() {
-        HouseService houseService1 = mock(HouseService.class);
+    public void getHouseDTOTest() {
         HouseDTO houseDTO = mock(HouseDTO.class);
         when(houseRepository.getReferenceById(3L)).thenReturn(houseDTO);
 
-        houseService1.getHouseDTO(3L);
+        houseService.getHouseDTO(3L);
 
-        verify(houseRepository.getReferenceById(3L));
+        verify(houseRepository).getReferenceById(3L);
     }
 
     @Test
-    public void getHouseById() {
-        HouseService houseService1 = mock(HouseService.class);
+    public void getHouseByIdTest() {
         HouseDTO houseDTO = mock(HouseDTO.class);
         House house = mock(House.class);
         List<ShaftDTO> shaftDTOList = new ArrayList<>();
 
         when(shaftRepository.findByHouseDTOId(4L)).thenReturn(shaftDTOList);
+        when(houseRepository.getReferenceById(4L)).thenReturn(houseDTO);
         when(houseConverter.fromDTO(houseDTO, shaftDTOList)).thenReturn(house);
 
-        houseService1.getHouseById(4L);
-        verify(houseConverter.fromDTO(houseDTO, shaftDTOList));
+        houseService.getHouseById(4L);
+        verify(houseConverter).fromDTO(houseDTO, shaftDTOList);
     }
 
+
+    @Test
+    public void updateOrderByIdTest(){
+        List<SequenceOfStops> order = new ArrayList<>();
+        SequenceOfStops sequence = new SequenceOfStops();
+        sequence.setStopFloors(List.of(1, 2, 3));
+        sequence.setDirection(Direction.UPWARDS);
+        order.add(sequence);
+        houseService.updateOrderById(1L, order);
+
+        verify(houseRepository).updateOrderById(1L, JsonUtil.orderSequenceToStringInJSON(order));
+    }
 }

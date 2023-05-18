@@ -1,12 +1,10 @@
 package com.sytoss.edu.elevator.services;
 
-import com.sytoss.edu.elevator.HouseThreadPool;
 import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.HouseBuilder;
-import com.sytoss.edu.elevator.commands.Command;
 import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.converters.HouseConverter;
 import com.sytoss.edu.elevator.converters.ShaftConverter;
@@ -21,9 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -63,6 +59,7 @@ public class HouseService {
             shaft.setId(shaftDTO.getId());
         }
     }
+
     @Transactional
     public House getHouseById(long houseId) {
         HouseDTO houseDTO = getHouseDTO(houseId);
@@ -72,6 +69,7 @@ public class HouseService {
         setListeners(house);
         return house;
     }
+
     @Transactional
     public House getHouseByShaftId(long shaftId) {
         long houseId = shaftRepository.getAllById(shaftId).getHouseDTO().getId();
