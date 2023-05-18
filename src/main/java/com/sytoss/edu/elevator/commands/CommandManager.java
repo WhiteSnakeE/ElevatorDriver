@@ -38,8 +38,6 @@ public class CommandManager {
 
     public static final String FLOORS_PARAM = "Floors";
 
-    public static final String ITERATOR_PARAM = "Iterator";
-
     public static final String HOUSE_PARAM = "House";
 
     private final HashMap<String, Command> commandMap = new HashMap<>();
@@ -68,5 +66,4 @@ public class CommandManager {
     public void scheduleCommand(String nameCommand, HashMap<String, Object> params, long waitTime) {
         houseThreadPool.getFixedThreadPool().schedule(() -> getCommand(nameCommand).execute(params), waitTime, TimeUnit.MILLISECONDS);
     }
-
 }

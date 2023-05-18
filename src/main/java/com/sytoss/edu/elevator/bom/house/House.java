@@ -29,19 +29,19 @@ public class House extends Entity {
         this.elevatorDriver = elevatorDriver;
     }
 
-    public Shaft findNearestCabin(List<SequenceOfStops> orderSequenceOfStops) {
+    public Shaft findNearestCabin() {
         List<Shaft> appropriateShafts = getFreeShafts();
 
         if (appropriateShafts.isEmpty()) {
             log.info("findNearestCabin: all cabin is busy!");
-            appropriateShafts = shaftWithAppropriateDirection(orderSequenceOfStops.get(0).getDirection(), orderSequenceOfStops);
+            appropriateShafts = shaftWithAppropriateDirection(elevatorDriver.getOrderSequenceOfStops().get(0).getDirection(), elevatorDriver.getOrderSequenceOfStops());
             if (appropriateShafts.isEmpty()) {
                 log.info("findNearestCabin: appropriate cabin not found");
                 return null;
             }
         }
 
-        int firstStop = orderSequenceOfStops.get(0).getStopFloors().get(0);
+        int firstStop = elevatorDriver.getOrderSequenceOfStops().get(0).getStopFloors().get(0);
 
         return appropriateShafts.stream().min(Comparator.comparingInt(shaft -> Math.abs(firstStop - shaft.getCabinPosition()))).orElse(null);
     }

@@ -49,7 +49,7 @@ public class FindNearestCabinCommandTest {
         sequence.setStopFloors(List.of(2, 3, 4));
 
         when(house.getElevatorDriver()).thenReturn(elevatorDriver);
-        when(house.findNearestCabin(elevatorDriver.getOrderSequenceOfStops())).thenReturn(shaft);
+        when(house.findNearestCabin()).thenReturn(shaft);
         when(commandManager.getCommand(Command.MOVE_CABIN_COMMAND)).thenReturn(moveCabinCommand);
         when(shaft.isCabinMoving()).thenReturn(false);
         when(shaft.getSequenceOfStops()).thenReturn(sequence);
@@ -60,7 +60,7 @@ public class FindNearestCabinCommandTest {
         findNearestCabinCommand.execute(params);
         await();
 
-        verify(house).findNearestCabin(elevatorDriver.getOrderSequenceOfStops());
+        verify(house).findNearestCabin();
         verify(commandManager.getCommand(Command.MOVE_CABIN_COMMAND)).execute(any());
         verify(shaft).updateSequence(elevatorDriver);
         verify(shaft).isCabinMoving();

@@ -22,18 +22,11 @@ public class MoveCabinCommand implements Command {
     @Override
     public void execute(HashMap<String, Object> params) {
         Shaft shaft = (Shaft) params.get(SHAFT_PARAM);
-        House house = (House) params.get(CommandManager.HOUSE_PARAM);
         params.put(CommandManager.DIRECTION_PARAM, shaft.getSequenceOfStops().getDirection());
 
-        HashMap<String, Object> paramsActivateCommand = new HashMap<>();
+        commandManager.getCommand(START_ENGINE_COMMAND).execute(params);
 
-        paramsActivateCommand.put(SHAFT_PARAM, shaft);
-        paramsActivateCommand.put(DIRECTION_PARAM, Direction.UPWARDS);
-        paramsActivateCommand.put(HOUSE_PARAM, house);
-
-        commandManager.getCommand(START_ENGINE_COMMAND).execute(paramsActivateCommand);
-
-        commandManager.scheduleCommand(VISIT_FLOOR_COMMAND, paramsActivateCommand, VISIT_FLOOR_TIME_SLEEP);
+        commandManager.scheduleCommand(VISIT_FLOOR_COMMAND, params, VISIT_FLOOR_TIME_SLEEP);
     }
 }
 

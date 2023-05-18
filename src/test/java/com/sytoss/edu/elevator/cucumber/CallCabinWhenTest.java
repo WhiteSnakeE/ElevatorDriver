@@ -36,7 +36,7 @@ public class CallCabinWhenTest extends IntegrationTest {
         House house = getHouseConverter().fromDTO(houseDTOOptional.get(), shaftDTOList);
         house.setElevatorDriver(new ElevatorDriver(getCommandManager()));
         house.getElevatorDriver().addNewSequenceToOrder(floor, Direction.valueOf(direction));
-        Shaft shaft = house.findNearestCabin(house.getElevatorDriver().getOrderSequenceOfStops());
+        Shaft shaft = house.findNearestCabin();
         if (shaft != null) {
             shaft.addShaftListener(house.getElevatorDriver());
             shaft.updateSequence(house.getElevatorDriver());
