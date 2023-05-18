@@ -92,7 +92,7 @@ public class IntegrationTest extends AbstractControllerTest {
     private HouseService houseService;
 
     public List<ShaftDTO> getSortedShaftsByHouseId(Integer houseIndex) {
-        List<ShaftDTO> shaftDTOList = getShaftRepository().findByHouseDTOId(TestContext.getInstance().getHousesId().get(houseIndex));
+        List<ShaftDTO> shaftDTOList = getShaftRepository().findByHouseDTOId(getHouseId(houseIndex));
         shaftDTOList.sort(Comparator.comparingLong(ShaftDTO::getId));
         return shaftDTOList;
     }
@@ -107,12 +107,16 @@ public class IntegrationTest extends AbstractControllerTest {
     }
 
     public List<ShaftDTO> getSortedShaftsByHouseIndex(Integer houseIndex) {
-        List<ShaftDTO> shaftDTOList = getShaftRepository().findByHouseDTOId(TestContext.getInstance().getHousesId().get(houseIndex));
+        List<ShaftDTO> shaftDTOList = getShaftRepository().findByHouseDTOId(getHouseId(houseIndex));
         shaftDTOList.sort(Comparator.comparingLong(ShaftDTO::getId));
         return shaftDTOList;
     }
 
     public Long getShaftId(int shaftIndex, int houseIndex){
         return TestContext.getInstance().getShaftIds().get(houseIndex).get(shaftIndex);
+    }
+
+    public Long getHouseId(int houseIndex){
+        return TestContext.getInstance().getHouseIds().get(houseIndex);
     }
 }

@@ -19,6 +19,7 @@ import com.sytoss.edu.elevator.utils.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +42,6 @@ public class HouseService {
 
     private final CommandManager commandManager;
 
-    private final HouseThreadPool houseThreadPool;
 
     private House changeHouseConfiguration(int shaftsCount, int floorsCount) {
         House house = houseBuilder.build(shaftsCount, floorsCount);
@@ -63,27 +63,7 @@ public class HouseService {
             shaft.setId(shaftDTO.getId());
         }
     }
-
-    public House getHouse(long houseId) {
-        HouseDTO houseDTO = getHouseDTO(houseId);
-        List<ShaftDTO> shaftDTOList = shaftRepository.findByHouseDTOId(houseDTO.getId());
-        House house = houseConverter.fromDTO(houseDTO, shaftDTOList);
-        setListeners(house);
-        for (Shaft shaft : house.getShafts()) {
-            if (shaft.getSequenceOfStops() != null) {
-                houseThreadPool.getFixedThreadPool().submit(() -> {
-                    log.info("startMoveCabin: start threads for shaft with id {}", shaft.getId());
-                    HashMap<String, Object> paramsActivateCommand = new HashMap<>();
-                    paramsActivateCommand.put(CommandManager.SHAFT_PARAM, shaft);
-                    paramsActivateCommand.put(CommandManager.FLOORS_PARAM, house.getFloors());
-                    commandManager.getCommand(Command.MOVE_CABIN_COMMAND).execute(paramsActivateCommand);
-                    log.info("startMoveCabin: finish threads for shaft with id {}", shaft.getId());
-                });
-            }
-        }
-        return house;
-    }
-
+    @Transactional
     public House getHouseById(long houseId) {
         HouseDTO houseDTO = getHouseDTO(houseId);
         List<ShaftDTO> shaftDTOList = shaftRepository.findByHouseDTOId(houseDTO.getId());
@@ -92,15 +72,15 @@ public class HouseService {
         setListeners(house);
         return house;
     }
-
+    @Transactional
     public House getHouseByShaftId(long shaftId) {
         long houseId = shaftRepository.getAllById(shaftId).getHouseDTO().getId();
         return getHouseById(houseId);
     }
 
+    @Transactional
     public HouseDTO getHouseDTO(long houseId) {
-        Optional<HouseDTO> houseDTOOptional = houseRepository.findById(Long.valueOf(houseId));
-        return houseDTOOptional.get();
+        return houseRepository.getReferenceById(houseId);
     }
 
     private void setListeners(House house) {

@@ -30,9 +30,9 @@ public class UpFloorButtonTest {
 
         HashMap<String, Object> params = new HashMap<>();
 
-        params.put("numberFloor", 5);
+        params.put(CommandManager.FLOOR_NUMBER_PARAM, 5);
         params.put(CommandManager.HOUSE_PARAM, house);
-        params.put("Direction", Direction.UPWARDS);
+        params.put(CommandManager.DIRECTION_PARAM, Direction.UPWARDS);
 
 
         verify(command).execute(params);

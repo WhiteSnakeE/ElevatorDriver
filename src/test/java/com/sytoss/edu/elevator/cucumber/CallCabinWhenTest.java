@@ -25,7 +25,7 @@ public class CallCabinWhenTest extends IntegrationTest {
 
     @When("passenger on floor {int} presses UpFloorButton with direction {string}")
     public void passengerOnFloorPressesUpFloorButtonWithDirection(Integer floorNumber, String direction) {
-        String url = "/api/house/" + TestContext.getInstance().getHousesId().get(0) + "/floorButton/" + floorNumber + "/up";
+        String url = "/api/house/" + getHouseId(0) + "/floorButton/" + floorNumber + "/up";
         ResponseEntity<String> response = doPost(url, null, String.class);
         TestContext.getInstance().setResponse(response);
         await(floorNumber);
@@ -34,7 +34,7 @@ public class CallCabinWhenTest extends IntegrationTest {
     @When("call process findNearestCabin for floor {int} with direction {string}")
     public void callProcessFindNearestCabinForFloor(int floor, String direction) {
         List<ShaftDTO> shaftDTOList = getSortedShaftsByHouseIndex(0);
-        Optional<HouseDTO> houseDTOOptional = getHouseRepository().findById(TestContext.getInstance().getHousesId().get(0));
+        Optional<HouseDTO> houseDTOOptional = getHouseRepository().findById(getHouseId(0));
         House house = getHouseConverter().fromDTO(houseDTOOptional.get(), shaftDTOList);
         house.setElevatorDriver(new ElevatorDriver(getCommandManager()));
         house.getElevatorDriver().addNewSequenceToOrder(floor, Direction.valueOf(direction));
@@ -50,9 +50,8 @@ public class CallCabinWhenTest extends IntegrationTest {
     @When("start cabin with index {int} moving sequence of stops to")
     public void startCabinWithIndexMovingSequenceOfStopsTo(Integer shaftIndex) {
         List<ShaftDTO> shaftDTOList = getSortedShaftsByHouseIndex(0);
-        Optional<HouseDTO> houseDTOOptional = getHouseRepository().findById(TestContext.getInstance().getHousesId().get(0));
+        Optional<HouseDTO> houseDTOOptional = getHouseRepository().findById(getHouseId(0));
         House house = getHouseConverter().fromDTO(houseDTOOptional.get(), shaftDTOList);
-        //house.setElevatorDriver(new ElevatorDriver(getCommandManager()));
         Shaft shaft = getShaftConverter().fromDTO(shaftDTOList.get(shaftIndex));
         shaft.addShaftListener(house.getElevatorDriver());
 
@@ -67,7 +66,7 @@ public class CallCabinWhenTest extends IntegrationTest {
 
     @When("passenger in house {int} presses UpFloorButton on floor {int}")
     public void passengerInHousePressesUpFloorButtonOnFloor(int houseIndex, int floorNumber) {
-        String url = "/api/house/" + TestContext.getInstance().getHousesId().get(houseIndex) + "/floorButton/" + floorNumber + "/up";
+        String url = "/api/house/" + getHouseId(0) + "/floorButton/" + floorNumber + "/up";
         ResponseEntity<String> response = doPost(url, null, String.class);
         TestContext.getInstance().setResponse(response);
         await(floorNumber);

@@ -13,7 +13,7 @@ public class TestContext {
 
     private ResponseEntity<String> response;
 
-    private HashMap<Integer, Long> housesId = new HashMap<>();
+    private HashMap<Integer, Long> houseIds = new HashMap<>();
 
     private HashMap<Integer, List<Long>> shaftIds = new HashMap<>();
 

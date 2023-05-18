@@ -35,7 +35,7 @@ public class CallCabinThenTest extends IntegrationTest {
 
     @Then("ElevatorDriver has sequence of stops with floor {int}")
     public void elevatorDriverHasSequenceOfStopsWithFloor(Integer floorNumber) {
-        Optional<HouseDTO> houseDTOOptional = getHouseRepository().findById(TestContext.getInstance().getHousesId().get(0));
+        Optional<HouseDTO> houseDTOOptional = getHouseRepository().findById(getHouseId(0));
         HouseDTO houseDTO = houseDTOOptional.get();
         List<SequenceOfStops> order = JsonUtil.stringJSONToOrderSequence(houseDTO.getOrderSequenceOfStops());
 

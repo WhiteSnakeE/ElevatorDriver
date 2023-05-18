@@ -1,6 +1,6 @@
 package com.sytoss.edu.elevator.unit.services;
 
-import com.sytoss.edu.elevator.HouseThreadPool;
+import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.HouseBuilder;
 import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.converters.HouseConverter;
@@ -12,6 +12,9 @@ import com.sytoss.edu.elevator.repositories.HouseRepository;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import com.sytoss.edu.elevator.services.HouseService;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 
@@ -29,9 +32,7 @@ public class HouseServiceTest {
 
     private final ShaftConverter shaftConverter = mock(ShaftConverter.class);
 
-    private final HouseThreadPool houseThreadPool = mock(HouseThreadPool.class);
-
-    private final HouseService houseService = new HouseService(houseRepository, shaftRepository, houseBuilder, houseConverter, shaftConverter, commandManager, houseThreadPool);
+    private final HouseService houseService = new HouseService(houseRepository, shaftRepository, houseBuilder, houseConverter, shaftConverter, commandManager);
 
     @Test
     public void saveRequestTest() {
@@ -54,4 +55,53 @@ public class HouseServiceTest {
         verify(houseConverter).toDTO(any(), any());
         verify(shaftConverter, times(2)).toDTO(any(), any());
     }
+
+    @Test
+    public void getHouseByShaftId() {
+        Long shaftId = 5L;
+        HouseDTO houseDTO = mock(HouseDTO.class);
+        House house = mock(House.class);
+
+        List<ShaftDTO> shaftDTOList = new ArrayList<>();
+
+        ShaftRepository.ShaftHouseId shaftHouseId = mock(ShaftRepository.ShaftHouseId.class);
+        when(shaftRepository.getAllById(5L)).thenReturn(shaftHouseId);
+        when(shaftHouseId.getHouseDTO()).thenReturn(houseDTO);
+        when(houseDTO.getId()).thenReturn(shaftId);
+
+        when(houseRepository.getReferenceById(3L)).thenReturn(houseDTO);
+
+        when(houseDTO.getId()).thenReturn(3L);
+        when(shaftRepository.findByHouseDTOId(3L)).thenReturn(shaftDTOList);
+        when(houseConverter.fromDTO(houseDTO, shaftDTOList)).thenReturn(house);
+        houseService.getHouseByShaftId(shaftId);
+
+        verify(houseConverter.fromDTO(houseDTO, shaftDTOList));
+    }
+
+    @Test
+    public void getHouseDTO() {
+        HouseService houseService1 = mock(HouseService.class);
+        HouseDTO houseDTO = mock(HouseDTO.class);
+        when(houseRepository.getReferenceById(3L)).thenReturn(houseDTO);
+
+        houseService1.getHouseDTO(3L);
+
+        verify(houseRepository.getReferenceById(3L));
+    }
+
+    @Test
+    public void getHouseById() {
+        HouseService houseService1 = mock(HouseService.class);
+        HouseDTO houseDTO = mock(HouseDTO.class);
+        House house = mock(House.class);
+        List<ShaftDTO> shaftDTOList = new ArrayList<>();
+
+        when(shaftRepository.findByHouseDTOId(4L)).thenReturn(shaftDTOList);
+        when(houseConverter.fromDTO(houseDTO, shaftDTOList)).thenReturn(house);
+
+        houseService1.getHouseById(4L);
+        verify(houseConverter.fromDTO(houseDTO, shaftDTOList));
+    }
+
 }

@@ -36,6 +36,5 @@ Feature: move cabin
     Then commands should have be invoked for shaft 0 in house 1: MoveCabinCommand, StopEngineCommand, OpenDoorCommand, CloseDoorCommand for floors 8, 9
     And command should have be invoked for shaft 0 in house 1: VisitFloorCommand for floor 5, 6, 7, 8, 9
     And shaft 0 in house 1 has cabin position 9
-    And commands should have be invoked for shaft 1 in house 0: MoveCabinCommand, StopEngineCommand, OpenDoorCommand, CloseDoorCommand for floor 5
-    And command should have be invoked for shaft 1 in house 0: VisitFloorCommand for floor 5
+    And commands should have be invoked for shaft 1 in house 0: VisitFloorCommand, MoveCabinCommand, StopEngineCommand, OpenDoorCommand, CloseDoorCommand for floor 5
     And shaft 1 in house 0 has cabin position 5

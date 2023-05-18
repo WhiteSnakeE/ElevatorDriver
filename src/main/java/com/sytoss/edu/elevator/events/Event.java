@@ -8,9 +8,7 @@ public abstract class Event {
 
     private final Shaft shaft;
 
-
     public Event(Shaft shaft) {
         this.shaft = shaft;
-
     }
 }

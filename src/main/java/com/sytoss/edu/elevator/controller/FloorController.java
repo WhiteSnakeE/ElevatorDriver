@@ -1,6 +1,7 @@
 package com.sytoss.edu.elevator.controller;
 
 import com.sytoss.edu.elevator.services.FloorService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class FloorController {
             value = {@ApiResponse(responseCode = "200", description = "Success|OK"), @ApiResponse(responseCode = "400",
                     description = "Bad request")})
     @PostMapping("/house/{houseNumber}/floorButton/{floorNumber}/up")
+    @Operation
     public void goUpCabinRequest(
             @PathVariable(value = "houseNumber") int houseNumber,
             @PathVariable(value = "floorNumber") int floorNumber) {

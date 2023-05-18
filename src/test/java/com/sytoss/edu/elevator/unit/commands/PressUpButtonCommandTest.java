@@ -30,16 +30,14 @@ public class PressUpButtonCommandTest {
         House house = mock(House.class);
         HashMap<String, Object> params = new HashMap<>();
 
-        params.put("numberFloor", 5);
+        params.put(CommandManager.FLOOR_NUMBER_PARAM, 5);
         params.put(CommandManager.HOUSE_PARAM, house);
-        params.put("Direction", Direction.UPWARDS);
+        params.put(CommandManager.DIRECTION_PARAM, Direction.UPWARDS);
 
         when(commandManager.getCommand(Command.FIND_NEAREST_CABIN_COMMAND)).thenReturn(mock(FindNearestCabinCommand.class));
         when(house.getElevatorDriver()).thenReturn(elevatorDriver);
 
         pressUpButtonCommand.execute(params);
-        HashMap<String, Object> findNearestCabinParams = new HashMap<>();
-        findNearestCabinParams.put(CommandManager.HOUSE_PARAM, house);
 
         verify(elevatorDriver).addNewSequenceToOrder(5, Direction.UPWARDS);
         verify(commandManager.getCommand(Command.FIND_NEAREST_CABIN_COMMAND)).execute(params);
