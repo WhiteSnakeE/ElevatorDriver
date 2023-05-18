@@ -31,10 +31,6 @@ public class ShaftService {
         shaftRepository.updateCabinPositionById(shaftId, cabinPosition);
     }
 
-    public ShaftDTO getById(Long id) {
-        return shaftRepository.getShaftDTOById(id);
-    }
-
     public SequenceOfStops getSequenceOfStopsByShaftId(Long id) {
         ShaftDTO shaftDTO = shaftRepository.getShaftDTOById(id);
         return JsonUtil.stringJSONToSequenceOfStops(shaftDTO.getSequenceOfStops());
