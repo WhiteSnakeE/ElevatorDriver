@@ -55,7 +55,7 @@ public class ShaftServiceTest {
         when(shaftRepository.getShaftDTOById(1L)).thenReturn(shaftDTO);
         when(shaftDTO.getSequenceOfStops()).thenReturn(JsonUtil.sequenceToStringInJSON(sequenceOfStops));
 
-        SequenceOfStops sequence = shaftService.getSequenceOfStopsByShaftId(1L);
+        shaftService.getSequenceOfStopsByShaftId(1L);
 
         verify(shaftRepository).getShaftDTOById(1L);
     }

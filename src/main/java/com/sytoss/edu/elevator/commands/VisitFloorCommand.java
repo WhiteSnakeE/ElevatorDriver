@@ -26,7 +26,7 @@ public class VisitFloorCommand implements Command {
     @Override
     public void execute(HashMap<String, Object> params) {
         Shaft shaft = (Shaft) params.get(SHAFT_PARAM);
-        shaft.setSequenceOfStops(shaftService.getSequenceOfStopsByShaftId(shaft.getId()));
+        //shaft.setSequenceOfStops(shaftService.getSequenceOfStopsByShaftId(shaft.getId()));
         House house = houseService.getHouseByShaftId(shaft.getId());
         Floor floor = house.nextFloor(shaft.getCabinPosition());
         log.info("Shaft with id [{}] is on floor: [{}]", shaft.getId(), floor.getFloorNumber());

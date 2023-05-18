@@ -1,6 +1,5 @@
 package com.sytoss.edu.elevator.bom.house.floors;
 
-import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.buttons.FloorWithUpButton;
 import com.sytoss.edu.elevator.bom.house.buttons.UpFloorButton;
 import lombok.extern.slf4j.Slf4j;

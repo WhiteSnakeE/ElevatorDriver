@@ -57,4 +57,15 @@ public class FloorServiceTest {
         floorService.goUpCabinRequest(1, 2);
         verify(middleFloor).pressUpButton();
     }
+
+    @Test
+    public void goUpCabinRequestWongFloorNumberTest() {
+        int id = 2;
+        House house = mock(House.class);
+        when(houseService.getHouseById(id)).thenReturn(house);
+        when(houseService.getHouseDTO(id)).thenReturn(houseDTO);
+        when(house.getElevatorDriver()).thenReturn(elevatorDriver);
+        floorService.goUpCabinRequest(id, 24);
+        verify(houseService).getHouseById(id);
+    }
 }

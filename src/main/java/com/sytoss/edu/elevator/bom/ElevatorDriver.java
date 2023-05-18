@@ -25,9 +25,9 @@ import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 @RequiredArgsConstructor
 public class ElevatorDriver extends Entity implements ShaftListener {
 
-    private List<SequenceOfStops> orderSequenceOfStops = new ArrayList<>();
-
     private final CommandManager commandManager;
+
+    private List<SequenceOfStops> orderSequenceOfStops = new ArrayList<>();
 
     public void addNewSequenceToOrder(int floorNumber, Direction direction) {
         SequenceOfStops sequenceOfStops = new SequenceOfStops();

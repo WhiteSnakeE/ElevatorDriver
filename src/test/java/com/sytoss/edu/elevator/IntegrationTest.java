@@ -91,13 +91,13 @@ public class IntegrationTest extends AbstractControllerTest {
     @Autowired
     private HouseService houseService;
 
-    public List<ShaftDTO> getSortedShaftsByHouseId(Integer houseIndex) {
+    protected List<ShaftDTO> getSortedShaftsByHouseId(Integer houseIndex) {
         List<ShaftDTO> shaftDTOList = getShaftRepository().findByHouseDTOId(getHouseId(houseIndex));
         shaftDTOList.sort(Comparator.comparingLong(ShaftDTO::getId));
         return shaftDTOList;
     }
 
-    public void await(int num) {
+    protected void await(int num) {
         int time = num * OPEN_DOOR_TIME_SLEEP + CLOSE_DOOR_TIME_SLEEP + VISIT_FLOOR_TIME_SLEEP + MOVE_CABIN_TIME_SLEEP + 20 * num;
         try {
             Thread.sleep(time);
@@ -106,17 +106,17 @@ public class IntegrationTest extends AbstractControllerTest {
         }
     }
 
-    public List<ShaftDTO> getSortedShaftsByHouseIndex(Integer houseIndex) {
+    protected List<ShaftDTO> getSortedShaftsByHouseIndex(Integer houseIndex) {
         List<ShaftDTO> shaftDTOList = getShaftRepository().findByHouseDTOId(getHouseId(houseIndex));
         shaftDTOList.sort(Comparator.comparingLong(ShaftDTO::getId));
         return shaftDTOList;
     }
 
-    public Long getShaftId(int shaftIndex, int houseIndex){
+    protected Long getShaftId(int shaftIndex, int houseIndex){
         return TestContext.getInstance().getShaftIds().get(houseIndex).get(shaftIndex);
     }
 
-    public Long getHouseId(int houseIndex){
+    protected Long getHouseId(int houseIndex){
         return TestContext.getInstance().getHouseIds().get(houseIndex);
     }
 }

@@ -1,6 +1,7 @@
 package com.sytoss.edu.elevator.unit.commands;
 
 import com.sytoss.edu.elevator.bom.Cabin;
+import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.DoorState;
 import com.sytoss.edu.elevator.commands.CloseDoorCommand;
@@ -28,11 +29,13 @@ class CloseDoorCommandTest {
 
         when(shaft.getCabin()).thenReturn(cabin);
         when(cabin.getDoorState()).thenReturn(DoorState.CLOSED);
+        when(shaftService.getSequenceOfStopsByShaftId(shaft.getId())).thenReturn(mock(SequenceOfStops.class));
 
         closeDoorCommand.execute(params);
 
         verify(shaft).closeCabinDoor();
         verify(shaftService).updateDoorStateById(0L, DoorState.CLOSED);
         verify(shaftService).updateSequenceById(0L, null);
+        verify(shaftService).getSequenceOfStopsByShaftId(shaft.getId());
     }
 }

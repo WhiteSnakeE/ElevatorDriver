@@ -2,6 +2,7 @@ package com.sytoss.edu.elevator.controller;
 
 import com.sytoss.edu.elevator.params.HouseParams;
 import com.sytoss.edu.elevator.services.HouseService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class HouseController {
             value = {@ApiResponse(responseCode = "200", description = "Success|OK"), @ApiResponse(responseCode = "400",
                     description = "Bad request")})
     @PostMapping("/register")
+    @Operation
     public void saveRequest(
             @RequestBody HouseParams houseParams) {
         houseService.saveRequest(houseParams);

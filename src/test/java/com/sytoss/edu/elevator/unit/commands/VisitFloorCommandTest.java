@@ -34,11 +34,18 @@ public class VisitFloorCommandTest {
         when(shaft.getId()).thenReturn(2L);
         when(houseService.getHouseByShaftId(shaft.getId())).thenReturn(house);
         when(house.nextFloor(shaft.getCabinPosition())).thenReturn(floor);
+        when(houseService.getHouseById(house.getId())).thenReturn(house);
+        when(house.nextFloor(shaft.getCabinPosition())).thenReturn(floor);
         when(floor.getFloorNumber()).thenReturn(3);
 
         visitFloorCommand.execute(params);
 
         verify(shaftService).updateCabinPositionById(2L, floor.getFloorNumber());
         verify(shaft).setCabinPosition(floor.getFloorNumber());
+        verify(houseService).getHouseByShaftId(shaft.getId());
+        verify(house).nextFloor(shaft.getCabinPosition());
+
+
+
     }
 }

@@ -23,7 +23,13 @@ public class FloorService {
         House house = houseService.getHouseById(houseNumber);
         HouseDTO houseDTO = houseService.getHouseDTO(houseNumber);
         house.getElevatorDriver()
-                .setOrderSequenceOfStops(stringJsonToOrder(houseDTO.getOrderSequenceOfStops()));
+                .setOrderSequenceOfStops(setOrder(houseDTO));
+
+        if(floorNumber>house.getFloors().size()){
+            log.warn("Floor " + floorNumber + " doesn't exist in this house!");
+            return;
+        }
+
         Floor floor = house.getFloors().get(floorNumber - 1);
 
         if (floor instanceof FloorWithUpButton) {
@@ -31,7 +37,17 @@ public class FloorService {
         }
     }
 
-    private List<SequenceOfStops> stringJsonToOrder(String order){
+    private List<SequenceOfStops> stringJsonToOrder(String order) {
         return JsonUtil.stringJSONToOrderSequence(order);
+    }
+
+
+    private String getOrderFromHouseDTO(HouseDTO houseDTO){
+        return houseDTO.getOrderSequenceOfStops();
+    }
+
+    private List<SequenceOfStops> setOrder(HouseDTO houseDTO){
+        String order = getOrderFromHouseDTO(houseDTO);
+        return  stringJsonToOrder(order);
     }
 }

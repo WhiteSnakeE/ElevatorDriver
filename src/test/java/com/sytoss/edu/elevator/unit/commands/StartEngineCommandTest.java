@@ -5,6 +5,7 @@ import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.enums.EngineState;
+import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.commands.StartEngineCommand;
 import com.sytoss.edu.elevator.services.ShaftService;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ public class StartEngineCommandTest {
         shaft.setId(123L);
         Engine engine = mock(Engine.class);
         HashMap<String, Object> params = new HashMap<>();
-        params.put("Shaft", shaft);
+        params.put(CommandManager.SHAFT_PARAM, shaft);
 
         when(shaft.getEngine()).thenReturn(engine);
         when(engine.getEngineState()).thenReturn(EngineState.GOING_UP);
