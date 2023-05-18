@@ -1,6 +1,7 @@
 package com.sytoss.edu.elevator.unit.commands;
 
 import com.sytoss.edu.elevator.bom.Engine;
+import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.enums.EngineState;
@@ -25,10 +26,11 @@ public class StartEngineCommandTest {
         Engine engine = mock(Engine.class);
         HashMap<String, Object> params = new HashMap<>();
         params.put("Shaft", shaft);
-        params.put("Direction", Direction.UPWARDS);
 
         when(shaft.getEngine()).thenReturn(engine);
         when(engine.getEngineState()).thenReturn(EngineState.GOING_UP);
+        when(shaft.getSequenceOfStops()).thenReturn(mock(SequenceOfStops.class));
+        when(shaft.getSequenceOfStops().getDirection()).thenReturn(Direction.UPWARDS);
 
         startEngineCommand.execute(params);
         verify(engine).start(Direction.UPWARDS);

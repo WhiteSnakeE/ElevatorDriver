@@ -42,6 +42,6 @@ public class PressUpButtonCommandTest {
         findNearestCabinParams.put(CommandManager.HOUSE_PARAM, house);
 
         verify(elevatorDriver).addNewSequenceToOrder(5, Direction.UPWARDS);
-        verify(commandManager.getCommand(Command.FIND_NEAREST_CABIN_COMMAND)).execute(findNearestCabinParams);
+        verify(commandManager.getCommand(Command.FIND_NEAREST_CABIN_COMMAND)).execute(params);
     }
 }

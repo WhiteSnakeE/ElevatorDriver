@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 
+import static com.sytoss.edu.elevator.commands.CommandManager.*;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -21,15 +23,13 @@ public class PressUpButtonCommand implements Command {
     @Override
     public void execute(HashMap<String, Object> params) {
         log.info("Start PressUpButton.execute COMMAND with params: {}", params);
-        int numberFloor = (int) params.get(CommandManager.FLOOR_NUMBER_PARAM);
-        Direction direction = (Direction) params.get(CommandManager.DIRECTION_PARAM);
-        House house = (House) params.get(CommandManager.HOUSE_PARAM);
+        int numberFloor = (int) params.get(FLOOR_NUMBER_PARAM);
+        Direction direction = (Direction) params.get(DIRECTION_PARAM);
+        House house = (House) params.get(HOUSE_PARAM);
         house.getElevatorDriver().addNewSequenceToOrder(numberFloor, direction);
         houseService.updateOrderById(house.getId(), house.getElevatorDriver().getOrderSequenceOfStops());
-        HashMap<String, Object> newParams = new HashMap<>();
+        params.remove(FLOOR_NUMBER_PARAM);
 
-        newParams.put(CommandManager.HOUSE_PARAM, house);
-
-        commandManager.getCommand(Command.FIND_NEAREST_CABIN_COMMAND).execute(newParams);
+        commandManager.getCommand(Command.FIND_NEAREST_CABIN_COMMAND).execute(params);
     }
 }

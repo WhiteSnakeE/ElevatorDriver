@@ -50,21 +50,18 @@ public class FindNearestCabinCommand implements Command {
 
         if (nearestCabin.getSequenceOfStops().isFirst(nearestCabin.getCabinPosition())) {
             houseThreadPool.getFixedThreadPool().submit(() -> {
-                HashMap<String, Object> paramsActivateCommand = new HashMap<>();
-                paramsActivateCommand.put(CommandManager.SHAFT_PARAM, nearestCabin);
+                params.put(CommandManager.SHAFT_PARAM, nearestCabin);
                 log.info("[FindNearestCabin] start OpenDoorCommand for shaft with id {}", nearestCabin.getId());
-                commandManager.getCommand(OPEN_DOOR_COMMAND).execute(paramsActivateCommand);
+                commandManager.getCommand(OPEN_DOOR_COMMAND).execute(params);
                 log.info("[FindNearestCabin] finish OpenDoorCommand for shaft with id {}", nearestCabin.getId());
             });
             return;
         }
 
         houseThreadPool.getFixedThreadPool().submit(() -> {
+            params.put(CommandManager.SHAFT_PARAM, nearestCabin);
             log.info("startMoveCabin: start threads for shaft with id {}", nearestCabin.getId());
-            HashMap<String, Object> paramsActivateCommand = new HashMap<>();
-            paramsActivateCommand.put(CommandManager.SHAFT_PARAM, nearestCabin);
-            paramsActivateCommand.put(CommandManager.HOUSE_PARAM, house);
-            commandManager.getCommand(MOVE_CABIN_COMMAND).execute(paramsActivateCommand);
+            commandManager.getCommand(MOVE_CABIN_COMMAND).execute(params);
             log.info("startMoveCabin: finish threads for shaft with id {}", nearestCabin.getId());
         });
     }

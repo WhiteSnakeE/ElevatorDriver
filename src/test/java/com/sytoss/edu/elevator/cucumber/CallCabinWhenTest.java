@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import static com.sytoss.edu.elevator.commands.CommandManager.*;
+
 @Slf4j
 public class CallCabinWhenTest extends IntegrationTest {
 
@@ -50,14 +52,14 @@ public class CallCabinWhenTest extends IntegrationTest {
         List<ShaftDTO> shaftDTOList = getSortedShaftsByHouseIndex(0);
         Optional<HouseDTO> houseDTOOptional = getHouseRepository().findById(TestContext.getInstance().getHousesId().get(0));
         House house = getHouseConverter().fromDTO(houseDTOOptional.get(), shaftDTOList);
-        house.setElevatorDriver(new ElevatorDriver(getCommandManager()));
+        //house.setElevatorDriver(new ElevatorDriver(getCommandManager()));
         Shaft shaft = getShaftConverter().fromDTO(shaftDTOList.get(shaftIndex));
         shaft.addShaftListener(house.getElevatorDriver());
 
         HashMap<String, Object> paramsExec = new HashMap<>();
-        paramsExec.put("Shaft", shaft);
-
-        paramsExec.put("Floors", house.getFloors());
+        paramsExec.put(SHAFT_PARAM, shaft);
+        paramsExec.put(DIRECTION_PARAM, shaft.getSequenceOfStops().getDirection());
+        paramsExec.put(FLOORS_PARAM, house.getFloors());
         getCommandManager().getCommand(Command.MOVE_CABIN_COMMAND).execute(paramsExec);
 
         await(house.getShafts().get(shaftIndex).getSequenceOfStops().getStopFloors().get(house.getShafts().get(shaftIndex).getSequenceOfStops().getStopFloors().size() - 1));
