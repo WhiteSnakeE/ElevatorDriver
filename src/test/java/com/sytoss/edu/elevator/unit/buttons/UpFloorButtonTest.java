@@ -25,8 +25,8 @@ public class UpFloorButtonTest {
     @Test
     public void pressTest() {
         House house = mock(House.class);
-        UpFloorButton upFloorButton = new UpFloorButton(command);
-        upFloorButton.press(house, 5);
+        UpFloorButton upFloorButton = new UpFloorButton(command, house);
+        upFloorButton.press(5);
 
         HashMap<String, Object> params = new HashMap<>();
 

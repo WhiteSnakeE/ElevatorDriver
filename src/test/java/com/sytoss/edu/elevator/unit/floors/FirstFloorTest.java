@@ -15,9 +15,9 @@ public class FirstFloorTest {
     @Test
     public void pressUpButton() {
         House house = mock(House.class);
-        FirstFloor firstFloor = new FirstFloor(house, upFloorButton);
-        firstFloor.pressUpButton(house);
+        FirstFloor firstFloor = new FirstFloor(upFloorButton);
+        firstFloor.pressUpButton();
 
-        verify(upFloorButton).press(house, firstFloor.getFloorNumber());
+        verify(upFloorButton).press(firstFloor.getFloorNumber());
     }
 }

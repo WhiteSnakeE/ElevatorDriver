@@ -29,13 +29,11 @@ public class ElevatorDriver extends Entity implements ShaftListener {
 
     private final CommandManager commandManager;
 
-
     public void addNewSequenceToOrder(int floorNumber, Direction direction) {
         SequenceOfStops sequenceOfStops = new SequenceOfStops();
         sequenceOfStops.setDirection(direction);
         sequenceOfStops.setStopFloors(new ArrayList<>(List.of(floorNumber)));
         orderSequenceOfStops.add(sequenceOfStops);
-
     }
 
     public void removeSequenceFromOrder() {

@@ -25,12 +25,12 @@ public class HouseBuilder {
         for (int i = 0; i < shaftCount; i++) {
             result.getShafts().add(new Shaft());
         }
-        FirstFloor firstFloor = new FirstFloor(result, new UpFloorButton(commandManager.getCommand(Command.PRESS_UP_BUTTON)));
+        FirstFloor firstFloor = new FirstFloor(new UpFloorButton(commandManager.getCommand(Command.PRESS_UP_BUTTON), result));
 
         result.getFloors().add(firstFloor);
         for (int i = 1; i < floorCount; i++) {
             int floorNumber = i + 1;
-            result.getFloors().add(new MiddleFloor(floorNumber, result, new UpFloorButton(commandManager.getCommand(Command.PRESS_UP_BUTTON))));
+            result.getFloors().add(new MiddleFloor(floorNumber, new UpFloorButton(commandManager.getCommand(Command.PRESS_UP_BUTTON), result)));
         }
         return result;
     }

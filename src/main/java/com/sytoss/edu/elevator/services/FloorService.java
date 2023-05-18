@@ -24,7 +24,7 @@ public class FloorService {
         Floor floor = house.getFloors().get(floorNumber - 1);
 
         if (floor instanceof FloorWithUpButton) {
-            ((FloorWithUpButton) floor).pressUpButton(house);
+            ((FloorWithUpButton) floor).pressUpButton();
         }
     }
 }

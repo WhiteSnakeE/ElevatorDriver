@@ -61,12 +61,11 @@ public class CallCabinThenTest extends IntegrationTest {
         }
     }
 
-    @Then("commands should have be invoked for shaft {int} in house {int}: {stringList} for floor/floors {intList}")
+    @Then("command/commands should have be invoked for shaft {int} in house {int}: {stringList} for floor/floors {intList}")
     public void commandsShouldHaveBeInvokedForShaftInHouseMoveCabinCommandVisitFloorCommandStopCabinCommandOpenDoorCommandCloseDoorCommandForFloor(int shaftIndex, int houseIndex, List<String> commands, List<Integer> floors) {
         for (String command : commands) {
             Mockito.verify(getCommandManager().getCommand(command), times(floors.size())).execute(argThat((arg) -> {
                 Shaft shaft = (Shaft) (arg.get(SHAFT_PARAM));
-                log.info(shaft.getId().toString());
                 return shaft.getId().equals(getShaftId(shaftIndex, houseIndex));
             }));
         }

@@ -4,5 +4,5 @@ import com.sytoss.edu.elevator.bom.house.House;
 
 public interface FloorWithUpButton {
 
-    void pressUpButton(House house);
+    void pressUpButton();
 }

@@ -37,7 +37,7 @@ public class FloorServiceTest {
         when(house.getFloors()).thenReturn(List.of(firstFloor));
         when(houseDTO.getOrderSequenceOfStops()).thenReturn("");
         floorService.goUpCabinRequest(1, 1);
-        verify(firstFloor).pressUpButton(house);
+        verify(firstFloor).pressUpButton();
     }
 
     @Test
@@ -55,6 +55,6 @@ public class FloorServiceTest {
         when(house.getElevatorDriver()).thenReturn(elevatorDriver);
         when(house.getFloors()).thenReturn(list);
         floorService.goUpCabinRequest(1, 2);
-        verify(middleFloor).pressUpButton(house);
+        verify(middleFloor).pressUpButton();
     }
 }

@@ -8,12 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UpFloorButton extends FloorButton {
 
-    public UpFloorButton(Command command) {
-        super(command);
+    public UpFloorButton(Command command, House house) {
+        super(command, house);
     }
 
-    public void press(House house, int floorNumber) {
+    public void press(int floorNumber) {
         log.info("UpFloorButton: press floorNumber {} ", floorNumber);
-        super.press(house, floorNumber, Direction.UPWARDS);
+        super.press(floorNumber, Direction.UPWARDS);
     }
 }
