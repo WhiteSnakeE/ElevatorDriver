@@ -21,9 +21,7 @@ public class PressUpButtonCommandTest {
 
     private final CommandManager commandManager = mock(CommandManager.class);
 
-    private final HouseService houseService = mock(HouseService.class);
-
-    private final PressUpButtonCommand pressUpButtonCommand = new PressUpButtonCommand(commandManager, houseService);
+    private final PressUpButtonCommand pressUpButtonCommand = new PressUpButtonCommand(commandManager);
 
     @Test
     public void executeTest() {

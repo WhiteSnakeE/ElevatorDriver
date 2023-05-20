@@ -44,8 +44,5 @@ public class VisitFloorCommandTest {
         verify(shaft).setCabinPosition(floor.getFloorNumber());
         verify(houseService).getHouseByShaftId(shaft.getId());
         verify(house).nextFloor(shaft.getCabinPosition());
-
-
-
     }
 }

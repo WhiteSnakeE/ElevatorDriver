@@ -66,7 +66,7 @@ public class HouseService {
         List<ShaftDTO> shaftDTOList = shaftRepository.findByHouseDTOId(houseDTO.getId());
         House house = houseConverter.fromDTO(houseDTO, shaftDTOList);
         house.setElevatorDriver(new ElevatorDriver(commandManager));
-        setListeners(house);
+        house.getShafts().forEach(shaft -> shaft.addShaftListener(house.getElevatorDriver()));
         return house;
     }
 
@@ -79,12 +79,6 @@ public class HouseService {
     @Transactional
     public HouseDTO getHouseDTO(long houseId) {
         return houseRepository.getReferenceById(houseId);
-    }
-
-    private void setListeners(House house) {
-        for (Shaft shaft : house.getShafts()) {
-            shaft.addShaftListener(house.getElevatorDriver());
-        }
     }
 
     public void updateOrderById(Long houseId, List<SequenceOfStops> order) {
