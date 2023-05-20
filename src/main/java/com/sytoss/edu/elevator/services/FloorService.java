@@ -20,11 +20,6 @@ public class FloorService {
         HouseDTO houseDTO = houseService.getHouseDTO(houseNumber);
         house.getElevatorDriver().setOrderSequenceOfStops(houseDTO.getOrderSequenceOfStops());
 
-        if (floorNumber > house.getFloors().size()) {
-            log.warn("Floor " + floorNumber + " doesn't exist in this house!");
-            return;
-        }
-
         Floor floor = house.getFloors().get(floorNumber - 1);
 
         if (floor instanceof FloorWithUpButton) {
