@@ -5,7 +5,8 @@ import com.sytoss.edu.elevator.bom.enums.DoorState;
 import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.events.CabinPositionChangedEvent;
 import com.sytoss.edu.elevator.events.DoorStateChangedEvent;
-import com.sytoss.edu.elevator.services.ShaftListener;
+import com.sytoss.edu.elevator.listeners.CabinListener;
+import com.sytoss.edu.elevator.listeners.ShaftListener;
 import com.sytoss.edu.elevator.utils.JsonUtil;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 @Setter
 @Slf4j
 @RequiredArgsConstructor
-public class ElevatorDriver extends Entity implements ShaftListener {
+public class ElevatorDriver extends Entity implements ShaftListener, CabinListener {
 
     private final CommandManager commandManager;
 

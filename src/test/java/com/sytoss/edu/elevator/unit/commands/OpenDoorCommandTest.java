@@ -16,7 +16,7 @@ public class OpenDoorCommandTest {
 
     private final ShaftService shaftService = mock(ShaftService.class);
 
-    private final OpenDoorCommand openDoorCommand = new OpenDoorCommand(shaftService);
+    private final OpenDoorCommand openDoorCommand = new OpenDoorCommand();
 
     @Test
     public void executeTest() {

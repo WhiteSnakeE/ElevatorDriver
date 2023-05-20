@@ -12,7 +12,10 @@ import com.sytoss.edu.elevator.dto.ShaftDTO;
 import com.sytoss.edu.elevator.params.HouseParams;
 import com.sytoss.edu.elevator.repositories.HouseRepository;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
+import com.sytoss.edu.elevator.services.CabinService;
+import com.sytoss.edu.elevator.services.EngineService;
 import com.sytoss.edu.elevator.services.HouseService;
+import com.sytoss.edu.elevator.services.ShaftService;
 import com.sytoss.edu.elevator.utils.JsonUtil;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +38,13 @@ public class HouseServiceTest {
 
     private final ShaftConverter shaftConverter = mock(ShaftConverter.class);
 
-    private final HouseService houseService = new HouseService(houseRepository, shaftRepository, houseBuilder, houseConverter, shaftConverter, commandManager);
+    private final ShaftService shaftService = mock(ShaftService.class);
+
+    private final EngineService engineService = mock(EngineService.class);
+
+    private final CabinService cabinService = mock(CabinService.class);
+
+    private final HouseService houseService = new HouseService(houseRepository, shaftRepository, houseBuilder, houseConverter, shaftConverter, commandManager, shaftService, engineService, cabinService);
 
     @Test
     public void saveRequestTest() {

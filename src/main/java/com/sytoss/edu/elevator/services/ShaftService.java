@@ -4,16 +4,22 @@ import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.enums.DoorState;
 import com.sytoss.edu.elevator.bom.enums.EngineState;
 import com.sytoss.edu.elevator.dto.ShaftDTO;
+import com.sytoss.edu.elevator.events.CabinPositionChangedEvent;
+import com.sytoss.edu.elevator.events.SequenceOfStopsChangedEvent;
+import com.sytoss.edu.elevator.listeners.SequenceOfStopsListener;
+import com.sytoss.edu.elevator.listeners.ShaftListener;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import com.sytoss.edu.elevator.utils.JsonUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class ShaftService {
+@Slf4j
+public class ShaftService implements ShaftListener, SequenceOfStopsListener {
 
     private final ShaftRepository shaftRepository;
 
@@ -36,5 +42,17 @@ public class ShaftService {
     public SequenceOfStops getSequenceOfStopsByShaftId(Long id) {
         ShaftDTO shaftDTO = shaftRepository.getShaftDTOById(id);
         return JsonUtil.stringJSONToSequenceOfStops(shaftDTO.getSequenceOfStops());
+    }
+
+    @Override
+    public void handleCabinPositionChanged(CabinPositionChangedEvent event) {
+        shaftRepository.updateCabinPositionById(event.getShaft().getId(), event.getShaft().getCabinPosition());
+        log.info("CabinPosition was updated to [{}] in Shaft with id [{}]", event.getShaft().getCabinPosition(), event.getShaft().getId());
+    }
+
+    @Override
+    public void handleSequenceOfStopsChanged(SequenceOfStopsChangedEvent event) {
+        shaftRepository.updateSequenceById(event.getShaft().getId(), JsonUtil.sequenceToStringInJSON(event.getShaft().getSequenceOfStops()));
+        log.info("SequenceOfStops was updated in Shaft with id [{}] in DB", event.getShaft().getId());
     }
 }

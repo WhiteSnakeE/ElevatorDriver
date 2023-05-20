@@ -18,7 +18,7 @@ public class StartEngineCommandTest {
 
     private final ShaftService shaftService = mock(ShaftService.class);
 
-    private final StartEngineCommand startEngineCommand = new StartEngineCommand(shaftService);
+    private final StartEngineCommand startEngineCommand = new StartEngineCommand();
 
     @Test
     public void executeTest() {

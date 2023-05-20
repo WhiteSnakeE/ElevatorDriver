@@ -21,7 +21,7 @@ public class VisitFloorCommandTest {
 
     private final HouseService houseService = mock(HouseService.class);
 
-    private final VisitFloorCommand visitFloorCommand = new VisitFloorCommand(shaftService, houseService);
+    private final VisitFloorCommand visitFloorCommand = new VisitFloorCommand(houseService);
 
     @Test
     public void executeTest() {

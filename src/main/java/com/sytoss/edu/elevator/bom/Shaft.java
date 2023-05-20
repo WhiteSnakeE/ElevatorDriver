@@ -3,7 +3,10 @@ package com.sytoss.edu.elevator.bom;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.events.CabinPositionChangedEvent;
 import com.sytoss.edu.elevator.events.DoorStateChangedEvent;
-import com.sytoss.edu.elevator.services.ShaftListener;
+import com.sytoss.edu.elevator.events.EngineStateChangedEvent;
+import com.sytoss.edu.elevator.events.SequenceOfStopsChangedEvent;
+import com.sytoss.edu.elevator.listeners.SequenceOfStopsListener;
+import com.sytoss.edu.elevator.listeners.ShaftListener;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +29,8 @@ public class Shaft extends Entity {
     private Cabin cabin;
 
     private List<ShaftListener> shaftListeners = new ArrayList<>();
+
+    private List<SequenceOfStopsListener> sequenceOfStopsListeners = new ArrayList<>();
 
     public Shaft() {
         cabin = new Cabin();
@@ -53,10 +58,12 @@ public class Shaft extends Entity {
             elevatorDriver.removeSequenceFromOrder();
         }
         log.info("Shaft with id {} and sequence of stops of found cabin: {}", getId(), sequenceOfStops.getStopFloors());
+        fireSequenceOfStops();
     }
 
     public void clearSequence() {
         this.sequenceOfStops = null;
+        fireSequenceOfStops();
     }
 
     public boolean isSameDirection(Direction direction, Integer currentPosition) {
@@ -69,6 +76,14 @@ public class Shaft extends Entity {
 
     public boolean removeShaftListener(ShaftListener shaftListener) {
         return shaftListeners.remove(shaftListener);
+    }
+
+    public void addSequenceOfStopsListener(SequenceOfStopsListener sequenceOfStopsListener) {
+        sequenceOfStopsListeners.add(sequenceOfStopsListener);
+    }
+
+    public boolean removeSequenceOfStopsListener(SequenceOfStopsListener sequenceOfStopsListener) {
+        return sequenceOfStopsListeners.remove(sequenceOfStopsListener);
     }
 
     public void setCabinPosition(int currentFloor) {
@@ -86,13 +101,33 @@ public class Shaft extends Entity {
         fireDoorState();
     }
 
+    public void startEngine(Direction direction) {
+        engine.start(direction);
+        fireEngineState();
+    }
+
+    public void stopEngine() {
+        engine.stop();
+        fireEngineState();
+    }
+
     private void fireDoorState() {
         DoorStateChangedEvent event = new DoorStateChangedEvent(this);
-        shaftListeners.forEach(shaftListener -> shaftListener.handleDoorStateChanged(event));
+        cabin.getCabinListeners().forEach(cabinListener -> cabinListener.handleDoorStateChanged(event));
     }
 
     private void fireCabinPosition() {
         CabinPositionChangedEvent event = new CabinPositionChangedEvent(this);
         shaftListeners.forEach(shaftListener -> shaftListener.handleCabinPositionChanged(event));
+    }
+
+    private void fireEngineState() {
+        EngineStateChangedEvent event = new EngineStateChangedEvent(this);
+        engine.getEngineListeners().forEach(engineListener -> engineListener.handleEngineStateChanged(event));
+    }
+
+    private void fireSequenceOfStops() {
+        SequenceOfStopsChangedEvent event = new SequenceOfStopsChangedEvent(this);
+        sequenceOfStopsListeners.forEach(sequenceOfStopsListener -> sequenceOfStopsListener.handleSequenceOfStopsChanged(event));
     }
 }

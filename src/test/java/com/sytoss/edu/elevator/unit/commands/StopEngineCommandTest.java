@@ -15,7 +15,7 @@ public class StopEngineCommandTest {
 
     private final ShaftService shaftService = mock(ShaftService.class);
 
-    private final StopEngineCommand stopEngineCommand = new StopEngineCommand(shaftService);
+    private final StopEngineCommand stopEngineCommand = new StopEngineCommand();
 
     @Test
     public void executeTest() {

@@ -68,7 +68,6 @@ public class FindNearestCabinCommand implements Command {
 
     private void updateSequences(House house, Shaft nearestCabin) {
         nearestCabin.updateSequence(house.getElevatorDriver());
-        shaftService.updateSequenceById(nearestCabin.getId(), nearestCabin.getSequenceOfStops());
         houseService.updateOrderById(house.getId(), house.getElevatorDriver().getOrderSequenceOfStops());
     }
 }
