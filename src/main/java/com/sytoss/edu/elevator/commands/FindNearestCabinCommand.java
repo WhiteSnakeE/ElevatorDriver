@@ -41,7 +41,6 @@ public class FindNearestCabinCommand implements Command {
 
         updateSequences(house, nearestCabin);
 
-
         if (nearestCabin.getCabinPosition() > nearestCabin.getSequenceOfStops().getStopFloors().get(0)) {
             log.info("There is must be moving down");
             nearestCabin.clearSequence();
