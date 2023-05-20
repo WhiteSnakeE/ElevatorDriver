@@ -22,7 +22,7 @@ public class HouseController {
             value = {@ApiResponse(responseCode = "200", description = "Success|OK"), @ApiResponse(responseCode = "400",
                     description = "Bad request")})
     @PostMapping("/register")
-    @Operation
+    @Operation(description = "House registration in DataBase")
     public void saveRequest(
             @RequestBody HouseParams houseParams) {
         houseService.saveRequest(houseParams);

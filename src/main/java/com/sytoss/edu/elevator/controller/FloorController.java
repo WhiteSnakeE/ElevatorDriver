@@ -21,7 +21,7 @@ public class FloorController {
             value = {@ApiResponse(responseCode = "200", description = "Success|OK"), @ApiResponse(responseCode = "400",
                     description = "Bad request")})
     @PostMapping("/house/{houseNumber}/floorButton/{floorNumber}/up")
-    @Operation
+    @Operation(description = "Call cabin to floor with UP direction")
     public void goUpCabinRequest(
             @PathVariable(value = "houseNumber") int houseNumber,
             @PathVariable(value = "floorNumber") int floorNumber) {
