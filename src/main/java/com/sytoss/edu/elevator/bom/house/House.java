@@ -63,9 +63,3 @@ public class House extends Entity {
         return shafts.stream().filter(shaft -> shaft.isSameDirection(currentDirection, orderSequenceOfStops.get(0).getStopFloors().get(0))).toList();
     }
 }
-
-
-
-
-
-
