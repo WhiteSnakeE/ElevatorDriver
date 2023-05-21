@@ -66,7 +66,7 @@ public class CallCabinWhenTest extends IntegrationTest {
 
     @When("passenger in house {int} presses UpFloorButton on floor {int}")
     public void passengerInHousePressesUpFloorButtonOnFloor(int houseIndex, int floorNumber) {
-        String url = "/api/house/" + getHouseId(0) + "/floorButton/" + floorNumber + "/up";
+        String url = "/api/house/" + getHouseId(houseIndex) + "/floorButton/" + floorNumber + "/up";
         ResponseEntity<String> response = doPost(url, null, String.class);
         TestContext.getInstance().setResponse(response);
         await(floorNumber);
