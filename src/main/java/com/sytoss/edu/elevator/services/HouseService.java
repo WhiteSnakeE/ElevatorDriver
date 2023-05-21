@@ -38,7 +38,6 @@ public class HouseService {
 
     private final CommandManager commandManager;
 
-
     private House changeHouseConfiguration(int shaftsCount, int floorsCount) {
         House house = houseBuilder.build(shaftsCount, floorsCount);
         for (Shaft shaft : house.getShafts()) {

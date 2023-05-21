@@ -21,7 +21,6 @@ public class UpFloorButtonTest {
     @Mock
     private Command command;
 
-
     @Test
     public void pressTest() {
         House house = mock(House.class);
