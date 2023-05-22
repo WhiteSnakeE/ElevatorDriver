@@ -4,7 +4,6 @@ import com.sytoss.edu.elevator.bom.Cabin;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.DoorState;
 import com.sytoss.edu.elevator.commands.OpenDoorCommand;
-import com.sytoss.edu.elevator.services.ShaftService;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -13,8 +12,6 @@ import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
 import static org.mockito.Mockito.*;
 
 public class OpenDoorCommandTest {
-
-    private final ShaftService shaftService = mock(ShaftService.class);
 
     private final OpenDoorCommand openDoorCommand = new OpenDoorCommand();
 
@@ -32,6 +29,5 @@ public class OpenDoorCommandTest {
         openDoorCommand.execute(params);
 
         verify(shaft).openCabinDoor();
-        verify(shaftService).updateDoorStateById(0L, DoorState.OPENED);
     }
 }

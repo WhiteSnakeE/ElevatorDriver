@@ -29,13 +29,13 @@ class CloseDoorCommandTest {
 
         when(shaft.getCabin()).thenReturn(cabin);
         when(cabin.getDoorState()).thenReturn(DoorState.CLOSED);
+        when(shaft.getId()).thenReturn(1L);
         when(shaftService.getSequenceOfStopsByShaftId(shaft.getId())).thenReturn(mock(SequenceOfStops.class));
 
         closeDoorCommand.execute(params);
 
         verify(shaft).closeCabinDoor();
-        verify(shaftService).updateDoorStateById(0L, DoorState.CLOSED);
-        verify(shaftService).updateSequenceById(0L, null);
-        verify(shaftService).getSequenceOfStopsByShaftId(shaft.getId());
+        verify(shaft).setSequenceOfStops(shaftService.getSequenceOfStopsByShaftId(1L));
+        verify(shaftService, times(2)).getSequenceOfStopsByShaftId(shaft.getId());
     }
 }

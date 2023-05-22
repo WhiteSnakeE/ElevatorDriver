@@ -53,7 +53,7 @@ public class CallCabinWhenTest extends IntegrationTest {
         Optional<HouseDTO> houseDTOOptional = getHouseRepository().findById(getHouseId(0));
         House house = getHouseConverter().fromDTO(houseDTOOptional.get(), shaftDTOList);
         Shaft shaft = getShaftConverter().fromDTO(shaftDTOList.get(shaftIndex));
-        shaft.addShaftListener(house.getElevatorDriver());
+        addListenersToShaft(shaft, house.getElevatorDriver());
 
         HashMap<String, Object> paramsExec = new HashMap<>();
         paramsExec.put(SHAFT_PARAM, shaft);
@@ -70,5 +70,14 @@ public class CallCabinWhenTest extends IntegrationTest {
         ResponseEntity<String> response = doPost(url, null, String.class);
         TestContext.getInstance().setResponse(response);
         await(floorNumber);
+    }
+
+    private void addListenersToShaft(Shaft shaft, ElevatorDriver elevatorDriver) {
+        shaft.addShaftListener(getShaftService());
+        shaft.addShaftListener(elevatorDriver);
+        shaft.addSequenceOfStopsListener(getShaftService());
+        shaft.getEngine().addEngineListener(getEngineService());
+        shaft.getCabin().addCabinListener(getCabinService());
+        shaft.getCabin().addCabinListener(elevatorDriver);
     }
 }

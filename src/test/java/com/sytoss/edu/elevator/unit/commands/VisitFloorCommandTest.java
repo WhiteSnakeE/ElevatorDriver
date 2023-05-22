@@ -5,7 +5,6 @@ import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.floors.Floor;
 import com.sytoss.edu.elevator.commands.VisitFloorCommand;
 import com.sytoss.edu.elevator.services.HouseService;
-import com.sytoss.edu.elevator.services.ShaftService;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -16,8 +15,6 @@ import static org.mockito.Mockito.*;
 public class VisitFloorCommandTest {
 
     private final House house = mock(House.class);
-
-    private final ShaftService shaftService = mock(ShaftService.class);
 
     private final HouseService houseService = mock(HouseService.class);
 
@@ -40,7 +37,6 @@ public class VisitFloorCommandTest {
 
         visitFloorCommand.execute(params);
 
-        verify(shaftService).updateCabinPositionById(2L, floor.getFloorNumber());
         verify(shaft).setCabinPosition(floor.getFloorNumber());
         verify(houseService).getHouseByShaftId(shaft.getId());
         verify(house).nextFloor(shaft.getCabinPosition());

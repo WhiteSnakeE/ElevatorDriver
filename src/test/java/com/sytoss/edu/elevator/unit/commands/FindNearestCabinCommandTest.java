@@ -84,11 +84,10 @@ public class FindNearestCabinCommandTest {
 
         await();
 
-        verify(houseService, times(2)).updateOrderById(house.getId(),house.getElevatorDriver().getOrderSequenceOfStops());
+        verify(houseService, times(2)).updateOrderById(house.getId(), house.getElevatorDriver().getOrderSequenceOfStops());
         verify(house).findNearestCabin();
         verify(shaft).isCabinMoving();
         verify(shaft).updateSequence(house.getElevatorDriver());
-        verify(shaftService).updateSequenceById(shaft.getId(), shaft.getSequenceOfStops());
         verify(commandManager.getCommand(OPEN_DOOR_COMMAND), times(0)).execute(any());
         verify(commandManager.getCommand(MOVE_CABIN_COMMAND), times(0)).execute(any());
     }
@@ -116,7 +115,6 @@ public class FindNearestCabinCommandTest {
         verify(shaft).isCabinMoving();
         verify(shaft).updateSequence(house.getElevatorDriver());
         verify(shaft).clearSequence();
-        verify(shaftService, times(2)).updateSequenceById(shaft.getId(), shaft.getSequenceOfStops());
         verify(commandManager.getCommand(OPEN_DOOR_COMMAND), times(0)).execute(any());
         verify(commandManager.getCommand(MOVE_CABIN_COMMAND), times(0)).execute(any());
     }
@@ -144,7 +142,6 @@ public class FindNearestCabinCommandTest {
         verify(house).findNearestCabin();
         verify(shaft).isCabinMoving();
         verify(shaft).updateSequence(house.getElevatorDriver());
-        verify(shaftService).updateSequenceById(shaft.getId(), shaft.getSequenceOfStops());
         verify(commandManager.getCommand(OPEN_DOOR_COMMAND)).execute(any());
     }
 

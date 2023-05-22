@@ -6,8 +6,7 @@ import com.sytoss.edu.elevator.converters.ShaftConverter;
 import com.sytoss.edu.elevator.dto.ShaftDTO;
 import com.sytoss.edu.elevator.repositories.HouseRepository;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
-import com.sytoss.edu.elevator.services.FloorService;
-import com.sytoss.edu.elevator.services.HouseService;
+import com.sytoss.edu.elevator.services.*;
 import io.cucumber.junit.CucumberOptions;
 import io.cucumber.spring.CucumberContextConfiguration;
 import lombok.Getter;
@@ -91,6 +90,15 @@ public class IntegrationTest extends AbstractControllerTest {
     @Autowired
     private HouseService houseService;
 
+    @Autowired
+    private ShaftService shaftService;
+
+    @Autowired
+    private EngineService engineService;
+
+    @Autowired
+    private CabinService cabinService;
+
     protected List<ShaftDTO> getSortedShaftsByHouseId(Integer houseIndex) {
         List<ShaftDTO> shaftDTOList = getShaftRepository().findByHouseDTOId(getHouseId(houseIndex));
         shaftDTOList.sort(Comparator.comparingLong(ShaftDTO::getId));
@@ -112,11 +120,11 @@ public class IntegrationTest extends AbstractControllerTest {
         return shaftDTOList;
     }
 
-    protected Long getShaftId(int shaftIndex, int houseIndex){
+    protected Long getShaftId(int shaftIndex, int houseIndex) {
         return TestContext.getInstance().getShaftIds().get(houseIndex).get(shaftIndex);
     }
 
-    protected Long getHouseId(int houseIndex){
+    protected Long getHouseId(int houseIndex) {
         return TestContext.getInstance().getHouseIds().get(houseIndex);
     }
 }
