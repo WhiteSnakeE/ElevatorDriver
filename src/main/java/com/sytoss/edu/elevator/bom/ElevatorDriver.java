@@ -6,6 +6,7 @@ import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.events.CabinPositionChangedEvent;
 import com.sytoss.edu.elevator.events.DoorStateChangedEvent;
 import com.sytoss.edu.elevator.listeners.CabinListener;
+import com.sytoss.edu.elevator.listeners.OrderSequenceOfStopsListener;
 import com.sytoss.edu.elevator.listeners.ShaftListener;
 import com.sytoss.edu.elevator.utils.JsonUtil;
 import lombok.Getter;
@@ -30,6 +31,8 @@ public class ElevatorDriver extends Entity implements ShaftListener, CabinListen
     private final CommandManager commandManager;
 
     private List<SequenceOfStops> orderSequenceOfStops = new ArrayList<>();
+
+    private List<OrderSequenceOfStopsListener> orderSequenceOfStopsListeners = new ArrayList<>();
 
     public void setOrderSequenceOfStops(List<SequenceOfStops> order) {
         this.orderSequenceOfStops = order;

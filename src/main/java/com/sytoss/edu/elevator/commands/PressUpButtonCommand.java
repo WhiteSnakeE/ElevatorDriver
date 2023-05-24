@@ -26,7 +26,7 @@ public class PressUpButtonCommand implements Command {
         int numberFloor = (int) params.get(FLOOR_NUMBER_PARAM);
         Direction direction = (Direction) params.get(DIRECTION_PARAM);
         House house = (House) params.get(HOUSE_PARAM);
-        house.getElevatorDriver().addNewSequenceToOrder(numberFloor, direction);
+        house.addNewSequenceToOrder(numberFloor, direction);
         house.getElevatorDriver().getOrderSequenceOfStops().get(house.getElevatorDriver().getOrderSequenceOfStops().size() - 1).addSequenceOfStopsListener(shaftService);
         params.remove(FLOOR_NUMBER_PARAM);
         commandManager.getCommand(Command.FIND_NEAREST_CABIN_COMMAND).execute(params);

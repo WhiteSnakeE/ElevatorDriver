@@ -6,6 +6,7 @@ import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.house.floors.Floor;
+import com.sytoss.edu.elevator.events.OrderSequenceOfStopsChangedEvent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,16 @@ public class House extends Entity {
 
     public House(ElevatorDriver elevatorDriver) {
         this.elevatorDriver = elevatorDriver;
+    }
+
+    public void addNewSequenceToOrder(int floorNumber, Direction direction) {
+        elevatorDriver.addNewSequenceToOrder(floorNumber, direction);
+        fireOrderSequenceOfStops();
+    }
+
+    public void removeSequenceFromOrder() {
+        elevatorDriver.removeSequenceFromOrder();
+        fireOrderSequenceOfStops();
     }
 
     public Shaft findNearestCabin() {
@@ -61,6 +72,11 @@ public class House extends Entity {
 
     private List<Shaft> shaftWithAppropriateDirection(Direction currentDirection, List<SequenceOfStops> orderSequenceOfStops) {
         return shafts.stream().filter(shaft -> shaft.isSameDirection(currentDirection, orderSequenceOfStops.get(0).getStopFloors().get(0))).toList();
+    }
+
+    private void fireOrderSequenceOfStops() {
+        OrderSequenceOfStopsChangedEvent event = new OrderSequenceOfStopsChangedEvent(null, this);
+        elevatorDriver.getOrderSequenceOfStopsListeners().forEach(orderSequenceOfStopsListener -> orderSequenceOfStopsListener.handleOrderSequenceOfStopsChanged(event));
     }
 }
 

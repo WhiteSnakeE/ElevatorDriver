@@ -10,6 +10,8 @@ import com.sytoss.edu.elevator.converters.HouseConverter;
 import com.sytoss.edu.elevator.converters.ShaftConverter;
 import com.sytoss.edu.elevator.dto.HouseDTO;
 import com.sytoss.edu.elevator.dto.ShaftDTO;
+import com.sytoss.edu.elevator.events.OrderSequenceOfStopsChangedEvent;
+import com.sytoss.edu.elevator.listeners.OrderSequenceOfStopsListener;
 import com.sytoss.edu.elevator.params.HouseParams;
 import com.sytoss.edu.elevator.repositories.HouseRepository;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
@@ -24,7 +26,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class HouseService {
+public class HouseService implements OrderSequenceOfStopsListener {
 
     private final HouseRepository houseRepository;
 
@@ -74,7 +76,6 @@ public class HouseService {
         house.setElevatorDriver(new ElevatorDriver(commandManager));
         house.getShafts().forEach(shaft -> shaft.addShaftListener(shaftService));
         house.getShafts().forEach(shaft -> shaft.addShaftListener(house.getElevatorDriver()));
-        //house.getShafts().forEach(shaft -> shaft.getSequenceOfStops().addSequenceOfStopsListener(shaftService));
         house.getShafts().forEach(shaft -> shaft.getEngine().addEngineListener(engineService));
         house.getShafts().forEach(shaft -> shaft.getCabin().addCabinListener(cabinService));
         house.getShafts().forEach(shaft -> shaft.getCabin().addCabinListener(house.getElevatorDriver()));
@@ -94,5 +95,11 @@ public class HouseService {
 
     public void updateOrderById(Long houseId, List<SequenceOfStops> order) {
         houseRepository.updateOrderById(houseId, JsonUtil.orderSequenceToStringInJSON(order));
+    }
+
+    @Override
+    public void handleOrderSequenceOfStopsChanged(OrderSequenceOfStopsChangedEvent event) {
+        House house = event.getHouse();
+        houseRepository.updateOrderById(house.getId(), JsonUtil.orderSequenceToStringInJSON(house.getElevatorDriver().getOrderSequenceOfStops()));
     }
 }
