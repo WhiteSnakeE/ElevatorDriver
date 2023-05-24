@@ -51,7 +51,7 @@ public class PressUpButtonCommandTest {
         when(elevatorDriver.getOrderSequenceOfStops()).thenReturn(order);
 
         pressUpButtonCommand.execute(params);
-        verify(elevatorDriver).addNewSequenceToOrder(5, Direction.UPWARDS);
+        verify(house).addNewSequenceToOrder(5, Direction.UPWARDS);
         verify(commandManager.getCommand(Command.FIND_NEAREST_CABIN_COMMAND)).execute(params);
     }
 }
