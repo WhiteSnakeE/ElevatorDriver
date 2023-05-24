@@ -65,7 +65,7 @@ public class FindNearestCabinCommandTest {
 
         verify(house).findNearestCabin();
         verify(commandManager.getCommand(MOVE_CABIN_COMMAND)).execute(any());
-        verify(shaft).updateSequence(elevatorDriver);
+        verify(shaft).updateSequence(elevatorDriver.getOrderSequenceOfStops());
         verify(shaft).isCabinMoving();
     }
 
@@ -87,7 +87,7 @@ public class FindNearestCabinCommandTest {
         verify(houseService, times(2)).updateOrderById(house.getId(), house.getElevatorDriver().getOrderSequenceOfStops());
         verify(house).findNearestCabin();
         verify(shaft).isCabinMoving();
-        verify(shaft).updateSequence(house.getElevatorDriver());
+        verify(shaft).updateSequence(house.getElevatorDriver().getOrderSequenceOfStops());
         verify(commandManager.getCommand(OPEN_DOOR_COMMAND), times(0)).execute(any());
         verify(commandManager.getCommand(MOVE_CABIN_COMMAND), times(0)).execute(any());
     }
@@ -113,7 +113,7 @@ public class FindNearestCabinCommandTest {
         verify(houseService, times(2)).updateOrderById(house.getId(), house.getElevatorDriver().getOrderSequenceOfStops());
         verify(house).findNearestCabin();
         verify(shaft).isCabinMoving();
-        verify(shaft).updateSequence(house.getElevatorDriver());
+        verify(shaft).updateSequence(house.getElevatorDriver().getOrderSequenceOfStops());
         verify(shaft).clearSequence();
         verify(commandManager.getCommand(OPEN_DOOR_COMMAND), times(0)).execute(any());
         verify(commandManager.getCommand(MOVE_CABIN_COMMAND), times(0)).execute(any());
@@ -141,7 +141,7 @@ public class FindNearestCabinCommandTest {
         verify(houseService, times(2)).updateOrderById(house.getId(), house.getElevatorDriver().getOrderSequenceOfStops());
         verify(house).findNearestCabin();
         verify(shaft).isCabinMoving();
-        verify(shaft).updateSequence(house.getElevatorDriver());
+        verify(shaft).updateSequence(house.getElevatorDriver().getOrderSequenceOfStops());
         verify(commandManager.getCommand(OPEN_DOOR_COMMAND)).execute(any());
     }
 

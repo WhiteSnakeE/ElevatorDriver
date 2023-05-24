@@ -41,7 +41,7 @@ public class CallCabinWhenTest extends IntegrationTest {
         Shaft shaft = house.findNearestCabin();
         if (shaft != null) {
             shaft.addShaftListener(house.getElevatorDriver());
-            shaft.updateSequence(house.getElevatorDriver());
+            shaft.updateSequence(house.getElevatorDriver().getOrderSequenceOfStops());
             getShaftRepository().updateSequenceById(shaft.getId(), JsonUtil.sequenceToStringInJSON(shaft.getSequenceOfStops()));
         }
         getHouseRepository().updateOrderById(house.getId(), JsonUtil.orderSequenceToStringInJSON(house.getElevatorDriver().getOrderSequenceOfStops()));
@@ -75,9 +75,10 @@ public class CallCabinWhenTest extends IntegrationTest {
     private void addListenersToShaft(Shaft shaft, ElevatorDriver elevatorDriver) {
         shaft.addShaftListener(getShaftService());
         shaft.addShaftListener(elevatorDriver);
-        shaft.addSequenceOfStopsListener(getShaftService());
+        shaft.getSequenceOfStops().addSequenceOfStopsListener(getShaftService());
         shaft.getEngine().addEngineListener(getEngineService());
         shaft.getCabin().addCabinListener(getCabinService());
         shaft.getCabin().addCabinListener(elevatorDriver);
+        elevatorDriver.addOrderSequenceOfStopsListeners(getHouseService());
     }
 }

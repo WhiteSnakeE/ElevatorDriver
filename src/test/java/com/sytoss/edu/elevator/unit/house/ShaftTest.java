@@ -14,10 +14,9 @@ import static org.mockito.Mockito.*;
 
 public class ShaftTest {
 
-    private final Shaft shaft = new Shaft();
-
     @Test
     public void isMovingTest() {
+        Shaft shaft = new Shaft();
         SequenceOfStops sequence = mock(SequenceOfStops.class);
 
         shaft.setSequenceOfStops(sequence);
@@ -27,24 +26,26 @@ public class ShaftTest {
 
     @Test
     public void isFreeTest() {
+        Shaft shaft = new Shaft();
         Assertions.assertTrue(shaft.isFree());
     }
 
     @Test
     public void updateSequenceAddTest() {
+        Shaft shaft = new Shaft();
         ElevatorDriver elevatorDriver = mock(ElevatorDriver.class);
         SequenceOfStops sequence = new SequenceOfStops();
         sequence.setStopFloors(List.of(5));
 
         when(elevatorDriver.getOrderSequenceOfStops()).thenReturn(List.of(sequence));
 
-        shaft.updateSequence(elevatorDriver);
+        shaft.updateSequence(elevatorDriver.getOrderSequenceOfStops());
         Assertions.assertEquals(5, shaft.getSequenceOfStops().getStopFloors().get(0));
     }
 
     @Test
     public void updateSequenceMergeTest() {
-        shaft.clearSequence();
+        Shaft shaft = new Shaft();
         ElevatorDriver elevatorDriver = mock(ElevatorDriver.class);
 
         SequenceOfStops sequenceOfStops1 = new SequenceOfStops();
@@ -56,12 +57,13 @@ public class ShaftTest {
 
         when(elevatorDriver.getOrderSequenceOfStops()).thenReturn(List.of(sequenceOfStops2));
 
-        shaft.updateSequence(elevatorDriver);
+        shaft.updateSequence(elevatorDriver.getOrderSequenceOfStops());
         Assertions.assertEquals(List.of(3, 5), shaft.getSequenceOfStops().getStopFloors());
     }
 
     @Test
     public void isSameDirectionTest() {
+        Shaft shaft = new Shaft();
         SequenceOfStops sequence = new SequenceOfStops();
         sequence.setDirection(Direction.UPWARDS);
 
@@ -76,6 +78,7 @@ public class ShaftTest {
 
     @Test
     public void openCabinDoorTest() {
+        Shaft shaft = new Shaft();
         Cabin cabin = mock(Cabin.class);
         shaft.setCabin(cabin);
 
@@ -86,6 +89,7 @@ public class ShaftTest {
 
     @Test
     public void closeCabinDoorTest() {
+        Shaft shaft = new Shaft();
         Cabin cabin = mock(Cabin.class);
         shaft.setCabin(cabin);
 

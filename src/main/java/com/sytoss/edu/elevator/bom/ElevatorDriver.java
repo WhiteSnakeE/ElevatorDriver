@@ -56,6 +56,10 @@ public class ElevatorDriver extends Entity implements ShaftListener, CabinListen
         orderSequenceOfStops.remove(0);
     }
 
+    public void addOrderSequenceOfStopsListeners(OrderSequenceOfStopsListener listener) {
+        orderSequenceOfStopsListeners.add(listener);
+    }
+
     @Override
     public void handleCabinPositionChanged(CabinPositionChangedEvent event) {
         Shaft shaft = event.getShaft();

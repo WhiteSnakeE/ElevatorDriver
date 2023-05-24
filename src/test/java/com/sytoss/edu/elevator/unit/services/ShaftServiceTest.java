@@ -80,7 +80,9 @@ public class ShaftServiceTest {
     public void handleSequenceOfStopsChangedTest() {
         SequenceOfStopsChangedEvent event = mock(SequenceOfStopsChangedEvent.class);
         Shaft shaft = mock(Shaft.class);
-        SequenceOfStops sequence = null;
+        SequenceOfStops sequence = new SequenceOfStops();
+        sequence.setStopFloors(List.of(1, 2, 3));
+        sequence.setDirection(Direction.UPWARDS);
 
         when(event.getShaft()).thenReturn(shaft);
         when(shaft.getId()).thenReturn(1L);

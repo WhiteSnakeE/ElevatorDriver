@@ -44,16 +44,14 @@ public class Shaft extends Entity {
         return sequenceOfStops == null;
     }
 
-    public synchronized void updateSequence(ElevatorDriver elevatorDriver) {
+    public synchronized void updateSequence(List<SequenceOfStops> order) {
         if (isFree()) {
-            this.sequenceOfStops = elevatorDriver.getOrderSequenceOfStops().get(0);
-            elevatorDriver.removeSequenceFromOrder();
+            this.sequenceOfStops = order.get(0);
         } else {
             ArrayList<Integer> stops = new ArrayList<>(this.sequenceOfStops.getStopFloors());
-            stops.addAll(elevatorDriver.getOrderSequenceOfStops().get(0).getStopFloors());
+            stops.addAll(order.get(0).getStopFloors());
             Collections.sort(stops);
             this.sequenceOfStops.setStopFloors(stops);
-            elevatorDriver.removeSequenceFromOrder();
         }
         log.info("Shaft with id {} and sequence of stops of found cabin: {}", getId(), sequenceOfStops.getStopFloors());
         fireSequenceOfStops();

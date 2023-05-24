@@ -35,8 +35,7 @@ public class CallCabinGivenTest extends IntegrationTest {
     @Given("shaft with index {int} has sequence of stops with floor/floors {intList} and Direction {string} and cabin position {int}")
     public void shaftWithIndexAndSequenceOfStopsAndDirectionAndCabinPosition(Integer shaftIndex, List<Integer> floorsNumbers,
                                                                              String direction, Integer cabinPosition) {
-    shaftInHouseHasSequenceOfStopsWithFloorsAndDirectionAndCabinPosition(shaftIndex,0,floorsNumbers,direction,cabinPosition);
-
+        shaftInHouseHasSequenceOfStopsWithFloorsAndDirectionAndCabinPosition(shaftIndex, 0, floorsNumbers, direction, cabinPosition);
     }
 
     @Given("All shaft are free and no sequence of stops in queue")
