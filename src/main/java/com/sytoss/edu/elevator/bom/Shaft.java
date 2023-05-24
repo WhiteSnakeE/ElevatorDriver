@@ -30,8 +30,6 @@ public class Shaft extends Entity {
 
     private List<ShaftListener> shaftListeners = new ArrayList<>();
 
-    private List<SequenceOfStopsListener> sequenceOfStopsListeners = new ArrayList<>();
-
     public Shaft() {
         cabin = new Cabin();
         engine = new Engine();
@@ -61,9 +59,14 @@ public class Shaft extends Entity {
         fireSequenceOfStops();
     }
 
+    public void done() {
+        SequenceOfStopsChangedEvent event = new SequenceOfStopsChangedEvent(this);
+        sequenceOfStops.getSequenceOfStopsListeners().forEach(sequenceOfStopsListener -> sequenceOfStopsListener.handleSequenceOfStopsChanged(event));
+    }
+
     public void clearSequence() {
+        done();
         this.sequenceOfStops = null;
-        fireSequenceOfStops();
     }
 
     public boolean isSameDirection(Direction direction, Integer currentPosition) {
@@ -72,18 +75,6 @@ public class Shaft extends Entity {
 
     public void addShaftListener(ShaftListener shaftListener) {
         shaftListeners.add(shaftListener);
-    }
-
-    public boolean removeShaftListener(ShaftListener shaftListener) {
-        return shaftListeners.remove(shaftListener);
-    }
-
-    public void addSequenceOfStopsListener(SequenceOfStopsListener sequenceOfStopsListener) {
-        sequenceOfStopsListeners.add(sequenceOfStopsListener);
-    }
-
-    public boolean removeSequenceOfStopsListener(SequenceOfStopsListener sequenceOfStopsListener) {
-        return sequenceOfStopsListeners.remove(sequenceOfStopsListener);
     }
 
     public void setCabinPosition(int currentFloor) {
@@ -128,6 +119,6 @@ public class Shaft extends Entity {
 
     private void fireSequenceOfStops() {
         SequenceOfStopsChangedEvent event = new SequenceOfStopsChangedEvent(this);
-        sequenceOfStopsListeners.forEach(sequenceOfStopsListener -> sequenceOfStopsListener.handleSequenceOfStopsChanged(event));
+        sequenceOfStops.getSequenceOfStopsListeners().forEach(sequenceOfStopsListener -> sequenceOfStopsListener.handleSequenceOfStopsChanged(event));
     }
 }

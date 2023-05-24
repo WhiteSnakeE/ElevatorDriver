@@ -20,6 +20,7 @@ public class CloseDoorCommand implements Command {
         Shaft shaft = (Shaft) params.get(CommandManager.SHAFT_PARAM);
         log.info("Shaft with id [{}] has [DOOR STATE]: [CLOSED]", shaft.getId());
         shaft.setSequenceOfStops(shaftService.getSequenceOfStopsByShaftId(shaft.getId()));
+        shaft.getSequenceOfStops().addSequenceOfStopsListener(shaftService);
         shaft.closeCabinDoor();
     }
 }

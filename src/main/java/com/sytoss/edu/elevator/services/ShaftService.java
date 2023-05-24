@@ -1,6 +1,7 @@
 package com.sytoss.edu.elevator.services;
 
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
+import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.DoorState;
 import com.sytoss.edu.elevator.bom.enums.EngineState;
 import com.sytoss.edu.elevator.dto.ShaftDTO;
@@ -52,7 +53,12 @@ public class ShaftService implements ShaftListener, SequenceOfStopsListener {
 
     @Override
     public void handleSequenceOfStopsChanged(SequenceOfStopsChangedEvent event) {
-        shaftRepository.updateSequenceById(event.getShaft().getId(), JsonUtil.sequenceToStringInJSON(event.getShaft().getSequenceOfStops()));
-        log.info("SequenceOfStops was updated in Shaft with id [{}] in DB", event.getShaft().getId());
+        Shaft shaft = event.getShaft();
+        if (shaft.getSequenceOfStops().isLast(shaft.getCabinPosition())) {
+            shaftRepository.updateSequenceById(shaft.getId(), JsonUtil.sequenceToStringInJSON(null));
+        } else {
+            shaftRepository.updateSequenceById(shaft.getId(), JsonUtil.sequenceToStringInJSON(shaft.getSequenceOfStops()));
+        }
+        log.info("SequenceOfStops was updated in Shaft with id [{}] in DB", shaft.getId());
     }
 }

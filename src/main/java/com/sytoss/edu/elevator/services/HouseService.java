@@ -74,7 +74,7 @@ public class HouseService {
         house.setElevatorDriver(new ElevatorDriver(commandManager));
         house.getShafts().forEach(shaft -> shaft.addShaftListener(shaftService));
         house.getShafts().forEach(shaft -> shaft.addShaftListener(house.getElevatorDriver()));
-        house.getShafts().forEach(shaft -> shaft.addSequenceOfStopsListener(shaftService));
+        //house.getShafts().forEach(shaft -> shaft.getSequenceOfStops().addSequenceOfStopsListener(shaftService));
         house.getShafts().forEach(shaft -> shaft.getEngine().addEngineListener(engineService));
         house.getShafts().forEach(shaft -> shaft.getCabin().addCabinListener(cabinService));
         house.getShafts().forEach(shaft -> shaft.getCabin().addCabinListener(house.getElevatorDriver()));
