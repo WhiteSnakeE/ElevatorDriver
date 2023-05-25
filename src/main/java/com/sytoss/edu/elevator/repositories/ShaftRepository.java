@@ -15,6 +15,8 @@ import java.util.List;
 @Transactional
 public interface ShaftRepository extends JpaRepository<ShaftDTO, Long> {
 
+    ShaftDTO getShaftDTOById(Long id);
+
     @Modifying
     @Query("UPDATE ShaftDTO Shaft SET Shaft.doorState = :doorState WHERE Shaft.id = :id")
     void updateDoorStateById(
@@ -46,4 +48,5 @@ public interface ShaftRepository extends JpaRepository<ShaftDTO, Long> {
             @Param("overweightState") OverWeightState overweightState);
 
     List<ShaftDTO> findByHouseDTOId(Long id);
+
 }

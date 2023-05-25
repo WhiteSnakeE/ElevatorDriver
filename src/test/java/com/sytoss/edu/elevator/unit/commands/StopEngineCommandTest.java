@@ -4,7 +4,7 @@ import com.sytoss.edu.elevator.bom.Engine;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.EngineState;
 import com.sytoss.edu.elevator.commands.StopEngineCommand;
-import com.sytoss.edu.elevator.repositories.ShaftRepository;
+import com.sytoss.edu.elevator.services.ShaftService;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -13,9 +13,9 @@ import static org.mockito.Mockito.*;
 
 public class StopEngineCommandTest {
 
-    private final ShaftRepository shaftRepository = mock(ShaftRepository.class);
+    private final ShaftService shaftService = mock(ShaftService.class);
 
-    private final StopEngineCommand stopEngineCommand = new StopEngineCommand(shaftRepository);
+    private final StopEngineCommand stopEngineCommand = new StopEngineCommand(shaftService);
 
     @Test
     public void executeTest() {
@@ -30,6 +30,6 @@ public class StopEngineCommandTest {
         stopEngineCommand.execute(params);
 
         verify(engine).stop();
-        verify(shaftRepository).updateEngineStateById(123L, EngineState.STAYING);
+        verify(shaftService).updateEngineStateById(123L, EngineState.STAYING);
     }
 }

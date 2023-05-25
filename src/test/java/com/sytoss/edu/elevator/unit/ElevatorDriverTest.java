@@ -80,10 +80,8 @@ public class ElevatorDriverTest {
         Shaft shaft = mock(Shaft.class);
         SequenceOfStops sequence = mock(SequenceOfStops.class);
         VisitFloorCommand visitFloorCommand = mock(VisitFloorCommand.class);
-
         HashMap<String, Object> params = new HashMap<>();
         params.put(SHAFT_PARAM, shaft);
-
         when(event.getShaft()).thenReturn(shaft);
         when(shaft.getSequenceOfStops()).thenReturn(sequence);
         when(sequence.getStopFloors()).thenReturn(List.of(2));

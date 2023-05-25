@@ -29,11 +29,13 @@ public class HouseTest {
         sequence1.setStopFloors(List.of(3));
         orderSequenceOfStops.add(sequence1);
 
+        house.getElevatorDriver().setOrderSequenceOfStops(orderSequenceOfStops);
+
         house.getShafts().get(0).setCabinPosition(12);
         house.getShafts().get(0).setId(0L);
         house.getShafts().get(1).setId(1L);
 
-        Shaft shaft = house.findNearestCabin(orderSequenceOfStops);
+        Shaft shaft = house.findNearestCabin();
 
         Assertions.assertEquals(1L, shaft.getId());
     }

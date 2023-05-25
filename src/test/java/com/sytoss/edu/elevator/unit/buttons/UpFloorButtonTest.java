@@ -4,14 +4,15 @@ import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.buttons.UpFloorButton;
 import com.sytoss.edu.elevator.commands.Command;
+import com.sytoss.edu.elevator.commands.CommandManager;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashMap;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith({MockitoExtension.class})
@@ -20,18 +21,18 @@ public class UpFloorButtonTest {
     @Mock
     private Command command;
 
-    @Spy
-    private House house;
-
     @Test
     public void pressTest() {
-        UpFloorButton upFloorButton = new UpFloorButton(command);
+        House house = mock(House.class);
+        UpFloorButton upFloorButton = new UpFloorButton(command, house);
         upFloorButton.press(5);
 
         HashMap<String, Object> params = new HashMap<>();
 
-        params.put("numberFloor", 5);
-        params.put("Direction", Direction.UPWARDS);
+        params.put(CommandManager.FLOOR_NUMBER_PARAM, 5);
+        params.put(CommandManager.HOUSE_PARAM, house);
+        params.put(CommandManager.DIRECTION_PARAM, Direction.UPWARDS);
+
 
         verify(command).execute(params);
     }

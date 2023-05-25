@@ -1,11 +1,13 @@
 package com.sytoss.edu.elevator.unit.commands;
 
 import com.sytoss.edu.elevator.bom.Engine;
+import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
 import com.sytoss.edu.elevator.bom.enums.EngineState;
+import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.commands.StartEngineCommand;
-import com.sytoss.edu.elevator.repositories.ShaftRepository;
+import com.sytoss.edu.elevator.services.ShaftService;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -14,9 +16,9 @@ import static org.mockito.Mockito.*;
 
 public class StartEngineCommandTest {
 
-    private final ShaftRepository shaftRepository = mock(ShaftRepository.class);
+    private final ShaftService shaftService = mock(ShaftService.class);
 
-    private final StartEngineCommand startEngineCommand = new StartEngineCommand(shaftRepository);
+    private final StartEngineCommand startEngineCommand = new StartEngineCommand(shaftService);
 
     @Test
     public void executeTest() {
@@ -24,14 +26,15 @@ public class StartEngineCommandTest {
         shaft.setId(123L);
         Engine engine = mock(Engine.class);
         HashMap<String, Object> params = new HashMap<>();
-        params.put("Shaft", shaft);
-        params.put("Direction", Direction.UPWARDS);
+        params.put(CommandManager.SHAFT_PARAM, shaft);
 
         when(shaft.getEngine()).thenReturn(engine);
         when(engine.getEngineState()).thenReturn(EngineState.GOING_UP);
+        when(shaft.getSequenceOfStops()).thenReturn(mock(SequenceOfStops.class));
+        when(shaft.getSequenceOfStops().getDirection()).thenReturn(Direction.UPWARDS);
 
         startEngineCommand.execute(params);
         verify(engine).start(Direction.UPWARDS);
-        verify(shaftRepository).updateEngineStateById(123L, EngineState.GOING_UP);
+        verify(shaftService).updateEngineStateById(123L, EngineState.GOING_UP);
     }
 }

@@ -1,47 +1,87 @@
 package com.sytoss.edu.elevator.cucumber;
 
 import com.sytoss.edu.elevator.IntegrationTest;
+import com.sytoss.edu.elevator.TestContext;
+import com.sytoss.edu.elevator.bom.SequenceOfStops;
+import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
+import com.sytoss.edu.elevator.dto.HouseDTO;
+import com.sytoss.edu.elevator.dto.ShaftDTO;
+import com.sytoss.edu.elevator.utils.JsonUtil;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
+import static com.sytoss.edu.elevator.commands.CommandManager.SHAFT_PARAM;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.times;
 
+@Slf4j
 public class CallCabinThenTest extends IntegrationTest {
-
-    @Then("Shaft with index {int} should have sequence of stops with floor {int} and direction {string}")
-    public void shaftShouldCreateSequenceOfStopsWithFloorAndIdAndDirection(Integer shaftIndex, Integer floorRequested,
-                                                                           String direction) {
-        Assertions.assertEquals(floorRequested, getHouse().getShafts().get(shaftIndex).getSequenceOfStops().getStopFloors().get(0));
-        Assertions.assertEquals(Direction.valueOf(direction), getHouse().getShafts().get(shaftIndex).getSequenceOfStops().getDirection());
-    }
 
     @Then("Shaft with index {int} should not have sequence of stops")
     public void shaftShouldNotHaveSequenceOfStops(Integer shaftIndex) {
-        Assertions.assertNull(getHouse().getShafts().get(shaftIndex).getSequenceOfStops());
+        List<ShaftDTO> shaftDTOList = getSortedShaftsByHouseIndex(0);
+        Shaft shaft = getShaftConverter().fromDTO(shaftDTOList.get(shaftIndex));
+        Assertions.assertNull(shaft.getSequenceOfStops());
     }
 
     @Then("ElevatorDriver has sequence of stops with floor {int}")
     public void elevatorDriverHasSequenceOfStopsWithFloor(Integer floorNumber) {
-        Assertions.assertEquals(floorNumber, getElevatorDriver().getOrderSequenceOfStops().get(0).getStopFloors().get(0));
+        Optional<HouseDTO> houseDTOOptional = getHouseRepository().findById(getHouseId(0));
+        HouseDTO houseDTO = houseDTOOptional.get();
+        List<SequenceOfStops> order = JsonUtil.stringJSONToOrderSequence(houseDTO.getOrderSequenceOfStops());
+
+        Assertions.assertEquals(floorNumber, order.get(0).getStopFloors().get(0));
     }
 
-    @Then("Shaft with index {int} should have sequence of stops with floors {intList} and direction {string}")
+    @Then("Shaft with index {int} should have sequence of stops with floor/floors {intList} and direction {string}")
     public void shaftWithIndexShouldHaveSequence(Integer shaftIndex, List<Integer> floors, String direction) {
+        List<ShaftDTO> shaftDTOList = getSortedShaftsByHouseIndex(0);
+        Shaft shaft = getShaftConverter().fromDTO(shaftDTOList.get(shaftIndex));
+
         for (int i = 0; i < floors.size(); ++i) {
-            Assertions.assertEquals(floors.get(i), getHouse().getShafts().get(shaftIndex).getSequenceOfStops().getStopFloors().get(i));
-            Assertions.assertEquals(Direction.valueOf(direction), getHouse().getShafts().get(shaftIndex).getSequenceOfStops().getDirection());
+            Assertions.assertEquals(floors.get(i), shaft.getSequenceOfStops().getStopFloors().get(i));
+            Assertions.assertEquals(Direction.valueOf(direction), shaft.getSequenceOfStops().getDirection());
         }
     }
 
-    @Then("commands should have be invoked for shaft with index {int}: {stringList} for floor/floors {intList}")
+    @Then("commands should have be invoked for shaft with id {int}: {stringList} for floor/floors {intList}")
     public void commandsShouldHaveBeInvokedForShaftWithIndexOpenDoorCheckOverweightCloseDoorForFloor(
             Integer shaftIndex, List<String> commands, List<Integer> stopFloors) {
         for (String command : commands) {
             Mockito.verify(getCommandManager().getCommand(command), times(stopFloors.size())).execute(Mockito.any());
+        }
+    }
+
+    @Then("command/commands should have be invoked for shaft {int} in house {int}: {stringList} for floor/floors {intList}")
+    public void commandsShouldHaveBeInvokedForShaftInHouseMoveCabinCommandVisitFloorCommandStopCabinCommandOpenDoorCommandCloseDoorCommandForFloor(int shaftIndex, int houseIndex, List<String> commands, List<Integer> floors) {
+        for (String command : commands) {
+            Mockito.verify(getCommandManager().getCommand(command), times(floors.size())).execute(argThat((arg) -> {
+                Shaft shaft = (Shaft) (arg.get(SHAFT_PARAM));
+                return shaft.getId().equals(getShaftId(shaftIndex, houseIndex));
+            }));
+        }
+    }
+
+    @And("shaft {int} in house {int} has cabin position {int}")
+    public void shaftInHouseHasCabinPosition(int shaftIndex, int houseIndex, int cabinPosition) {
+        List<ShaftDTO> shaftDTOList = getSortedShaftsByHouseId(houseIndex);
+        Assertions.assertEquals(cabinPosition, shaftDTOList.get(shaftIndex).getCabinPosition());
+    }
+
+    @Then("commands should have be invoked for shaft with index {int}: {stringList} for floor/floors {intList}")
+    public void commandsShouldHaveBeInvokedForShaftWithIndexOpenDoorCommandCloseDoorCommandForFloor
+            (int shaftIndex, List<String> commands, List<Integer> floors) {
+        for (String command : commands) {
+            Mockito.verify(getCommandManager().getCommand(command), times(floors.size())).execute(any());
         }
     }
 }

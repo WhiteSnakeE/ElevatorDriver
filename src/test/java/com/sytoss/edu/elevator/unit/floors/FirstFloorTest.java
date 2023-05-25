@@ -1,5 +1,6 @@
 package com.sytoss.edu.elevator.unit.floors;
 
+import com.sytoss.edu.elevator.bom.house.House;
 import com.sytoss.edu.elevator.bom.house.buttons.UpFloorButton;
 import com.sytoss.edu.elevator.bom.house.floors.FirstFloor;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ public class FirstFloorTest {
 
     @Test
     public void pressUpButton() {
+        House house = mock(House.class);
         FirstFloor firstFloor = new FirstFloor(upFloorButton);
         firstFloor.pressUpButton();
 

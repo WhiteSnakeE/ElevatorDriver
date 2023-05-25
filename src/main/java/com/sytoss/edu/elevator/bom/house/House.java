@@ -1,5 +1,6 @@
 package com.sytoss.edu.elevator.bom.house;
 
+import com.sytoss.edu.elevator.bom.ElevatorDriver;
 import com.sytoss.edu.elevator.bom.Entity;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
@@ -22,19 +23,25 @@ public class House extends Entity {
 
     private List<Floor> floors = new ArrayList<>();
 
-    public Shaft findNearestCabin(List<SequenceOfStops> orderSequenceOfStops) {
+    private ElevatorDriver elevatorDriver;
+
+    public House(ElevatorDriver elevatorDriver) {
+        this.elevatorDriver = elevatorDriver;
+    }
+
+    public Shaft findNearestCabin() {
         List<Shaft> appropriateShafts = getFreeShafts();
 
         if (appropriateShafts.isEmpty()) {
             log.info("findNearestCabin: all cabin is busy!");
-            appropriateShafts = shaftWithAppropriateDirection(orderSequenceOfStops.get(0).getDirection(), orderSequenceOfStops);
+            appropriateShafts = shaftWithAppropriateDirection(elevatorDriver.getOrderSequenceOfStops().get(0).getDirection(), elevatorDriver.getOrderSequenceOfStops());
             if (appropriateShafts.isEmpty()) {
                 log.info("findNearestCabin: appropriate cabin not found");
                 return null;
             }
         }
 
-        int firstStop = orderSequenceOfStops.get(0).getStopFloors().get(0);
+        int firstStop = elevatorDriver.getOrderSequenceOfStops().get(0).getStopFloors().get(0);
 
         return appropriateShafts.stream().min(Comparator.comparingInt(shaft -> Math.abs(firstStop - shaft.getCabinPosition()))).orElse(null);
     }
@@ -52,14 +59,7 @@ public class House extends Entity {
         return shafts.stream().filter(Shaft::isFree).toList();
     }
 
-    private List<Shaft> shaftWithAppropriateDirection(Direction currentDirection,
-                                                      List<SequenceOfStops> orderSequenceOfStops) {
+    private List<Shaft> shaftWithAppropriateDirection(Direction currentDirection, List<SequenceOfStops> orderSequenceOfStops) {
         return shafts.stream().filter(shaft -> shaft.isSameDirection(currentDirection, orderSequenceOfStops.get(0).getStopFloors().get(0))).toList();
     }
 }
-
-
-
-
-
-

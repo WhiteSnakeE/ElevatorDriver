@@ -12,6 +12,16 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class CommandManager {
 
+    public static final String SHAFT_PARAM = "Shaft";
+
+    public static final String DIRECTION_PARAM = "Direction";
+
+    public static final String FLOOR_NUMBER_PARAM = "numberFloor";
+
+    public static final String FLOORS_PARAM = "Floors";
+
+    public static final String HOUSE_PARAM = "House";
+
     private final HouseThreadPool houseThreadPool;
 
     private final ObjectProvider<PressUpButtonCommand> pressUpButtonCommandProvider;
@@ -29,16 +39,6 @@ public class CommandManager {
     private final ObjectProvider<CloseDoorCommand> closeDoorCommandObjectProvider;
 
     private final ObjectProvider<VisitFloorCommand> visitFloorCommandObjectProvider;
-
-    public static final String SHAFT_PARAM = "Shaft";
-
-    public static final String DIRECTION_PARAM = "Direction";
-
-    public static final String FLOOR_NUMBER_PARAM = "numberFloor";
-
-    public static final String FLOORS_PARAM = "Floors";
-
-    public static final String ITERATOR_PARAM = "Iterator";
 
     private final HashMap<String, Command> commandMap = new HashMap<>();
 
@@ -66,5 +66,4 @@ public class CommandManager {
     public void scheduleCommand(String nameCommand, HashMap<String, Object> params, long waitTime) {
         houseThreadPool.getFixedThreadPool().schedule(() -> getCommand(nameCommand).execute(params), waitTime, TimeUnit.MILLISECONDS);
     }
-
 }

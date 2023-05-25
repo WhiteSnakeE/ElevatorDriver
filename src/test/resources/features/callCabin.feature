@@ -1,5 +1,8 @@
 Feature: Call cabin
 
+  Background:
+    Given house 0 with numberOfFloors 16 and numberOfShafts 2 exists in database
+
   Scenario: calling a cabin for both free cabins with direction "UPWARDS"
     Given shaft with index 0 has free cabin and cabin position 3
     And shaft with index 1 has free cabin and cabin position 4
