@@ -79,9 +79,3 @@ public class House extends Entity {
         elevatorDriver.getOrderSequenceOfStopsListeners().forEach(orderSequenceOfStopsListener -> orderSequenceOfStopsListener.handleOrderSequenceOfStopsChanged(event));
     }
 }
-
-
-
-
-
-
