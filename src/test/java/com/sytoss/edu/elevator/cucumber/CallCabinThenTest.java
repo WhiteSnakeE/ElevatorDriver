@@ -1,7 +1,6 @@
 package com.sytoss.edu.elevator.cucumber;
 
 import com.sytoss.edu.elevator.IntegrationTest;
-import com.sytoss.edu.elevator.TestContext;
 import com.sytoss.edu.elevator.bom.SequenceOfStops;
 import com.sytoss.edu.elevator.bom.Shaft;
 import com.sytoss.edu.elevator.bom.enums.Direction;
@@ -14,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 

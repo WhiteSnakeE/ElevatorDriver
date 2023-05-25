@@ -8,17 +8,14 @@ import com.sytoss.edu.elevator.commands.Command;
 import com.sytoss.edu.elevator.commands.CommandManager;
 import com.sytoss.edu.elevator.commands.FindNearestCabinCommand;
 import com.sytoss.edu.elevator.commands.PressUpButtonCommand;
-import com.sytoss.edu.elevator.services.HouseService;
 import com.sytoss.edu.elevator.services.ShaftService;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ListResourceBundle;
 
 import static org.mockito.Mockito.*;
-
 
 public class PressUpButtonCommandTest {
 

@@ -34,8 +34,4 @@ public class Engine extends Entity {
     public void addEngineListener(EngineListener engineListener) {
         engineListeners.add(engineListener);
     }
-
-    public void removeEngineListener(EngineListener engineListener) {
-        engineListeners.remove(engineListener);
-    }
 }

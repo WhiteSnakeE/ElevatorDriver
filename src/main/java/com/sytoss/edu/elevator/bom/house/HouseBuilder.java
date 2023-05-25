@@ -31,6 +31,7 @@ public class HouseBuilder {
             int floorNumber = i + 1;
             result.getFloors().add(new MiddleFloor(floorNumber, new UpFloorButton(commandManager.getCommand(Command.PRESS_UP_BUTTON), result)));
         }
+
         return result;
     }
 }

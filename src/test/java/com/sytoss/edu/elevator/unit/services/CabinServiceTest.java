@@ -6,7 +6,6 @@ import com.sytoss.edu.elevator.bom.enums.DoorState;
 import com.sytoss.edu.elevator.events.DoorStateChangedEvent;
 import com.sytoss.edu.elevator.repositories.ShaftRepository;
 import com.sytoss.edu.elevator.services.CabinService;
-import com.sytoss.edu.elevator.services.ShaftService;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;

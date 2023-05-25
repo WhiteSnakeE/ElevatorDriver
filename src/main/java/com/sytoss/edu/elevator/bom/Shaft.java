@@ -5,7 +5,6 @@ import com.sytoss.edu.elevator.events.CabinPositionChangedEvent;
 import com.sytoss.edu.elevator.events.DoorStateChangedEvent;
 import com.sytoss.edu.elevator.events.EngineStateChangedEvent;
 import com.sytoss.edu.elevator.events.SequenceOfStopsChangedEvent;
-import com.sytoss.edu.elevator.listeners.SequenceOfStopsListener;
 import com.sytoss.edu.elevator.listeners.ShaftListener;
 import lombok.Getter;
 import lombok.Setter;

@@ -10,7 +10,6 @@ import java.util.List;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 
-
 public final class JsonUtil {
 
     public static String orderSequenceToStringInJSON(List<SequenceOfStops> orderSequenceOfStops) {

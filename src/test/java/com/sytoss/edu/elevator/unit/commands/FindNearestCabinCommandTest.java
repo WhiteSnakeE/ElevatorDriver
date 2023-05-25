@@ -147,7 +147,6 @@ public class FindNearestCabinCommandTest {
 
     @Test
     public void executeShaftIsNullTest() {
-
         HashMap<String, Object> params = new HashMap<>();
         params.put(HOUSE_PARAM, house);
 

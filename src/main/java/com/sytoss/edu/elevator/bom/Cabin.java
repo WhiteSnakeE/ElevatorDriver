@@ -34,8 +34,4 @@ public class Cabin extends Entity {
     public void addCabinListener(CabinListener cabinListener) {
         cabinListeners.add(cabinListener);
     }
-
-    public void removeCabinListener(CabinListener cabinListener) {
-        cabinListeners.remove(cabinListener);
-    }
 }

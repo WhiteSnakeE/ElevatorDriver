@@ -84,12 +84,10 @@ public class ElevatorDriver extends Entity implements ShaftListener, CabinListen
         if (shaft.getCabin().getDoorState().equals(DoorState.OPENED)) {
             commandManager.scheduleCommand(CLOSE_DOOR_COMMAND, params, CLOSE_DOOR_TIME_SLEEP);
         } else {
-
             if (shaft.getSequenceOfStops().isLast(shaft.getCabinPosition())) {
                 shaft.clearSequence();
                 return;
             }
-
             commandManager.scheduleCommand(MOVE_CABIN_COMMAND, params, MOVE_CABIN_TIME_SLEEP);
         }
     }

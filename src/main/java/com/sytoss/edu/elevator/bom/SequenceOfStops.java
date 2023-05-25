@@ -2,7 +2,6 @@ package com.sytoss.edu.elevator.bom;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sytoss.edu.elevator.bom.enums.Direction;
-import com.sytoss.edu.elevator.events.SequenceOfStopsChangedEvent;
 import com.sytoss.edu.elevator.listeners.SequenceOfStopsListener;
 import lombok.Getter;
 import lombok.Setter;

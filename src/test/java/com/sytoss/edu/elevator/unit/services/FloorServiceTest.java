@@ -27,7 +27,6 @@ public class FloorServiceTest {
 
     private final FloorService floorService = new FloorService(houseService);
 
-
     @Test
     public void goUpCabinRequestToFirstFloorTest() {
         FirstFloor firstFloor = mock(FirstFloor.class);

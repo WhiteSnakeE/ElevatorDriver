@@ -25,13 +25,17 @@ public class PressUpButtonCommand implements Command {
     @Override
     public void execute(HashMap<String, Object> params) {
         log.info("Start PressUpButton.execute COMMAND with params: {}", params);
+
         int numberFloor = (int) params.get(FLOOR_NUMBER_PARAM);
         Direction direction = (Direction) params.get(DIRECTION_PARAM);
         House house = (House) params.get(HOUSE_PARAM);
+
         house.addNewSequenceToOrder(numberFloor, direction);
         List<SequenceOfStops> order = house.getElevatorDriver().getOrderSequenceOfStops();
         order.get(order.size() - 1).addSequenceOfStopsListener(shaftService);
+
         params.remove(FLOOR_NUMBER_PARAM);
+
         commandManager.getCommand(Command.FIND_NEAREST_CABIN_COMMAND).execute(params);
     }
 }

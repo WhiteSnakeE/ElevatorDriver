@@ -33,7 +33,6 @@ public class UpFloorButtonTest {
         params.put(CommandManager.HOUSE_PARAM, house);
         params.put(CommandManager.DIRECTION_PARAM, Direction.UPWARDS);
 
-
         verify(command).execute(params);
     }
 }
