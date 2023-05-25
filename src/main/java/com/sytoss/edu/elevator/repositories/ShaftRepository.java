@@ -41,12 +41,6 @@ public interface ShaftRepository extends JpaRepository<ShaftDTO, Long> {
             @Param("id") Long id,
             @Param("cabinPosition") int cabinPosition);
 
-    @Modifying
-    @Query("UPDATE ShaftDTO Shaft SET Shaft.overweightState = :overweightState WHERE Shaft.id = :id")
-    void updateOverweightStateById(
-            @Param("id") Long id,
-            @Param("overweightState") OverWeightState overweightState);
-
     List<ShaftDTO> findByHouseDTOId(Long id);
 
 }
