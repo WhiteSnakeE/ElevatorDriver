@@ -75,15 +75,12 @@ public class HouseServiceTest {
         House house = mock(House.class);
 
         List<ShaftDTO> shaftDTOList = new ArrayList<>();
+        ShaftDTO shaftDTO = mock(ShaftDTO.class);
 
-        ShaftRepository.ShaftHouseId shaftHouseId = mock(ShaftRepository.ShaftHouseId.class);
-        when(shaftRepository.getAllById(5L)).thenReturn(shaftHouseId);
-        when(shaftHouseId.getHouseDTO()).thenReturn(houseDTO);
-        when(houseDTO.getId()).thenReturn(shaftId);
-
-        when(houseRepository.getReferenceById(3L)).thenReturn(houseDTO);
-
+        when(shaftRepository.getReferenceById(5L)).thenReturn(shaftDTO);
+        when(shaftDTO.getHouseDTO()).thenReturn(houseDTO);
         when(houseDTO.getId()).thenReturn(3L);
+        when(houseRepository.getReferenceById(3L)).thenReturn(houseDTO);
         when(shaftRepository.findByHouseDTOId(3L)).thenReturn(shaftDTOList);
         when(houseConverter.fromDTO(houseDTO, shaftDTOList)).thenReturn(house);
         houseService.getHouseByShaftId(shaftId);

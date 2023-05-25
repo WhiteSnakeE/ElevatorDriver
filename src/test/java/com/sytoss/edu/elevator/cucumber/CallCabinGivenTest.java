@@ -27,8 +27,8 @@ import static com.sytoss.edu.elevator.bom.enums.OverWeightState.NOT_OVERWEIGHT;
 public class CallCabinGivenTest extends IntegrationTest {
 
     @Given("shaft with index {int} has free cabin and cabin position {int}")
-    public void shaftWithIdAndEngineHasEngineStateAndShaftHasCurrentPosition(Integer shaftIndex,
-                                                                             Integer cabinPosition) {
+    public void shaftHasFreeCabinAndCabinPosition(Integer shaftIndex,
+                                                  Integer cabinPosition) {
         shaftInHouseHasFreeCabinAndCabinPosition(shaftIndex, 0, cabinPosition);
     }
 
@@ -36,6 +36,7 @@ public class CallCabinGivenTest extends IntegrationTest {
     public void shaftWithIndexAndSequenceOfStopsAndDirectionAndCabinPosition(Integer shaftIndex, List<Integer> floorsNumbers,
                                                                              String direction, Integer cabinPosition) {
         shaftInHouseHasSequenceOfStopsWithFloorsAndDirectionAndCabinPosition(shaftIndex, 0, floorsNumbers, direction, cabinPosition);
+
     }
 
     @Given("All shaft are free and no sequence of stops in queue")

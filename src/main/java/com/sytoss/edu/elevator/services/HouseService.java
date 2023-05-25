@@ -84,7 +84,7 @@ public class HouseService implements OrderSequenceOfStopsListener {
 
     @Transactional
     public House getHouseByShaftId(long shaftId) {
-        long houseId = shaftRepository.getAllById(shaftId).getHouseDTO().getId();
+        long houseId = shaftRepository.getReferenceById(shaftId).getHouseDTO().getId();
         return getHouseById(houseId);
     }
 
