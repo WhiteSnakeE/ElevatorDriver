@@ -35,6 +35,7 @@ public class FindNearestCabinCommand implements Command {
         }
 
         if (nearestCabin.isCabinMoving()) {
+            nearestCabin.getSequenceOfStops().addSequenceOfStopsListener(shaftService);
             updateSequences(house, nearestCabin);
             return;
         }
