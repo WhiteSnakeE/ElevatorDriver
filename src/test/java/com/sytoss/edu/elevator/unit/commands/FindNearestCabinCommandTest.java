@@ -75,11 +75,17 @@ public class FindNearestCabinCommandTest {
         HashMap<String, Object> params = new HashMap<>();
         params.put(HOUSE_PARAM, house);
         Shaft shaft = mock(Shaft.class);
+
+        SequenceOfStops sequence = new SequenceOfStops();
+        sequence.setStopFloors(List.of(1, 2, 3));
+        sequence.setDirection(Direction.UPWARDS);
+
         when(house.getElevatorDriver()).thenReturn(mock(ElevatorDriver.class));
         when(house.findNearestCabin()).thenReturn(shaft);
         when(shaft.isCabinMoving()).thenReturn(true);
         when(commandManager.getCommand(OPEN_DOOR_COMMAND)).thenReturn(mock(OpenDoorCommand.class));
         when(commandManager.getCommand(MOVE_CABIN_COMMAND)).thenReturn(mock(MoveCabinCommand.class));
+        when(shaft.getSequenceOfStops()).thenReturn(sequence);
         findNearestCabinCommand.execute(params);
 
         await();

@@ -26,5 +26,5 @@ house:
 houseThreadPool:
   openDoorTimeSleep: 1000
   closeDoorTimeSleep: 2000
-  visitFloorTimeSleep: 2000
+  visitFloorTimeSleep: 500
   moveCabinTimeSleep: 1000
