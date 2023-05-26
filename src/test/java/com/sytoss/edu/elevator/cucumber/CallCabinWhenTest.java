@@ -74,7 +74,7 @@ public class CallCabinWhenTest extends IntegrationTest {
     private void addListenersToShaft(Shaft shaft, ElevatorDriver elevatorDriver) {
         shaft.addShaftListener(getShaftService());
         shaft.addShaftListener(elevatorDriver);
-        shaft.getSequenceOfStops().addSequenceOfStopsListener(getShaftService());
+        shaft.getSequenceOfStops().addListener(getShaftService());
         shaft.getEngine().addEngineListener(getEngineService());
         shaft.getCabin().addCabinListener(getCabinService());
         shaft.getCabin().addCabinListener(elevatorDriver);

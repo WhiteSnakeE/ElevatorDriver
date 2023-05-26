@@ -7,10 +7,10 @@ import lombok.Getter;
 public class OrderSequenceOfStopsChangedEvent extends Event {
 
     @Getter
-    private House house;
+    private final House house;
 
-    public OrderSequenceOfStopsChangedEvent(Shaft shaft, House house) {
-        super(shaft);
+    public OrderSequenceOfStopsChangedEvent(House house) {
+        super(null);
         this.house = house;
     }
 }

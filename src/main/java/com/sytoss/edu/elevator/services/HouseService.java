@@ -73,11 +73,13 @@ public class HouseService implements OrderSequenceOfStopsListener {
         List<ShaftDTO> shaftDTOList = shaftRepository.findByHouseDTOId(houseDTO.getId());
         House house = houseConverter.fromDTO(houseDTO, shaftDTOList);
         house.setElevatorDriver(new ElevatorDriver(commandManager));
-        house.getShafts().forEach(shaft -> shaft.addShaftListener(shaftService));
-        house.getShafts().forEach(shaft -> shaft.addShaftListener(house.getElevatorDriver()));
-        house.getShafts().forEach(shaft -> shaft.getEngine().addEngineListener(engineService));
-        house.getShafts().forEach(shaft -> shaft.getCabin().addCabinListener(cabinService));
-        house.getShafts().forEach(shaft -> shaft.getCabin().addCabinListener(house.getElevatorDriver()));
+        house.getShafts().forEach(shaft -> {
+            shaft.addShaftListener(shaftService);
+            shaft.addShaftListener(house.getElevatorDriver());
+            shaft.getEngine().addEngineListener(engineService);
+            shaft.getCabin().addCabinListener(cabinService);
+            shaft.getCabin().addCabinListener(house.getElevatorDriver());
+        });
         return house;
     }
 

@@ -32,7 +32,7 @@ public class PressUpButtonCommand implements Command {
 
         house.addNewSequenceToOrder(numberFloor, direction);
         List<SequenceOfStops> order = house.getElevatorDriver().getOrderSequenceOfStops();
-        order.get(order.size() - 1).addSequenceOfStopsListener(shaftService);
+        order.get(order.size() - 1).addListener(shaftService);
 
         params.remove(FLOOR_NUMBER_PARAM);
 

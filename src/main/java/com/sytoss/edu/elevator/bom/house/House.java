@@ -75,7 +75,7 @@ public class House extends Entity {
     }
 
     private void fireOrderSequenceOfStops() {
-        OrderSequenceOfStopsChangedEvent event = new OrderSequenceOfStopsChangedEvent(null, this);
+        OrderSequenceOfStopsChangedEvent event = new OrderSequenceOfStopsChangedEvent(this);
         elevatorDriver.getOrderSequenceOfStopsListeners().forEach(orderSequenceOfStopsListener -> orderSequenceOfStopsListener.handleOrderSequenceOfStopsChanged(event));
     }
 }

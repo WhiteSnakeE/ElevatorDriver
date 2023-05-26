@@ -28,7 +28,7 @@ public class SequenceOfStops extends Entity {
         return stopFloors.get(0) == floor;
     }
 
-    public void addSequenceOfStopsListener(SequenceOfStopsListener sequenceOfStopsListener) {
+    public void addListener(SequenceOfStopsListener sequenceOfStopsListener) {
         sequenceOfStopsListeners.add(sequenceOfStopsListener);
     }
 }
